@@ -1,0 +1,25 @@
+{
+	"compileOnSave": false,
+	"name": "storm-react-diagrams",
+	"compilerOptions": {
+		"suppressExcessPropertyErrors": true,
+		"declaration": true,
+		"outDir": "dist/@types",
+		"target": "es5",
+		"strictNullChecks": false,
+		"sourceMap": true,
+		"skipLibCheck": true,
+		"jsx": "react",
+		"baseUrl": ".",
+		"experimentalDecorators": true,
+		"lib": [
+			"dom",
+			"es2015"
+		]
+	},
+	"exclude": [
+		"node_modules",
+		"**/*.spec.ts",
+		"./dist"
+	]
+}

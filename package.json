@@ -1,0 +1,38 @@
+{
+	"name": "@projectstorm/react-canvas",
+	"version": "0.0.1",
+	"scripts": {
+		"pretty": "prettier --use-tabs --write \"{src,demos,tests}/**/*.{ts,tsx}\" --print-width 120",
+		"storybook": "start-storybook -p 9001 -c .storybook",
+		"storybook:build": "build-storybook -c .storybook -o .out",
+		"storybook:github": "storybook-to-ghpages"
+	},
+	"dependencies": {
+		"lodash": "^4.17.5",
+		"mathjs": "^4.0.1",
+		"react": "^16.2.0"
+	},
+	"devDependencies": {
+		"@storybook/addon-options": "^3.3.15",
+		"@storybook/addons": "^3.3.15",
+		"@storybook/react": "^3.3.15",
+		"@types/lodash": "^4.14.106",
+		"@types/mathjs": "^0.0.38",
+		"@types/react": "^16.0.40",
+		"@types/react-dom": "^16.0.4",
+		"@storybook/addon-actions": "^3.3.15",
+		"awesome-typescript-loader": "^4.0.1",
+		"babel-core": "^6.26.0",
+		"css-loader": "^0.28.11",
+		"file-loader": "^1.1.11",
+		"prettier": "^1.11.1",
+		"sass-loader": "^6.0.7",
+		"source-map-loader": "^0.2.3",
+		"style-loader": "^0.20.3",
+		"tsconfig-paths-webpack-plugin": "^3.0.2",
+		"node-sass": "^4.8.3",
+		"typescript": "^2.7.2",
+		"storybook-host": "^4.1.5",
+		"react-dom": "^16.2.0"
+	}
+}
