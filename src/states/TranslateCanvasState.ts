@@ -1,10 +1,9 @@
-import { AbstractState } from "../state-machine/AbstractState";
 import { StateMachine } from "../state-machine/StateMachine";
 import { CanvasEngine } from "../CanvasEngine";
-import { MouseInput, MouseInputType } from "../state-machine/inputs/MouseInput";
+import { MouseInputType } from "../state-machine/inputs/MouseInput";
+import { AbstractDisplacementState } from "../state-machine/AbstractDisplacementState";
 
-export class TranslateCanvasState extends AbstractState {
-	initialMouse: MouseInput;
+export class TranslateCanvasState extends AbstractDisplacementState {
 	initialOffsetX: number;
 	initialOffsetY: number;
 	engine: CanvasEngine;
@@ -15,21 +14,15 @@ export class TranslateCanvasState extends AbstractState {
 	}
 
 	activated(machine: StateMachine) {
-		this.initialMouse = machine.getInput(MouseInputType.DOWN) as MouseInput;
+		super.activated(machine);
 		this.initialOffsetX = this.engine.getModel().getOffsetX();
 		this.initialOffsetY = this.engine.getModel().getOffsetY();
 	}
 
 	deactivate(machine: StateMachine) {}
 
-	process(machine: StateMachine) {
-		let input = machine.getInput(MouseInputType.MOVE) as MouseInput;
-		this.engine
-			.getModel()
-			.setOffset(
-				this.initialOffsetX + (input.mouseX - this.initialMouse.mouseX),
-				this.initialOffsetY + (input.mouseY - this.initialMouse.mouseY)
-			);
+	processDisplacement(displacementX, displacementY) {
+		this.engine.getModel().setOffset(this.initialOffsetX + displacementX, this.initialOffsetY + displacementY);
 		this.engine.getCanvasWidget().forceUpdate();
 	}
 }
