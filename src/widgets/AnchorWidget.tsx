@@ -20,10 +20,12 @@ export class AnchorWidget extends BaseWidget<AnchorWidgetProps> {
 		return (
 			<div
 				{...this.getProps()}
-				onMouseEnter={() => {
-					this.props.engine.getStateMachine().addInput(new ModelAnchorInput(this.props.selectionModel, this.props.pos));
+				onMouseDown={() => {
+					this.props.engine
+						.getStateMachine()
+						.addInput(new ModelAnchorInput(this.props.selectionModel, this.props.pos));
 				}}
-				onMouseLeave={() => {
+				onMouseUp={() => {
 					this.props.engine.getStateMachine().removeInput(ModelAnchorInput.NAME);
 				}}
 			/>

@@ -9,6 +9,7 @@ import { DimensionTracker } from "../tracking/DimensionTracker";
 import { SelectionElementModel } from "../primitives/selection/SelectionElementModel";
 import { MouseWheelInput } from "../state-machine/inputs/MouseWheelInput";
 import { MouseInput, MouseInputType } from "../state-machine/inputs/MouseInput";
+import { Rectangle } from "../geometry/Rectangle";
 
 export interface CanvasWidgetProps extends BaseWidgetProps {
 	engine: CanvasEngine;
@@ -20,6 +21,7 @@ export interface CanvasWidgetState {}
 export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetState> {
 	selectionLayer: CanvasLayerModel;
 	dimension: DimensionTracker;
+	ref: { current: HTMLElement };
 
 	// handles
 	onKeyDownHandle: (event: any) => any;
@@ -36,17 +38,22 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		this.selectionLayer = new CanvasLayerModel();
 		this.selectionLayer.svg = false;
 		this.selectionLayer.transform = false;
+		this.ref = (React as any).createRef();
 
 		this.onKeyDownHandle = () => {};
 
 		this.onKeyUpHandle = () => {};
 
 		this.onMouseMoveHandle = event => {
-			this.props.engine.getStateMachine().addInput(new MouseInput(MouseInputType.MOVE, event.clientX, event.clientY));
+			this.props.engine
+				.getStateMachine()
+				.addInput(new MouseInput(MouseInputType.MOVE, event.clientX, event.clientY));
 		};
 
 		this.onMouseDownHandle = event => {
-			this.props.engine.getStateMachine().addInput(new MouseInput(MouseInputType.DOWN, event.clientX, event.clientY));
+			this.props.engine
+				.getStateMachine()
+				.addInput(new MouseInput(MouseInputType.DOWN, event.clientX, event.clientY));
 		};
 
 		this.onMouseUpHandle = () => {
@@ -108,23 +115,43 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		this.computeSelectionLayer();
 	}
 
+	zoomToFit(margin: number = 0) {
+		let model = this.props.engine.getModel();
+		let bounds = Rectangle.boundingBoxFromPolygons(
+			_.map(model.getElements(), element => {
+				return element.getDimensions();
+			})
+		);
+
+		let zoomFactor = Math.min(
+			(this.dimension.realDimensions.getWidth() - margin - margin) / bounds.getWidth(),
+			(this.dimension.realDimensions.getHeight() - margin - margin) / bounds.getHeight()
+		);
+
+		model.setZoomLevel(zoomFactor);
+		model.setOffset(
+			margin + -1 * bounds.getTopLeft().x * model.getZoomLevel(),
+			margin + -1 * bounds.getTopLeft().y * model.getZoomLevel()
+		);
+		this.forceUpdate();
+	}
+
 	render() {
 		return (
-			<DimensionTrackerWidget
-				{...this.getProps()}
-				extraProps={{
-					onWheel: this.onMouseWheelHandle,
-					onMouseDown: this.onMouseDownHandle,
-					onMouseMove: this.onMouseMoveHandle,
-					onMouseUp: this.onMouseUpHandle
-				}}
-				engine={this.props.engine}
-				dimensionTracker={this.dimension}
-			>
-				{_.map(this.props.engine.getModel().layers.getEntities(), layer => {
-					return <CanvasLayerWidget key={layer.getID()} engine={this.props.engine} layer={layer} />;
-				})}
-				<CanvasLayerWidget key={"selection"} engine={this.props.engine} layer={this.selectionLayer} />
+			<DimensionTrackerWidget reference={this.ref} engine={this.props.engine} dimensionTracker={this.dimension}>
+				<div
+					{...this.getProps()}
+					ref={this.ref}
+					onWheel={this.onMouseWheelHandle}
+					onMouseDown={this.onMouseDownHandle}
+					onMouseMove={this.onMouseMoveHandle}
+					onMouseUp={this.onMouseUpHandle}
+				>
+					{_.map(this.props.engine.getModel().layers.getEntities(), layer => {
+						return <CanvasLayerWidget key={layer.getID()} engine={this.props.engine} layer={layer} />;
+					})}
+					<CanvasLayerWidget key={"selection"} engine={this.props.engine} layer={this.selectionLayer} />
+				</div>
 			</DimensionTrackerWidget>
 		);
 	}

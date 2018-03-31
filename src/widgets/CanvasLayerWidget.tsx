@@ -31,7 +31,7 @@ export class CanvasLayerWidget extends BaseWidget<CanvasLayerWidgetProps, Canvas
 					"px," +
 					canvas.getOffsetY() +
 					"px) scale(" +
-					canvas.getZoomLevel() / 100.0 +
+					canvas.getZoomLevel() +
 					")"
 			};
 		}

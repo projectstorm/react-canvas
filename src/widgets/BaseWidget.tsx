@@ -30,7 +30,9 @@ export class BaseWidget<P extends BaseWidgetProps = BaseWidgetProps, S = any> ex
 	}
 
 	getClassName(): string {
-		return (this.props.baseClass || this.className) + " " + (this.props.className ? this.props.className + " " : "");
+		return (
+			(this.props.baseClass || this.className) + " " + (this.props.className ? this.props.className + " " : "")
+		);
 	}
 
 	getProps(): any {

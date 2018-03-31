@@ -6,13 +6,13 @@ import { CanvasEngine } from "../CanvasEngine";
 export interface DimensionTrackerWidgetProps extends BaseWidgetProps {
 	dimensionTracker: DimensionTracker;
 	engine: CanvasEngine;
-	element?: any;
+	reference: { current: HTMLElement };
 }
 
 export interface DimensionTrackerWidgetState {}
 
 export class DimensionTrackerWidget extends BaseWidget<DimensionTrackerWidgetProps, DimensionTrackerWidgetState> {
-	ref: HTMLElement;
+	observer: any;
 
 	public static defaultProps = {
 		element: "div"
@@ -24,29 +24,34 @@ export class DimensionTrackerWidget extends BaseWidget<DimensionTrackerWidgetPro
 	}
 
 	updateDimensions() {
-		if (this.ref) {
-			this.props.dimensionTracker.updateDimensions(this.props.engine, this.ref);
+		if (this.props.reference.current) {
+			this.props.dimensionTracker.updateDimensions(
+				this.props.engine,
+				this.props.reference.current.getBoundingClientRect()
+			);
 		}
 	}
 
 	componentDidMount() {
+		// if resize observer is present, rather use that
+		if (window["ResizeObserver"]) {
+			this.observer = new window["ResizeObserver"](entries => {
+				for (let entry of entries) {
+					this.props.dimensionTracker.updateDimensions(this.props.engine, entry.contentRect);
+				}
+			});
+			this.observer.observe(this.props.reference.current);
+		}
 		this.updateDimensions();
 	}
 
 	componentDidUpdate() {
-		this.updateDimensions();
+		if (!this.observer) {
+			this.updateDimensions();
+		}
 	}
 
 	render() {
-		return React.createElement(
-			this.props.element,
-			{
-				...this.getProps(),
-				ref: ref => {
-					this.ref = ref as any;
-				}
-			},
-			this.props.children
-		);
+		return this.props.children;
 	}
 }

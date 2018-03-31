@@ -20,7 +20,7 @@ export class CanvasModel extends BaseModel {
 		this.layers.setParent(this);
 		this.offsetX = 0;
 		this.offsetY = 0;
-		this.zoom = 100;
+		this.zoom = 1;
 	}
 
 	getOffsetY() {
@@ -37,6 +37,10 @@ export class CanvasModel extends BaseModel {
 
 	setZoomLevel(zoom: number) {
 		this.zoom = zoom;
+	}
+
+	setZoomPercent(percent: number) {
+		this.zoom = percent / 100.0;
 	}
 
 	setOffset(offsetX: number, offsetY: number) {

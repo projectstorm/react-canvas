@@ -47,9 +47,7 @@ export class Polygon {
 
 	toRealDimensions(model: CanvasModel): this {
 		let dim = this.clone();
-		let zoom = model.zoom / 100.0;
-
-		dim.scale(zoom, zoom, new Point(0, 0));
+		dim.scale(model.getZoomLevel(), model.getZoomLevel(), new Point(0, 0));
 		dim.translate(model.offsetX, model.offsetY);
 		return dim;
 	}
@@ -91,7 +89,12 @@ export class Polygon {
 			}
 		}
 
-		return new Rectangle(new Point(minX, minY), new Point(maxX, minY), new Point(maxX, maxY), new Point(minX, maxY));
+		return new Rectangle(
+			new Point(minX, minY),
+			new Point(maxX, minY),
+			new Point(maxX, maxY),
+			new Point(minX, maxY)
+		);
 	}
 
 	getBoundingBox(): Rectangle {
@@ -115,6 +118,11 @@ export class Polygon {
 			}
 		}
 
-		return new Rectangle(new Point(minX, minY), new Point(maxX, minY), new Point(maxX, maxY), new Point(minX, maxY));
+		return new Rectangle(
+			new Point(minX, minY),
+			new Point(maxX, minY),
+			new Point(maxX, maxY),
+			new Point(minX, maxY)
+		);
 	}
 }

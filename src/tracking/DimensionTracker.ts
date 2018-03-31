@@ -20,13 +20,13 @@ export class DimensionTracker extends BaseModel<null, DimensionTrackerListener> 
 		this.realDimensions.updateDimensions(clientRect.left, clientRect.top, clientRect.width, clientRect.height);
 	}
 
-	updateDimensions(canvasEngine: CanvasEngine, ref: HTMLElement) {
+	updateDimensions(canvasEngine: CanvasEngine, ClientRect: ClientRect) {
 		if (!this.enableTracking) {
 			return false;
 		}
 
 		// store the real dimensions
-		this.recompute(canvasEngine, ref.getBoundingClientRect());
+		this.recompute(canvasEngine, ClientRect);
 
 		// fire the update event
 		this.iterateListeners((listener, event) => {

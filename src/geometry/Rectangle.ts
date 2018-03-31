@@ -26,7 +26,8 @@ export class Rectangle extends Polygon {
 
 	getWidth(): number {
 		return Math.sqrt(
-			Math.pow(this.getTopLeft().x - this.getTopRight().x, 2) + Math.pow(this.getTopLeft().y - this.getTopRight().y, 2)
+			Math.pow(this.getTopLeft().x - this.getTopRight().x, 2) +
+				Math.pow(this.getTopLeft().y - this.getTopRight().y, 2)
 		);
 	}
 

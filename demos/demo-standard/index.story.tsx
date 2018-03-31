@@ -5,7 +5,10 @@ import { CanvasModel } from "../../src/models-canvas/CanvasModel";
 import { CanvasLayerModel } from "../../src/models-canvas/CanvasLayerModel";
 import { SquareElementModel } from "../../src/primitives/square/SquareElementModel";
 
-export default () => {
+import { storiesOf } from "@storybook/react";
+import { button } from "@storybook/addon-knobs";
+
+storiesOf("Simple Usage", module).add("Full example", () => {
 	//setup canvas engine
 	let engine = new CanvasEngine();
 	engine.installDefaults();
@@ -34,5 +37,10 @@ export default () => {
 	squareModel3.dimensions.updateDimensions(420, 420, 50, 70);
 	squareModel3.selected = true;
 	layer.addElement(squareModel3);
+
+	button("Fit Width", () => {
+		engine.getCanvasWidget().zoomToFit(15);
+	});
+
 	return <CanvasWidget engine={engine} />;
-};
+});

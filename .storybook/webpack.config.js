@@ -27,7 +27,15 @@ module.exports = {
 			{
 				test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
 				loader: "file-loader"
-			}
+			},
+			{
+				test: /\.story\.tsx?$/,
+				loaders: [{
+					loader: require.resolve('@storybook/addon-storysource/loader'),
+					options: { parser: 'typescript' }
+				}],
+				enforce: 'pre',
+			},
 		]
 	},
 	resolve: {

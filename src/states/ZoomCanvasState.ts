@@ -17,22 +17,21 @@ export class ZoomCanvasState extends AbstractState {
 		const model = this.engine.getModel();
 		const canvas = this.engine.getCanvasWidget();
 
-		const oldZoomFactor = model.getZoomLevel() / 100;
-
-		// saftey check
-		if (model.getZoomLevel() + zoom.amount > 10) {
-			model.setZoomLevel(model.getZoomLevel() + zoom.amount);
+		let newZoomFactor = model.getZoomLevel() + zoom.amount / 100.0;
+		if (newZoomFactor <= 0.05) {
+			zoom.eject();
+			return;
 		}
 
-		const zoomFactor = model.getZoomLevel() / 100;
+		const oldZoomFactor = model.getZoomLevel();
 
 		const boundingRect = canvas.dimension.realDimensions;
 		const clientWidth = boundingRect.getWidth();
 		const clientHeight = boundingRect.getHeight();
 
 		// compute difference between rect before and after scroll
-		const widthDiff = clientWidth * zoomFactor - clientWidth * oldZoomFactor;
-		const heightDiff = clientHeight * zoomFactor - clientHeight * oldZoomFactor;
+		const widthDiff = clientWidth * newZoomFactor - clientWidth * oldZoomFactor;
+		const heightDiff = clientHeight * newZoomFactor - clientHeight * oldZoomFactor;
 
 		// compute mouse coords relative to canvas
 		const clientX = zoom.mouseX - boundingRect.getTopLeft().x;
@@ -42,6 +41,7 @@ export class ZoomCanvasState extends AbstractState {
 		const xFactor = (clientX - model.getOffsetX()) / oldZoomFactor / clientWidth;
 		const yFactor = (clientY - model.getOffsetY()) / oldZoomFactor / clientHeight;
 
+		model.setZoomLevel(newZoomFactor);
 		model.setOffset(model.getOffsetX() - widthDiff * xFactor, model.getOffsetY() - heightDiff * yFactor);
 
 		zoom.eject();

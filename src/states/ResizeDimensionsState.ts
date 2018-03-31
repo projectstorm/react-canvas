@@ -45,7 +45,7 @@ export class ResizeDimensionsState extends AbstractState {
 	process(machine: StateMachine) {
 		let movePoint = machine.getInput(MouseInputType.MOVE) as MouseInput;
 
-		let zoom = this.engine.getModel().getZoomLevel() / 100.0;
+		let zoom = this.engine.getModel().getZoomLevel();
 
 		// work out the distance difference
 		this.distanceX = (movePoint.mouseX - this.initialPoint.mouseX) / zoom;
