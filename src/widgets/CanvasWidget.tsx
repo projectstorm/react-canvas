@@ -10,6 +10,7 @@ import { SelectionElementModel } from "../primitives/selection/SelectionElementM
 import { MouseWheelInput } from "../state-machine/inputs/MouseWheelInput";
 import { MouseInput, MouseInputType } from "../state-machine/inputs/MouseInput";
 import { Rectangle } from "../geometry/Rectangle";
+import { CircleElementModel } from "../primitives/circle/CircleElementModel";
 
 export interface CanvasWidgetProps extends BaseWidgetProps {
 	engine: CanvasEngine;
@@ -20,6 +21,8 @@ export interface CanvasWidgetState {}
 
 export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetState> {
 	selectionLayer: CanvasLayerModel;
+	debugLayer: CanvasLayerModel;
+
 	dimension: DimensionTracker;
 	ref: { current: HTMLElement };
 
@@ -35,9 +38,17 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		super("src-canvas", props);
 		this.state = {};
 		this.dimension = new DimensionTracker();
+
+		// selection layer
 		this.selectionLayer = new CanvasLayerModel();
 		this.selectionLayer.svg = false;
 		this.selectionLayer.transform = false;
+
+		// debug layer
+		this.debugLayer = new CanvasLayerModel();
+		this.debugLayer.svg = true;
+		this.debugLayer.transform = true;
+
 		this.ref = (React as any).createRef();
 
 		this.onKeyDownHandle = () => {};
@@ -90,6 +101,8 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 	}
 
 	computeSelectionLayer() {
+		// selection
+		this.selectionLayer.clearEntities();
 		let model = this.props.engine.getModel();
 		let selected = _.filter(model.getElements(), element => {
 			return element.selected;
@@ -97,9 +110,15 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		if (selected.length > 0) {
 			let model = new SelectionElementModel();
 			model.setModels(selected);
-			this.selectionLayer.clearEntities();
 			this.selectionLayer.addElement(model);
 		}
+
+		// debug
+		this.debugLayer.clearEntities();
+		let models = CircleElementModel.createPointCloudFrom(this.getViewPort());
+		_.forEach(models, model => {
+			this.debugLayer.addElement(model);
+		});
 	}
 
 	componentDidMount() {
@@ -163,6 +182,7 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 					onMouseMove={this.onMouseMoveHandle}
 					onMouseUp={this.onMouseUpHandle}
 				>
+					<CanvasLayerWidget key={"debug"} engine={this.props.engine} layer={this.debugLayer} />
 					{_.map(this.props.engine.getModel().layers.getEntities(), layer => {
 						return <CanvasLayerWidget key={layer.getID()} engine={this.props.engine} layer={layer} />;
 					})}

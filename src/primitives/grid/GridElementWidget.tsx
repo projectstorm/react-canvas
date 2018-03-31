@@ -16,19 +16,19 @@ export class GridElementWidget extends React.Component<GridElementWidgetProps, G
 	}
 
 	render() {
-		let totalChildrenX = 10;
-		let totalChildrenY = 10;
-
 		let childrenX = [];
+		let offsetX =
+			this.props.engine.getModel().offsetX %
+			(this.props.model.sizeX * this.props.engine.getModel().getZoomLevel());
+		let spacingX = this.props.model.sizeX * this.props.engine.getModel().getZoomLevel();
+		let totalChildrenX = this.props.engine.getCanvasWidget().dimension.realDimensions.getWidth() / spacingX;
 		for (let i = 0; i < totalChildrenX; i++) {
-			let x =
-				this.props.engine.getModel().offsetX +
-				i * this.props.model.sizeX * this.props.engine.getModel().getZoomLevel();
+			let x = offsetX + spacingX * i;
 			childrenX.push(
 				<line
 					key={"x-" + i}
-					stroke={"rgba(0,0,0,0.1)"}
-					strokeWidth={1}
+					stroke={this.props.model.color}
+					strokeWidth={this.props.model.thickness}
 					y1={0}
 					y2={this.props.engine.getCanvasWidget().dimension.realDimensions.getHeight()}
 					x1={x}
@@ -38,15 +38,18 @@ export class GridElementWidget extends React.Component<GridElementWidgetProps, G
 		}
 
 		let childrenY = [];
+		let offsetY =
+			this.props.engine.getModel().offsetY %
+			(this.props.model.sizeY * this.props.engine.getModel().getZoomLevel());
+		let spacingY = this.props.model.sizeY * this.props.engine.getModel().getZoomLevel();
+		let totalChildrenY = this.props.engine.getCanvasWidget().dimension.realDimensions.getHeight() / spacingY;
 		for (let i = 0; i < totalChildrenY; i++) {
-			let y =
-				this.props.engine.getModel().offsetY +
-				i * this.props.model.sizeX * this.props.engine.getModel().getZoomLevel();
+			let y = offsetY + spacingY * i;
 			childrenY.push(
 				<line
 					key={"y-" + i}
-					stroke={"rgba(0,0,0,0.1)"}
-					strokeWidth={1}
+					stroke={this.props.model.color}
+					strokeWidth={this.props.model.thickness}
 					x1={0}
 					x2={this.props.engine.getCanvasWidget().dimension.realDimensions.getWidth()}
 					y1={y}

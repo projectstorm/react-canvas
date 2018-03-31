@@ -16,7 +16,7 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 
 	let model = new CanvasModel();
 	model.setOffset(100, 100);
-	model.setZoomLevel(0.5);
+	model.setZoomLevel(1);
 	engine.setModel(model);
 
 	// grid layer
@@ -28,6 +28,13 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	// add the grid
 	let gridModel = new GridElementModel();
 	layer2.addElement(gridModel);
+
+	let gridModel2 = new GridElementModel();
+	gridModel2.sizeX = 200;
+	gridModel2.sizeY = 200;
+	gridModel2.color = "cyan";
+	gridModel2.thickness = 2;
+	layer2.addElement(gridModel2);
 
 	// add layer
 	let layer = new CanvasLayerModel();
