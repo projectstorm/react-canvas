@@ -105,6 +105,7 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 	componentDidMount() {
 		this.computeSelectionLayer();
 		document.addEventListener("mousemove", this.onMouseMoveHandle);
+		this.forceUpdate();
 	}
 
 	componentWillUnmount() {
@@ -115,12 +116,27 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		this.computeSelectionLayer();
 	}
 
+	getViewPort(): Rectangle {
+		let model = this.props.engine.getModel();
+		return new Rectangle(
+			-model.getOffsetX() / model.getZoomLevel(),
+			-model.getOffsetY() / model.getZoomLevel(),
+			this.dimension.realDimensions.getWidth() / model.getZoomLevel(),
+			this.dimension.realDimensions.getHeight() / model.getZoomLevel()
+		);
+	}
+
 	zoomToFit(margin: number = 0) {
 		let model = this.props.engine.getModel();
 		let bounds = Rectangle.boundingBoxFromPolygons(
-			_.map(model.getElements(), element => {
-				return element.getDimensions();
-			})
+			_.filter(
+				_.map(model.getElements(), element => {
+					return element.getDimensions();
+				}),
+				el => {
+					return !!el;
+				}
+			)
 		);
 
 		let zoomFactor = Math.min(

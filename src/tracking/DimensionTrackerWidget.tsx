@@ -14,10 +14,6 @@ export interface DimensionTrackerWidgetState {}
 export class DimensionTrackerWidget extends BaseWidget<DimensionTrackerWidgetProps, DimensionTrackerWidgetState> {
 	observer: any;
 
-	public static defaultProps = {
-		element: "div"
-	};
-
 	constructor(props: DimensionTrackerWidgetProps) {
 		super("src-dimension-tracker", props);
 		this.state = {};

@@ -8,6 +8,7 @@ import { StateMachine } from "./state-machine/StateMachine";
 import { TranslateCanvasState } from "./states/TranslateCanvasState";
 import { ZoomCanvasState } from "./states/ZoomCanvasState";
 import * as _ from "lodash";
+import { GridElementFactory } from "./primitives/grid/GridElementFactory";
 
 export class CanvasEngineError extends Error {}
 
@@ -45,8 +46,12 @@ export class CanvasEngine {
 	}
 
 	installDefaults() {
+		// element factories
 		this.registerElementFactory(new SquareElementFactory());
 		this.registerElementFactory(new SelectionElementFactory());
+		this.registerElementFactory(new GridElementFactory());
+
+		// possible states
 		this.stateMachine.addState(new TranslateCanvasState(this));
 		this.stateMachine.addState(new ZoomCanvasState(this));
 	}

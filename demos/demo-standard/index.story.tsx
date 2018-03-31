@@ -7,6 +7,7 @@ import { SquareElementModel } from "../../src/primitives/square/SquareElementMod
 
 import { storiesOf } from "@storybook/react";
 import { button } from "@storybook/addon-knobs";
+import { GridElementModel } from "../../src/primitives/grid/GridElementModel";
 
 storiesOf("Simple Usage", module).add("Full example", () => {
 	//setup canvas engine
@@ -14,8 +15,19 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	engine.installDefaults();
 
 	let model = new CanvasModel();
-	model.setOffset(300, 300);
+	model.setOffset(100, 100);
+	model.setZoomLevel(0.5);
 	engine.setModel(model);
+
+	// grid layer
+	let layer2 = new CanvasLayerModel();
+	layer2.svg = true;
+	layer2.transform = false;
+	model.addLayer(layer2);
+
+	// add the grid
+	let gridModel = new GridElementModel();
+	layer2.addElement(gridModel);
 
 	// add layer
 	let layer = new CanvasLayerModel();
@@ -23,6 +35,7 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	layer.transform = true;
 	model.addLayer(layer);
 
+	// squares
 	let squareModel = new SquareElementModel();
 	squareModel.dimensions.updateDimensions(-100, -100, 100, 100);
 	squareModel.selected = true;
