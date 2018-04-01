@@ -4,5 +4,13 @@
 	width: 100%;
 	transform-origin: 0 0;
 	overflow: visible !important;
+	pointer-events: none;
+
+	rect{
+		pointer-events: all;
+	}
+	ellipse{
+		pointer-events: all;
+	}
 	//transition: transform 0.3s;
 }

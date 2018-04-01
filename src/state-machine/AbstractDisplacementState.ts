@@ -7,6 +7,12 @@ export abstract class AbstractDisplacementState extends AbstractState {
 	initialMouse: MouseInput;
 	engine: CanvasEngine;
 
+	constructor(name: string) {
+		super(name);
+		this.whitelist(MouseInputType.DOWN);
+		this.whitelist(MouseInputType.MOVE);
+	}
+
 	abstract processDisplacement(displacementX, displacementY);
 
 	activated(machine: StateMachine) {

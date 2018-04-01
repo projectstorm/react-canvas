@@ -1,19 +1,15 @@
 export class StateMachineInput {
 	name: string;
-	ejected: boolean;
-	locked: boolean;
+	claimed: boolean;
+	fallthrough: boolean;
 
 	constructor(name: string) {
 		this.name = name;
-		this.ejected = false;
-		this.locked = false;
+		this.claimed = false;
+		this.fallthrough = true;
 	}
 
-	lock() {
-		this.locked = true;
-	}
-
-	eject() {
-		this.ejected = true;
+	claim() {
+		this.claimed = true;
 	}
 }

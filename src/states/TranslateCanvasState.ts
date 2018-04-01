@@ -1,6 +1,5 @@
 import { StateMachine } from "../state-machine/StateMachine";
 import { CanvasEngine } from "../CanvasEngine";
-import { MouseInputType } from "../state-machine/inputs/MouseInput";
 import { AbstractDisplacementState } from "../state-machine/AbstractDisplacementState";
 
 export class TranslateCanvasState extends AbstractDisplacementState {
@@ -9,7 +8,7 @@ export class TranslateCanvasState extends AbstractDisplacementState {
 	engine: CanvasEngine;
 
 	constructor(engine: CanvasEngine) {
-		super("translate-canvas", [MouseInputType.MOVE, MouseInputType.DOWN]);
+		super("translate-canvas");
 		this.engine = engine;
 	}
 

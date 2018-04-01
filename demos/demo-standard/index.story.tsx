@@ -45,17 +45,14 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	// squares
 	let squareModel = new SquareElementModel();
 	squareModel.dimensions.updateDimensions(-100, -100, 100, 100);
-	squareModel.selected = true;
 	layer.addElement(squareModel);
 
 	let squareModel2 = new SquareElementModel();
 	squareModel2.dimensions.updateDimensions(300, 300, 50, 70);
-	squareModel2.selected = true;
 	layer.addElement(squareModel2);
 
 	let squareModel3 = new SquareElementModel();
 	squareModel3.dimensions.updateDimensions(420, 420, 50, 70);
-	squareModel3.selected = true;
 	layer.addElement(squareModel3);
 
 	button("Fit Width", () => {

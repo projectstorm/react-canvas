@@ -7,7 +7,8 @@ export class ZoomCanvasState extends AbstractState {
 	engine: CanvasEngine;
 
 	constructor(engine: CanvasEngine) {
-		super("zooming-canvas", [MouseWheelInput.NAME]);
+		super("zooming-canvas");
+		this.whitelist(MouseWheelInput.NAME);
 		this.engine = engine;
 	}
 
@@ -18,8 +19,8 @@ export class ZoomCanvasState extends AbstractState {
 		const canvas = this.engine.getCanvasWidget();
 
 		let newZoomFactor = model.getZoomLevel() + zoom.amount / 100.0;
-		if (newZoomFactor <= 0.05) {
-			zoom.eject();
+		if (newZoomFactor <= 0.1) {
+			machine.removeInput(MouseWheelInput.NAME);
 			return;
 		}
 
@@ -44,7 +45,7 @@ export class ZoomCanvasState extends AbstractState {
 		model.setZoomLevel(newZoomFactor);
 		model.setOffset(model.getOffsetX() - widthDiff * xFactor, model.getOffsetY() - heightDiff * yFactor);
 
-		zoom.eject();
+		machine.removeInput(MouseWheelInput.NAME);
 	}
 
 	deactivate(machine: StateMachine) {

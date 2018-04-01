@@ -1,6 +1,4 @@
-import { AbstractState } from "../state-machine/AbstractState";
 import { StateMachine } from "../state-machine/StateMachine";
-import { MouseInput, MouseInputType } from "../state-machine/inputs/MouseInput";
 import { ModelAnchorInput, ModelAnchorInputPosition } from "../state-machine/inputs/ModelAnchorInput";
 import * as _ from "lodash";
 import { CanvasEngine } from "../CanvasEngine";
@@ -16,7 +14,8 @@ export class ResizeDimensionsState extends AbstractDisplacementState {
 	engine: CanvasEngine;
 
 	constructor(engine: CanvasEngine) {
-		super("resize-dimension", [MouseInputType.DOWN, MouseInputType.MOVE, ModelAnchorInput.NAME]);
+		super("resize-dimension");
+		this.whitelist(ModelAnchorInput.NAME);
 		this.engine = engine;
 	}
 
@@ -30,14 +29,9 @@ export class ResizeDimensionsState extends AbstractDisplacementState {
 		this.initialDimensions = _.map(this.anchorInput.selectionModel.getModels(), model => {
 			return model.getDimensions();
 		});
-
-		// lock the anchor until we are done
-		machine.getInput(ModelAnchorInput.NAME).lock();
 	}
 
-	deactivate(machine: StateMachine) {
-		machine.getInput(ModelAnchorInput.NAME).eject();
-	}
+	deactivate(machine: StateMachine) {}
 
 	processDisplacement(displacementX, displacementY) {
 		const zoom = this.engine.getModel().getZoomLevel();

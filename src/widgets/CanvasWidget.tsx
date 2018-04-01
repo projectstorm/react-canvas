@@ -11,6 +11,7 @@ import { MouseWheelInput } from "../state-machine/inputs/MouseWheelInput";
 import { MouseInput, MouseInputType } from "../state-machine/inputs/MouseInput";
 import { Rectangle } from "../geometry/Rectangle";
 import { CircleElementModel } from "../primitives/circle/CircleElementModel";
+import { KeyInput } from "../state-machine/inputs/KeyInput";
 
 export interface CanvasWidgetProps extends BaseWidgetProps {
 	engine: CanvasEngine;
@@ -51,9 +52,13 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 
 		this.ref = (React as any).createRef();
 
-		this.onKeyDownHandle = () => {};
+		this.onKeyDownHandle = (event: any) => {
+			this.props.engine.getStateMachine().addInput(new KeyInput(event.key));
+		};
 
-		this.onKeyUpHandle = () => {};
+		this.onKeyUpHandle = (event: any) => {
+			this.props.engine.getStateMachine().removeInput(KeyInput.identifier(event.key));
+		};
 
 		this.onMouseMoveHandle = event => {
 			this.props.engine
@@ -75,7 +80,7 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 			let directive = this.props.engine
 				.getStateMachine()
 				.addInput(new MouseWheelInput(CanvasWidget.normalizeScrollWheel(event), event.clientX, event.clientY));
-			if (directive.ejected) {
+			if (directive.claimed) {
 				event.stopPropagation();
 				event.preventDefault();
 			}
@@ -124,11 +129,13 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 	componentDidMount() {
 		this.computeSelectionLayer();
 		document.addEventListener("mousemove", this.onMouseMoveHandle);
+		document.addEventListener("keydown", this.onKeyDownHandle);
 		this.forceUpdate();
 	}
 
 	componentWillUnmount() {
 		document.removeEventListener("mousemove", this.onMouseMoveHandle);
+		document.removeEventListener("keyup", this.onKeyUpHandle);
 	}
 
 	componentWillUpdate() {

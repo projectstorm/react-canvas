@@ -22,5 +22,6 @@ export class ModelAnchorInput extends StateMachineInput {
 		super(ModelAnchorInput.NAME);
 		this.selectionModel = model;
 		this.anchor = anchor;
+		this.fallthrough = false;
 	}
 }

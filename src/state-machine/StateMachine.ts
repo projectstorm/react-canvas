@@ -22,12 +22,14 @@ export class StateMachine {
 			return;
 		}
 
-		//cant delete locked inputs
-		if (this.inputs[type].locked) {
-			return;
-		}
-
 		delete this.inputs[type];
+		this.process();
+	}
+
+	addInputs(inputs: StateMachineInput[]) {
+		_.forEach(inputs, input => {
+			this.inputs[input.name] = input;
+		});
 		this.process();
 	}
 
@@ -44,6 +46,8 @@ export class StateMachine {
 	clearState() {
 		if (this.state) {
 			this.state.deactivate(this);
+		} else {
+			return;
 		}
 		this.state = null;
 	}
@@ -73,13 +77,14 @@ export class StateMachine {
 				return true;
 			}
 		});
+
+		let reProcess = false;
 		if (!foundState) {
 			this.clearState();
 		}
 
-		let reProcess = false;
 		_.forEach(this.inputs, input => {
-			if (input.ejected) {
+			if (input.fallthrough && !input.claimed) {
 				reProcess = true;
 				delete this.inputs[input.name];
 			}

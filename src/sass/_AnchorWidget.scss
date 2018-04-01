@@ -1,16 +1,17 @@
-.src-anchor{
-  background: lightgray;
-  border: solid 1px black;
-  position: absolute;
-  min-width: 8px;
-  min-height: 8px;
-  box-sizing: border-box;
-  cursor: move;
+.src-anchor {
+	background: lightgray;
+	border: solid 1px black;
+	position: absolute;
+	min-width: 8px;
+	min-height: 8px;
+	box-sizing: border-box;
+	cursor: move;
+	pointer-events: all;
 
-  &:hover{
-    border: 1px blue solid;
-    background: cyan;
-    min-width: 12px;
-    min-height: 12px;
-  }
+	&:hover {
+		border: 1px blue solid;
+		background: cyan;
+		min-width: 12px;
+		min-height: 12px;
+	}
 }

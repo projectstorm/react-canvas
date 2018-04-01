@@ -14,5 +14,8 @@ export class MouseInput extends StateMachineInput {
 		super(type);
 		this.mouseX = mouseX;
 		this.mouseY = mouseY;
+		if (type === MouseInputType.DOWN) {
+			this.fallthrough = false;
+		}
 	}
 }
