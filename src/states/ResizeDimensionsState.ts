@@ -4,8 +4,8 @@ import * as _ from "lodash";
 import { CanvasEngine } from "../CanvasEngine";
 import { Rectangle } from "../geometry/Rectangle";
 import { Point } from "../geometry/Point";
-import Matrix = mathjs.Matrix;
 import { AbstractDisplacementState } from "../state-machine/AbstractDisplacementState";
+import {Matrix} from "mathjs";
 
 export class ResizeDimensionsState extends AbstractDisplacementState {
 	anchorInput: ModelAnchorInput;

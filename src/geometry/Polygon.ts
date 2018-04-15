@@ -2,7 +2,7 @@ import { Point } from "./Point";
 import { Rectangle } from "./Rectangle";
 import * as _ from "lodash";
 import { CanvasModel } from "../models-canvas/CanvasModel";
-import Matrix = mathjs.Matrix;
+import {Matrix} from "mathjs";
 
 export class Polygon {
 	points: Point[];

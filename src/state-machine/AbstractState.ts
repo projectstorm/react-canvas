@@ -3,12 +3,14 @@ import { StateMachine } from "./StateMachine";
 
 export abstract class AbstractState {
 	name: string;
+	requiredPreviousState: string;
 
 	_whitelist: string[];
 	_blacklist: string[];
 
 	constructor(name: string) {
 		this.name = name;
+		this.requiredPreviousState = null;
 		this._whitelist = [];
 		this._blacklist = [];
 	}
@@ -17,17 +19,22 @@ export abstract class AbstractState {
 		this._whitelist.push(input);
 	}
 
-	blacklist(input: string) {
-		this._blacklist.push(input);
-	}
-
 	shouldStateActivate(machine: StateMachine): boolean {
-		let keys = _.keys(machine.inputs);
+		// a previous state is required
+		if(this.requiredPreviousState){
 
-		if (_.intersection(keys, this._blacklist).length > 0) {
-			return false;
+			// a previous state was required but there was none
+			if(!machine.state){
+				return false;
+			}
+
+			if(machine.state.name !== this.requiredPreviousState){
+				return false;
+			}
 		}
 
+		// now only allow it if all the inputs are matched
+		let keys = _.keys(machine.inputs);
 		if (_.intersection(keys, this._whitelist).length === this._whitelist.length) {
 			_.forEach(this._whitelist, input => {
 				machine.getInput(input).claim();
