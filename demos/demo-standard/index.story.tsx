@@ -61,12 +61,10 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	});
 
 	button("Undo", () => {
-		console.log("undo");
 		engine.getHistoryBank().goBackward();
 	});
 
 	button("Redo", () => {
-		console.log("redo");
 		engine.getHistoryBank().goForward();
 	});
 

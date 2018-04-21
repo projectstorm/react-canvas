@@ -56,7 +56,9 @@ export class GraphModel<
 	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: {[id: string]: BaseModel}): void {
 		super.deSerialize(data, engine, cache);
 		this.entities = _.mapValues(data['entities'],(entity: any) => {
-			return engine.generateEntityFor(entity._type).deSerialize(entity, engine, cache);
+			let entityOb = engine.generateEntityFor(entity._type);
+			entityOb.deSerialize(entity, engine, cache);
+			return entityOb;
 		}) as any;
 	}
 
