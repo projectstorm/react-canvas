@@ -1,7 +1,7 @@
 import { CanvasElementModel } from "../../models-canvas/CanvasElementModel";
 import { Rectangle } from "../../geometry/Rectangle";
-import {CanvasEngine} from "../../CanvasEngine";
-import {BaseModel} from "../../models/BaseModel";
+import { CanvasEngine } from "../../CanvasEngine";
+import { BaseModel } from "../../models/BaseModel";
 
 export class SquareElementModel extends CanvasElementModel {
 	border: number;
@@ -18,17 +18,16 @@ export class SquareElementModel extends CanvasElementModel {
 		this.selected = false;
 	}
 
-
-	serialize(){
+	serialize() {
 		return {
 			...super.serialize(),
 			dimensions: this.dimensions.serialize()
 		};
 	}
 
-	deSerialize(data: { [p: string]: any}, engine: CanvasEngine, cache: {[id: string]: BaseModel}): void {
+	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: { [id: string]: BaseModel }): void {
 		super.deSerialize(data, engine, cache);
-		this.dimensions.deserialize(data['dimensions']);
+		this.dimensions.deserialize(data["dimensions"]);
 	}
 
 	getDimensions(): Rectangle {

@@ -1,5 +1,5 @@
 import { CanvasElementModel } from "../../models-canvas/CanvasElementModel";
-import {AbstractStateMachineInput} from "./AbstractStateMachineInput";
+import { AbstractStateMachineInput } from "./AbstractStateMachineInput";
 
 export class ModelElementInput extends AbstractStateMachineInput {
 	element: CanvasElementModel;

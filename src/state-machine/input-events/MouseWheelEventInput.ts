@@ -1,4 +1,4 @@
-import {AbstractStateMachineEventInput} from "./AbstractStateMachineEventInput";
+import { AbstractStateMachineEventInput } from "./AbstractStateMachineEventInput";
 
 export class MouseWheelEventInput extends AbstractStateMachineEventInput {
 	amount: number;

@@ -2,8 +2,8 @@ import * as _ from "lodash";
 import { GraphModel } from "../models/GraphModel";
 import { CanvasElementModel } from "./CanvasElementModel";
 import { CanvasModel } from "./CanvasModel";
-import {CanvasEngine} from "../CanvasEngine";
-import {BaseModel, Serializable} from "../models/BaseModel";
+import { CanvasEngine } from "../CanvasEngine";
+import { BaseModel, Serializable } from "../models/BaseModel";
 
 export class CanvasLayerModel extends GraphModel<CanvasElementModel, CanvasModel> {
 	name: string;
@@ -19,12 +19,12 @@ export class CanvasLayerModel extends GraphModel<CanvasElementModel, CanvasModel
 		this.transform = true;
 	}
 
-	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: {[id: string]: BaseModel}): void {
+	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: { [id: string]: BaseModel }): void {
 		super.deSerialize(data, engine, cache);
-		this.name = data['name'];
-		this.svg = data['svg'];
-		this.transform = data['transform'];
-		this.elementOrder = _.map(data['elementOrder'],(elementID) => {
+		this.name = data["name"];
+		this.svg = data["svg"];
+		this.transform = data["transform"];
+		this.elementOrder = _.map(data["elementOrder"], elementID => {
 			return cache[elementID] as any;
 		});
 	}
@@ -35,7 +35,7 @@ export class CanvasLayerModel extends GraphModel<CanvasElementModel, CanvasModel
 			name: this.name,
 			svg: this.svg,
 			transform: this.transform,
-			elementOrder: _.map(this.elementOrder, 'id')
+			elementOrder: _.map(this.elementOrder, "id")
 		};
 	}
 

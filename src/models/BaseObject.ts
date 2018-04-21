@@ -13,7 +13,6 @@ export interface BaseEvent<T extends BaseObject = any> {
 export interface BaseListener<T extends BaseObject = any> {}
 
 export class BaseObject<LISTENER extends BaseListener = BaseListener> {
-
 	public listeners: { [s: string]: LISTENER };
 
 	constructor() {

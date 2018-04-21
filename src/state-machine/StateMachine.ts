@@ -1,14 +1,14 @@
-import {AbstractState} from "./AbstractState";
+import { AbstractState } from "./AbstractState";
 import * as _ from "lodash";
-import {AbstractStateMachineInput} from "./input/AbstractStateMachineInput";
-import {StateMachineReducer} from "./StateMachineReducer";
-import {BaseEvent, BaseListener, BaseObject} from "../models/BaseObject";
+import { AbstractStateMachineInput } from "./input/AbstractStateMachineInput";
+import { StateMachineReducer } from "./StateMachineReducer";
+import { BaseEvent, BaseListener, BaseObject } from "../models/BaseObject";
 
 export interface StateMachineListener extends BaseListener<StateMachine> {
-	stateChanged(event: BaseEvent<StateMachine> & {state: AbstractState});
+	stateChanged(event: BaseEvent<StateMachine> & { state: AbstractState });
 }
 
-export class StateMachine extends BaseObject<StateMachineListener>{
+export class StateMachine extends BaseObject<StateMachineListener> {
 	inputs: { [name: string]: AbstractStateMachineInput };
 	states: { [name: string]: AbstractState };
 	state: AbstractState;
@@ -39,21 +39,21 @@ export class StateMachine extends BaseObject<StateMachineListener>{
 		}
 
 		delete this.inputs[type];
-		if(fire){
+		if (fire) {
 			this.process();
 		}
 	}
 
 	addInput(input: AbstractStateMachineInput, fire: boolean = true): AbstractStateMachineInput {
 		this.inputs[input.name] = input;
-		if(fire){
+		if (fire) {
 			this.process();
 		}
 		return input;
 	}
 
 	getInput(name: string): AbstractStateMachineInput {
-		return _.find(this.inputs, {name: name});
+		return _.find(this.inputs, { name: name });
 	}
 
 	clearState() {
@@ -66,12 +66,12 @@ export class StateMachine extends BaseObject<StateMachineListener>{
 		this.fireStateChanged();
 	}
 
-	fireStateChanged(){
+	fireStateChanged() {
 		this.iterateListeners((listener, event) => {
-			if(listener.stateChanged){
-				listener.stateChanged({...event, state: this.state});
+			if (listener.stateChanged) {
+				listener.stateChanged({ ...event, state: this.state });
 			}
-		})
+		});
 	}
 
 	setState(state: AbstractState) {
@@ -115,13 +115,11 @@ export class StateMachine extends BaseObject<StateMachineListener>{
 			}
 		}
 
-
 		if (possibleStates.length === 0) {
 			this.clearState();
 		} else if (possibleStates.length > 0) {
 			this.setState(this.states[possibleStates[0]]);
 		}
-
 
 		// cleanup inputs
 		_.forEach(this.inputs, input => {

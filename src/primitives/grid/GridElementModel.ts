@@ -1,7 +1,7 @@
 import { CanvasElementModel } from "../../models-canvas/CanvasElementModel";
 import { Rectangle } from "../../geometry/Rectangle";
-import {CanvasEngine} from "../../CanvasEngine";
-import {BaseModel} from "../../models/BaseModel";
+import { CanvasEngine } from "../../CanvasEngine";
+import { BaseModel } from "../../models/BaseModel";
 
 export class GridElementModel extends CanvasElementModel {
 	sizeX: number;
@@ -25,10 +25,10 @@ export class GridElementModel extends CanvasElementModel {
 
 	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: { [p: string]: BaseModel }): void {
 		super.deSerialize(data, engine, cache);
-		this.sizeX = data['sizeX'];
-		this.sizeY = data['sizeY'];
-		this.color = data['color'];
-		this.thickness = data['thickness'];
+		this.sizeX = data["sizeX"];
+		this.sizeY = data["sizeY"];
+		this.color = data["color"];
+		this.thickness = data["thickness"];
 	}
 
 	serialize(): { selected: boolean } {

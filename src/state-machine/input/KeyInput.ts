@@ -1,4 +1,4 @@
-import {AbstractStateMachineInput} from "./AbstractStateMachineInput";
+import { AbstractStateMachineInput } from "./AbstractStateMachineInput";
 
 export enum KeyCode {
 	SHIFT = "Shift"

@@ -4,10 +4,10 @@ import { CanvasEngine } from "../../CanvasEngine";
 import { Rectangle } from "../../geometry/Rectangle";
 import { Point } from "../../geometry/Point";
 import { AbstractDisplacementState } from "../AbstractDisplacementState";
-import {Matrix} from "mathjs";
-import {ModelAnchorInput, ModelAnchorInputPosition} from "../input/ModelAnchorInput";
-import {MouseDownInput} from "../input/MouseDownInput";
-import {MouseMoveEventInput} from "../input-events/MouseMoveEventInput";
+import { Matrix } from "mathjs";
+import { ModelAnchorInput, ModelAnchorInputPosition } from "../input/ModelAnchorInput";
+import { MouseDownInput } from "../input/MouseDownInput";
+import { MouseMoveEventInput } from "../input-events/MouseMoveEventInput";
 
 export class ResizeDimensionsState extends AbstractDisplacementState {
 	anchorInput: ModelAnchorInput;

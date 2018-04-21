@@ -9,10 +9,10 @@ import { DimensionTracker } from "../tracking/DimensionTracker";
 import { SelectionElementModel } from "../primitives/selection/SelectionElementModel";
 import { Rectangle } from "../geometry/Rectangle";
 import { CircleElementModel } from "../primitives/circle/CircleElementModel";
-import {KeyInput} from "../state-machine/input/KeyInput";
-import {MouseDownInput} from "../state-machine/input/MouseDownInput";
-import {MouseMoveEventInput} from "../state-machine/input-events/MouseMoveEventInput";
-import {MouseWheelEventInput} from "../state-machine/input-events/MouseWheelEventInput";
+import { KeyInput } from "../state-machine/input/KeyInput";
+import { MouseDownInput } from "../state-machine/input/MouseDownInput";
+import { MouseMoveEventInput } from "../state-machine/input-events/MouseMoveEventInput";
+import { MouseWheelEventInput } from "../state-machine/input-events/MouseWheelEventInput";
 
 export interface CanvasWidgetProps extends BaseWidgetProps {
 	engine: CanvasEngine;
@@ -62,15 +62,11 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		};
 
 		this.onMouseMoveHandle = event => {
-			this.props.engine
-				.getStateMachine()
-				.addInput(new MouseMoveEventInput(event));
+			this.props.engine.getStateMachine().addInput(new MouseMoveEventInput(event));
 		};
 
 		this.onMouseDownHandle = event => {
-			this.props.engine
-				.getStateMachine()
-				.addInput(new MouseDownInput(event));
+			this.props.engine.getStateMachine().addInput(new MouseDownInput(event));
 		};
 
 		this.onMouseUpHandle = () => {
@@ -80,7 +76,9 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		this.onMouseWheelHandle = event => {
 			this.props.engine
 				.getStateMachine()
-				.addInput(new MouseWheelEventInput(CanvasWidget.normalizeScrollWheel(event), event.clientX, event.clientY));
+				.addInput(
+					new MouseWheelEventInput(CanvasWidget.normalizeScrollWheel(event), event.clientX, event.clientY)
+				);
 
 			event.stopPropagation();
 			event.preventDefault();
@@ -190,13 +188,14 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 					onMouseMove={this.onMouseMoveHandle}
 					onMouseUp={this.onMouseUpHandle}
 				>
-					{
-						_.map(this.props.engine.getModel().layers.getEntities(), (layer) => {
-							return React.cloneElement(this.props.engine.getFactoryForElement(layer).generateWidget(this.props.engine, layer), {
+					{_.map(this.props.engine.getModel().layers.getEntities(), layer => {
+						return React.cloneElement(
+							this.props.engine.getFactoryForElement(layer).generateWidget(this.props.engine, layer),
+							{
 								key: layer.getID()
-							});
-						})
-					}
+							}
+						);
+					})}
 					<CanvasLayerWidget key={"selection"} engine={this.props.engine} layer={this.selectionLayer} />
 				</div>
 			</DimensionTrackerWidget>

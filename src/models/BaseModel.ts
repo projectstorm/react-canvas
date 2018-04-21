@@ -1,6 +1,6 @@
-import {BaseListener, BaseObject} from "./BaseObject";
-import {Toolkit} from "../Toolkit";
-import {CanvasEngine} from "../CanvasEngine";
+import { BaseListener, BaseObject } from "./BaseObject";
+import { Toolkit } from "../Toolkit";
+import { CanvasEngine } from "../CanvasEngine";
 
 export interface Serializable {
 	_type: string;
@@ -30,13 +30,13 @@ export class BaseModel<PARENT = any, LISTENER extends BaseListener = BaseListene
 		this.listeners = {};
 	}
 
-	public deSerialize(data: { [s: string]: any }, engine: CanvasEngine, cache: {[id: string]: BaseModel}) {
+	public deSerialize(data: { [s: string]: any }, engine: CanvasEngine, cache: { [id: string]: BaseModel }) {
 		this.id = data.id;
-		if(data['parent']){
-			if(!cache[data['parent']]){
+		if (data["parent"]) {
+			if (!cache[data["parent"]]) {
 				throw "Cannot deserialize, because of missing parent";
 			}
-			this.parent = cache[data['parent']];
+			this.parent = cache[data["parent"]];
 		}
 		cache[this.id] = this;
 	}

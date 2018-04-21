@@ -1,8 +1,8 @@
 import { AbstractState } from "./AbstractState";
 import { StateMachine } from "./StateMachine";
 import { CanvasEngine } from "../CanvasEngine";
-import {MouseDownInput} from "./input/MouseDownInput";
-import {MouseMoveEventInput} from "./input-events/MouseMoveEventInput";
+import { MouseDownInput } from "./input/MouseDownInput";
+import { MouseMoveEventInput } from "./input-events/MouseMoveEventInput";
 
 export abstract class AbstractDisplacementState extends AbstractState {
 	initialMouse: MouseDownInput;

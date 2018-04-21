@@ -2,14 +2,14 @@ import { AbstractDisplacementState } from "../AbstractDisplacementState";
 import { StateMachine } from "../StateMachine";
 import { CanvasEngine } from "../../CanvasEngine";
 import { Rectangle } from "../../geometry/Rectangle";
-import {ModelElementInput} from "../input/ModelElementInput";
+import { ModelElementInput } from "../input/ModelElementInput";
 
 export class TranslateElementState extends AbstractDisplacementState {
 	engine: CanvasEngine;
 	initialPosition: Rectangle;
 	input: ModelElementInput;
 
-	static NAME = 'translate-element';
+	static NAME = "translate-element";
 
 	constructor(engine: CanvasEngine) {
 		super(TranslateElementState.NAME);

@@ -12,12 +12,12 @@ import { GridElementFactory } from "./primitives/grid/GridElementFactory";
 import { CircleElementFactory } from "./primitives/circle/CircleElementFactory";
 import { TranslateElementState } from "./state-machine/states/TranslateElementState";
 import { SelectElementState } from "./state-machine/states/SelectElementState";
-import {StateMachineReducer} from "./state-machine/StateMachineReducer";
-import {SelectCanvasState} from "./state-machine/states/SelectCanvasState";
-import {SelectElementsState} from "./state-machine/states/SelectElementsState";
-import {HistoryBank} from "./history/HistoryBank";
-import {BaseModel} from "./models/BaseModel";
-import {CanvasLayerFactory} from "./CanvasLayerFactory";
+import { StateMachineReducer } from "./state-machine/StateMachineReducer";
+import { SelectCanvasState } from "./state-machine/states/SelectCanvasState";
+import { SelectElementsState } from "./state-machine/states/SelectElementsState";
+import { HistoryBank } from "./history/HistoryBank";
+import { BaseModel } from "./models/BaseModel";
+import { CanvasLayerFactory } from "./CanvasLayerFactory";
 
 export class CanvasEngineError extends Error {}
 
@@ -36,7 +36,7 @@ export class CanvasEngine {
 		this.historyBank = new HistoryBank();
 	}
 
-	getHistoryBank(): HistoryBank{
+	getHistoryBank(): HistoryBank {
 		return this.historyBank;
 	}
 
@@ -52,26 +52,26 @@ export class CanvasEngine {
 		return this.model;
 	}
 
-	generateEntityFor(type: string): BaseModel{
+	generateEntityFor(type: string): BaseModel {
 		return this.elementFactories[type].generateModel();
 	}
 
-	deserialize(state: any){
+	deserialize(state: any) {
 		this.model.deSerialize(state, this, {});
 		this.canvasWidget.forceUpdate();
 	}
 
-	installHistoryBank(){
+	installHistoryBank() {
 		this.stateMachine.addListener({
-			stateChanged: (event) => {
+			stateChanged: event => {
 				this.historyBank.pushState(this.model.serialize());
 			}
 		});
 		this.historyBank.addListener({
-			forward: (event) => {
+			forward: event => {
 				this.deserialize(event.state);
 			},
-			backward: (event) => {
+			backward: event => {
 				this.deserialize(event.state);
 			}
 		});
@@ -102,11 +102,9 @@ export class CanvasEngine {
 		this.stateMachine.addState(new SelectCanvasState(this));
 
 		// ordered rules for selecting elements
-		this.stateMachine.addReducer(new StateMachineReducer([
-			SelectElementsState.NAME,
-			SelectElementState.NAME,
-			SelectCanvasState.NAME,
-		]));
+		this.stateMachine.addReducer(
+			new StateMachineReducer([SelectElementsState.NAME, SelectElementState.NAME, SelectCanvasState.NAME])
+		);
 	}
 
 	getCanvasWidget(): CanvasWidget {

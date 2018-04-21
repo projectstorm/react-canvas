@@ -1,10 +1,8 @@
-import {AbstractStateMachineInput} from "../input/AbstractStateMachineInput";
+import { AbstractStateMachineInput } from "../input/AbstractStateMachineInput";
 
 export class AbstractStateMachineEventInput extends AbstractStateMachineInput {
-
-	constructor(name: string){
+	constructor(name: string) {
 		super(name);
 		this.autoEject = true;
 	}
-
 }

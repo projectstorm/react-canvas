@@ -3,7 +3,7 @@ import { BaseWidget, BaseWidgetProps } from "./BaseWidget";
 import { AnchorWidget } from "./AnchorWidget";
 import { CanvasEngine } from "../CanvasEngine";
 import { SelectionElementModel } from "../primitives/selection/SelectionElementModel";
-import {ModelAnchorInputPosition} from "../state-machine/input/ModelAnchorInput";
+import { ModelAnchorInputPosition } from "../state-machine/input/ModelAnchorInput";
 
 export interface SelectionGroupWidgetProps extends BaseWidgetProps {
 	model: SelectionElementModel;

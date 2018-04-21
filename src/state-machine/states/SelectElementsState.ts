@@ -1,17 +1,16 @@
-import {AbstractState} from "../AbstractState";
-import {StateMachine} from "../StateMachine";
-import {CanvasEngine} from "../../CanvasEngine";
-import {MouseDownInput} from "../input/MouseDownInput";
-import {ModelElementInput} from "../input/ModelElementInput";
-import {KeyCode, KeyInput} from "../input/KeyInput";
+import { AbstractState } from "../AbstractState";
+import { StateMachine } from "../StateMachine";
+import { CanvasEngine } from "../../CanvasEngine";
+import { MouseDownInput } from "../input/MouseDownInput";
+import { ModelElementInput } from "../input/ModelElementInput";
+import { KeyCode, KeyInput } from "../input/KeyInput";
 
-export class SelectElementsState extends AbstractState{
-
+export class SelectElementsState extends AbstractState {
 	engine: CanvasEngine;
 
-	static NAME = 'select-elements';
+	static NAME = "select-elements";
 
-	constructor(engine: CanvasEngine){
+	constructor(engine: CanvasEngine) {
 		super(SelectElementsState.NAME);
 		this.requireInput(MouseDownInput.NAME);
 		this.requireInput(ModelElementInput.NAME);
@@ -25,10 +24,7 @@ export class SelectElementsState extends AbstractState{
 		this.engine.getCanvasWidget().forceUpdate();
 	}
 
-	deactivate(machine: StateMachine) {
-	}
+	deactivate(machine: StateMachine) {}
 
-	process(machine: StateMachine) {
-	}
-
+	process(machine: StateMachine) {}
 }

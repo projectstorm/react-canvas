@@ -3,7 +3,7 @@ import * as _ from "lodash";
 import { GraphModel } from "../models/GraphModel";
 import { CanvasElementModel } from "./CanvasElementModel";
 import { BaseModel } from "../models/BaseModel";
-import {CanvasEngine} from "../CanvasEngine";
+import { CanvasEngine } from "../CanvasEngine";
 
 export class CanvasModel extends BaseModel {
 	selectedLayer: CanvasLayerModel;
@@ -31,15 +31,15 @@ export class CanvasModel extends BaseModel {
 			offsetX: this.offsetX,
 			offsetY: this.offsetY,
 			zoom: this.zoom
-		}
+		};
 	}
 
-	deSerialize(data: { [p: string]: any, cache }, engine: CanvasEngine, cache: {[id: string]: BaseModel}): void {
+	deSerialize(data: { [p: string]: any; cache }, engine: CanvasEngine, cache: { [id: string]: BaseModel }): void {
 		super.deSerialize(data, engine, cache);
-		this.layers.deSerialize(data['layers'], engine, cache);
-		this.offsetX = data['offsetX'];
-		this.offsetY = data['offsetY'];
-		this.zoom = data['zoom'];
+		this.layers.deSerialize(data["layers"], engine, cache);
+		this.offsetX = data["offsetX"];
+		this.offsetY = data["offsetY"];
+		this.zoom = data["zoom"];
 	}
 
 	getOffsetY() {

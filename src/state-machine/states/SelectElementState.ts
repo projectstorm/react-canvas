@@ -2,8 +2,8 @@ import { AbstractState } from "../AbstractState";
 import { StateMachine } from "../StateMachine";
 import { CanvasEngine } from "../../CanvasEngine";
 import * as _ from "lodash";
-import {MouseDownInput} from "../input/MouseDownInput";
-import {ModelElementInput} from "../input/ModelElementInput";
+import { MouseDownInput } from "../input/MouseDownInput";
+import { ModelElementInput } from "../input/ModelElementInput";
 
 export class SelectElementState extends AbstractState {
 	engine: CanvasEngine;
@@ -20,7 +20,7 @@ export class SelectElementState extends AbstractState {
 	activated(machine: StateMachine) {
 		let input = machine.getInput(ModelElementInput.NAME) as ModelElementInput;
 
-		if(!input.element.selected){
+		if (!input.element.selected) {
 			_.forEach(this.engine.getModel().getSelectedEntities(), entity => {
 				entity.setSelected(false);
 			});

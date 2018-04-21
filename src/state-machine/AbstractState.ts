@@ -10,7 +10,7 @@ export abstract class AbstractState {
 		this.requiredInputs = [];
 	}
 
-	requireInput(name: string){
+	requireInput(name: string) {
 		this.requiredInputs.push(name);
 	}
 

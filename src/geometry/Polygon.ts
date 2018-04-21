@@ -2,7 +2,7 @@ import { Point } from "./Point";
 import { Rectangle } from "./Rectangle";
 import * as _ from "lodash";
 import { CanvasModel } from "../models-canvas/CanvasModel";
-import {Matrix} from "mathjs";
+import { Matrix } from "mathjs";
 
 export class Polygon {
 	points: Point[];
@@ -12,13 +12,13 @@ export class Polygon {
 	}
 
 	serialize() {
-		return _.map(this.points,(point)=> {
+		return _.map(this.points, point => {
 			return [point.x, point.y];
 		});
 	}
 
-	deserialize(data: any){
-		this.points = _.map(data, (point) => {
+	deserialize(data: any) {
+		this.points = _.map(data, point => {
 			return new Point(point[0], point[1]);
 		});
 	}

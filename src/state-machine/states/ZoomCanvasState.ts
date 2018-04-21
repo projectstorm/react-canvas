@@ -1,7 +1,7 @@
 import { CanvasEngine } from "../../CanvasEngine";
 import { AbstractState } from "../AbstractState";
 import { StateMachine } from "../StateMachine";
-import {MouseWheelEventInput} from "../input-events/MouseWheelEventInput";
+import { MouseWheelEventInput } from "../input-events/MouseWheelEventInput";
 
 export class ZoomCanvasState extends AbstractState {
 	engine: CanvasEngine;

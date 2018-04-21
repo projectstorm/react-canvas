@@ -1,7 +1,7 @@
-import {BaseModel, Serializable} from "./BaseModel";
+import { BaseModel, Serializable } from "./BaseModel";
 import * as _ from "lodash";
-import {BaseEvent, BaseListener} from "./BaseObject";
-import {CanvasEngine} from "../CanvasEngine";
+import { BaseEvent, BaseListener } from "./BaseObject";
+import { CanvasEngine } from "../CanvasEngine";
 
 export interface GraphModelListener<CHILD = BaseModel> extends BaseListener {
 	modelAdded: (event: BaseEvent & { model: CHILD }) => any;
@@ -44,25 +44,25 @@ export class GraphModel<
 		});
 	}
 
-	serialize(): Serializable{
+	serialize(): Serializable {
 		return {
 			...super.serialize(),
-			entities: _.mapValues(this.entities,(value) => {
+			entities: _.mapValues(this.entities, value => {
 				return value.serialize();
 			})
-		}
+		};
 	}
 
-	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: {[id: string]: BaseModel}): void {
+	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: { [id: string]: BaseModel }): void {
 		super.deSerialize(data, engine, cache);
-		this.entities = _.mapValues(data['entities'],(entity: any) => {
+		this.entities = _.mapValues(data["entities"], (entity: any) => {
 			let entityOb = engine.generateEntityFor(entity._type);
 			entityOb.deSerialize(entity, engine, cache);
 			return entityOb;
 		}) as any;
 	}
 
-	getEntities(): {[id: string]: CHILD} {
+	getEntities(): { [id: string]: CHILD } {
 		return this.entities;
 	}
 

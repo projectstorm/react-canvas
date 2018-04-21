@@ -2,7 +2,7 @@ import { BaseWidget, BaseWidgetProps } from "./BaseWidget";
 import * as React from "react";
 import { CanvasEngine } from "../CanvasEngine";
 import { SelectionElementModel } from "../primitives/selection/SelectionElementModel";
-import {ModelAnchorInput, ModelAnchorInputPosition} from "../state-machine/input/ModelAnchorInput";
+import { ModelAnchorInput, ModelAnchorInputPosition } from "../state-machine/input/ModelAnchorInput";
 
 export interface AnchorWidgetProps extends BaseWidgetProps {
 	engine: CanvasEngine;
