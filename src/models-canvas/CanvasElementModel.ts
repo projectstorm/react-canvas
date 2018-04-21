@@ -10,7 +10,6 @@ export interface CanvasElementModelListener extends BaseListener<CanvasElementMo
 
 export abstract class CanvasElementModel extends BaseModel<CanvasLayerModel, CanvasElementModelListener> {
 	selected: boolean;
-	type: string;
 
 	constructor(type: string) {
 		super(type);
@@ -21,14 +20,12 @@ export abstract class CanvasElementModel extends BaseModel<CanvasLayerModel, Can
 	serialize(){
 		return {
 			...super.serialize(),
-			type: this.type,
 			selected: this.selected
 		};
 	}
 
-	deSerialize(data: { [p: string]: any }, engine: CanvasEngine): void {
-		super.deSerialize(data, engine);
-		this.type = data['type'];
+	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: {[id: string]: BaseModel}): void {
+		super.deSerialize(data, engine, cache);
 		this.selected = data['selected'];
 	}
 

@@ -3,7 +3,7 @@ import { GraphModel } from "../models/GraphModel";
 import { CanvasElementModel } from "./CanvasElementModel";
 import { CanvasModel } from "./CanvasModel";
 import {CanvasEngine} from "../CanvasEngine";
-import {Serializable} from "../models/BaseModel";
+import {BaseModel, Serializable} from "../models/BaseModel";
 
 export class CanvasLayerModel extends GraphModel<CanvasElementModel, CanvasModel> {
 	name: string;
@@ -19,20 +19,23 @@ export class CanvasLayerModel extends GraphModel<CanvasElementModel, CanvasModel
 		this.transform = true;
 	}
 
-	deSerialize(data: { [p: string]: any }, engine: CanvasEngine): void {
-		super.deSerialize(data, engine);
+	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: {[id: string]: BaseModel}): void {
+		super.deSerialize(data, engine, cache);
 		this.name = data['name'];
 		this.svg = data['svg'];
 		this.transform = data['transform'];
+		this.elementOrder = _.map(data['elementOrder'],(elementID) => {
+			return cache[elementID] as any;
+		});
 	}
-
 
 	serialize(): Serializable & any {
 		return {
 			...super.serialize(),
 			name: this.name,
 			svg: this.svg,
-			transform: this.transform
+			transform: this.transform,
+			elementOrder: _.map(this.elementOrder, 'id')
 		};
 	}
 

@@ -16,6 +16,8 @@ import {StateMachineReducer} from "./state-machine/StateMachineReducer";
 import {SelectCanvasState} from "./state-machine/states/SelectCanvasState";
 import {SelectElementsState} from "./state-machine/states/SelectElementsState";
 import {HistoryBank} from "./history/HistoryBank";
+import {BaseModel} from "./models/BaseModel";
+import {CanvasLayerFactory} from "./CanvasLayerFactory";
 
 export class CanvasEngineError extends Error {}
 
@@ -50,12 +52,12 @@ export class CanvasEngine {
 		return this.model;
 	}
 
-	generateEntityFor(type: string){
+	generateEntityFor(type: string): BaseModel{
 		return this.elementFactories[type].generateModel();
 	}
 
 	deserialize(state: any){
-		this.model.deSerialize(state, this);
+		this.model.deSerialize(state, this, {});
 		this.canvasWidget.forceUpdate();
 	}
 
@@ -85,6 +87,7 @@ export class CanvasEngine {
 
 	installDefaults() {
 		// element factories
+		this.registerElementFactory(new CanvasLayerFactory());
 		this.registerElementFactory(new SquareElementFactory());
 		this.registerElementFactory(new SelectionElementFactory());
 		this.registerElementFactory(new GridElementFactory());
@@ -115,7 +118,7 @@ export class CanvasEngine {
 		this.historyBank.pushState(this.model.serialize());
 	}
 
-	getFactoryForElement(element: CanvasElementModel): AbstractElementFactory {
+	getFactoryForElement(element: BaseModel): AbstractElementFactory {
 		if (!this.elementFactories[element.type]) {
 			throw new CanvasEngineError("Cannot find Element factory with name: " + element.type);
 		}

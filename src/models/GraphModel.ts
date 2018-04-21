@@ -53,14 +53,14 @@ export class GraphModel<
 		}
 	}
 
-	deSerialize(data: { [p: string]: any }, engine: CanvasEngine): void {
-		super.deSerialize(data, engine);
+	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: {[id: string]: BaseModel}): void {
+		super.deSerialize(data, engine, cache);
 		this.entities = _.mapValues(data['entities'],(entity: any) => {
-			return engine.generateEntityFor(entity._type).deSerialize(entity, engine);
+			return engine.generateEntityFor(entity._type).deSerialize(entity, engine, cache);
 		}) as any;
 	}
 
-	getEntities() {
+	getEntities(): {[id: string]: CHILD} {
 		return this.entities;
 	}
 

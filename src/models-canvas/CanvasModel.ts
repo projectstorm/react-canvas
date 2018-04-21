@@ -34,9 +34,9 @@ export class CanvasModel extends BaseModel {
 		}
 	}
 
-	deSerialize(data: { [p: string]: any }, engine: CanvasEngine): void {
-		super.deSerialize(data, engine);
-		this.layers.deSerialize(data['layers'], engine);
+	deSerialize(data: { [p: string]: any, cache }, engine: CanvasEngine, cache: {[id: string]: BaseModel}): void {
+		super.deSerialize(data, engine, cache);
+		this.layers.deSerialize(data['layers'], engine, cache);
 		this.offsetX = data['offsetX'];
 		this.offsetY = data['offsetY'];
 		this.zoom = data['zoom'];

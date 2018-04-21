@@ -10,12 +10,12 @@ export interface Serializable {
 export class BaseModel<PARENT = any, LISTENER extends BaseListener = BaseListener> extends BaseObject<LISTENER> {
 	protected parent: any;
 	protected id: string;
-	protected serializeType: string;
+	public type: string;
 
 	constructor(type: string) {
 		super();
 		this.id = Toolkit.UID();
-		this.serializeType = type;
+		this.type = type;
 	}
 
 	setParent(parent: PARENT) {
@@ -30,14 +30,22 @@ export class BaseModel<PARENT = any, LISTENER extends BaseListener = BaseListene
 		this.listeners = {};
 	}
 
-	public deSerialize(data: { [s: string]: any }, engine: CanvasEngine) {
+	public deSerialize(data: { [s: string]: any }, engine: CanvasEngine, cache: {[id: string]: BaseModel}) {
 		this.id = data.id;
+		if(data['parent']){
+			if(!cache[data['parent']]){
+				throw "Cannot deserialize, because of missing parent";
+			}
+			this.parent = cache[data['parent']];
+		}
+		cache[this.id] = this;
 	}
 
 	public serialize(): Serializable & any {
 		return {
 			id: this.id,
-			_type: this.serializeType
+			parent: this.parent && this.parent.id,
+			_type: this.type
 		};
 	}
 

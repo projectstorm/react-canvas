@@ -15,6 +15,8 @@ A brand new foundation for storm-react-diagrams
 * ordered canvas elements per layer
 * grouped resizing via 8 anchor points
 * Fit to width
+* Serialization and deserialization
+* History (redo and undo)
 
 | 	|	|
 |---|---|

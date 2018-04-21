@@ -191,8 +191,10 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 					onMouseUp={this.onMouseUpHandle}
 				>
 					{
-						_.map(this.props.engine.getModel().layers.getEntities(), layer => {
-							return <CanvasLayerWidget key={layer.getID()} engine={this.props.engine} layer={layer} />;
+						_.map(this.props.engine.getModel().layers.getEntities(), (layer) => {
+							return React.cloneElement(this.props.engine.getFactoryForElement(layer).generateWidget(this.props.engine, layer), {
+								key: layer.getID()
+							});
 						})
 					}
 					<CanvasLayerWidget key={"selection"} engine={this.props.engine} layer={this.selectionLayer} />
