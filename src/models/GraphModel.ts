@@ -1,5 +1,7 @@
-import { BaseEvent, BaseListener, BaseModel } from "./BaseModel";
+import {BaseModel, Serializable} from "./BaseModel";
 import * as _ from "lodash";
+import {BaseEvent, BaseListener} from "./BaseObject";
+import {CanvasEngine} from "../CanvasEngine";
 
 export interface GraphModelListener<CHILD = BaseModel> extends BaseListener {
 	modelAdded: (event: BaseEvent & { model: CHILD }) => any;
@@ -17,8 +19,8 @@ export class GraphModel<
 > extends BaseModel<PARENT, LISTENER> {
 	protected entities: { [id: string]: CHILD };
 
-	constructor() {
-		super();
+	constructor(type: string) {
+		super(type);
 		this.entities = {};
 	}
 
@@ -40,6 +42,22 @@ export class GraphModel<
 				listener.modelRemoved({ ...event, model: entity });
 			}
 		});
+	}
+
+	serialize(): Serializable{
+		return {
+			...super.serialize(),
+			entities: _.mapValues(this.entities,(value) => {
+				return value.serialize();
+			})
+		}
+	}
+
+	deSerialize(data: { [p: string]: any }, engine: CanvasEngine): void {
+		super.deSerialize(data, engine);
+		this.entities = _.mapValues(data['entities'],(entity: any) => {
+			return engine.generateEntityFor(entity._type).deSerialize(entity, engine);
+		}) as any;
 	}
 
 	getEntities() {

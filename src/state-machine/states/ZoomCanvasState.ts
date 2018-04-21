@@ -1,26 +1,26 @@
-import { CanvasEngine } from "../CanvasEngine";
-import { AbstractState } from "../state-machine/AbstractState";
-import { MouseWheelInput } from "../state-machine/inputs/MouseWheelInput";
-import { StateMachine } from "../state-machine/StateMachine";
+import { CanvasEngine } from "../../CanvasEngine";
+import { AbstractState } from "../AbstractState";
+import { StateMachine } from "../StateMachine";
+import {MouseWheelEventInput} from "../input-events/MouseWheelEventInput";
 
 export class ZoomCanvasState extends AbstractState {
 	engine: CanvasEngine;
 
 	constructor(engine: CanvasEngine) {
 		super("zooming-canvas");
-		this.whitelist(MouseWheelInput.NAME);
+		this.requireInput(MouseWheelEventInput.NAME);
 		this.engine = engine;
 	}
 
 	activated(machine: StateMachine) {
-		let zoom = machine.getInput(MouseWheelInput.NAME) as MouseWheelInput;
+		let zoom = machine.getInput(MouseWheelEventInput.NAME) as MouseWheelEventInput;
 
 		const model = this.engine.getModel();
 		const canvas = this.engine.getCanvasWidget();
 
 		let newZoomFactor = model.getZoomLevel() + zoom.amount / 100.0;
 		if (newZoomFactor <= 0.1) {
-			machine.removeInput(MouseWheelInput.NAME);
+			machine.removeInput(MouseWheelEventInput.NAME);
 			return;
 		}
 
@@ -45,7 +45,7 @@ export class ZoomCanvasState extends AbstractState {
 		model.setZoomLevel(newZoomFactor);
 		model.setOffset(model.getOffsetX() - widthDiff * xFactor, model.getOffsetY() - heightDiff * yFactor);
 
-		machine.removeInput(MouseWheelInput.NAME);
+		machine.removeInput(MouseWheelEventInput.NAME);
 	}
 
 	deactivate(machine: StateMachine) {

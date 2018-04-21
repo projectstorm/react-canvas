@@ -10,7 +10,7 @@ export class CircleElementFactory extends AbstractElementFactory<CircleElementMo
 	}
 
 	generateModel(): CircleElementModel {
-		return undefined;
+		return new CircleElementModel();
 	}
 
 	generateWidget(engine: CanvasEngine, model: CircleElementModel): JSX.Element {

@@ -1,14 +1,20 @@
-import { StateMachine } from "../state-machine/StateMachine";
-import { CanvasEngine } from "../CanvasEngine";
-import { AbstractDisplacementState } from "../state-machine/AbstractDisplacementState";
+import { StateMachine } from "../StateMachine";
+import { CanvasEngine } from "../../CanvasEngine";
+import { AbstractDisplacementState } from "../AbstractDisplacementState";
+import {MouseDownInput} from "../input/MouseDownInput";
+import {MouseMoveEventInput} from "../input-events/MouseMoveEventInput";
 
 export class TranslateCanvasState extends AbstractDisplacementState {
 	initialOffsetX: number;
 	initialOffsetY: number;
 	engine: CanvasEngine;
 
+	static NAME = 'translate-canvas';
+
 	constructor(engine: CanvasEngine) {
-		super("translate-canvas");
+		super(TranslateCanvasState.NAME);
+		this.requireInput(MouseDownInput.NAME);
+		this.requireInput(MouseMoveEventInput.NAME);
 		this.engine = engine;
 	}
 

@@ -1,17 +1,18 @@
 import * as React from "react";
 import { CanvasEngine } from "../../CanvasEngine";
 import { GridElementModel } from "./GridElementModel";
+import {BaseWidget, BaseWidgetProps} from "../../widgets/BaseWidget";
 
-export interface GridElementWidgetProps {
+export interface GridElementWidgetProps extends BaseWidgetProps{
 	engine: CanvasEngine;
 	model: GridElementModel;
 }
 
 export interface GridElementWidgetState {}
 
-export class GridElementWidget extends React.Component<GridElementWidgetProps, GridElementWidgetState> {
+export class GridElementWidget extends BaseWidget<GridElementWidgetProps, GridElementWidgetState> {
 	constructor(props: GridElementWidgetProps) {
-		super(props);
+		super('src-grid-element',props);
 		this.state = {};
 	}
 
@@ -59,7 +60,7 @@ export class GridElementWidget extends React.Component<GridElementWidgetProps, G
 		}
 
 		return (
-			<g>
+			<g {...this.getProps()}>
 				{childrenX}
 				{childrenY}
 			</g>

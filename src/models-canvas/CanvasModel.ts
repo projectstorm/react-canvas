@@ -3,6 +3,7 @@ import * as _ from "lodash";
 import { GraphModel } from "../models/GraphModel";
 import { CanvasElementModel } from "./CanvasElementModel";
 import { BaseModel } from "../models/BaseModel";
+import {CanvasEngine} from "../CanvasEngine";
 
 export class CanvasModel extends BaseModel {
 	selectedLayer: CanvasLayerModel;
@@ -14,13 +15,31 @@ export class CanvasModel extends BaseModel {
 	zoom: number;
 
 	constructor() {
-		super();
+		super("canvas");
 		this.selectedLayer = null;
-		this.layers = new GraphModel();
+		this.layers = new GraphModel("layers");
 		this.layers.setParent(this);
 		this.offsetX = 0;
 		this.offsetY = 0;
 		this.zoom = 1;
+	}
+
+	serialize(): any {
+		return {
+			...super.serialize(),
+			layers: this.layers.serialize(),
+			offsetX: this.offsetX,
+			offsetY: this.offsetY,
+			zoom: this.zoom
+		}
+	}
+
+	deSerialize(data: { [p: string]: any }, engine: CanvasEngine): void {
+		super.deSerialize(data, engine);
+		this.layers.deSerialize(data['layers'], engine);
+		this.offsetX = data['offsetX'];
+		this.offsetY = data['offsetY'];
+		this.zoom = data['zoom'];
 	}
 
 	getOffsetY() {

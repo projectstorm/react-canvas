@@ -3,7 +3,7 @@ import { SelectionElementModel } from "./SelectionElementModel";
 import { CanvasEngine } from "../../CanvasEngine";
 import { SelectionElementWidget } from "./SelectionElementWidget";
 import * as React from "react";
-import { ResizeDimensionsState } from "../../states/ResizeDimensionsState";
+import { ResizeDimensionsState } from "../../state-machine/states/ResizeDimensionsState";
 
 export class SelectionElementFactory extends AbstractElementFactory<SelectionElementModel> {
 	constructor() {
@@ -11,7 +11,7 @@ export class SelectionElementFactory extends AbstractElementFactory<SelectionEle
 	}
 
 	generateModel(): SelectionElementModel {
-		return undefined;
+		return new SelectionElementModel();
 	}
 
 	getCanvasStates() {

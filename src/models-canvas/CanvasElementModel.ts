@@ -1,6 +1,8 @@
 import { CanvasLayerModel } from "./CanvasLayerModel";
-import { BaseEvent, BaseListener, BaseModel } from "../models/BaseModel";
+import { BaseModel } from "../models/BaseModel";
 import { Rectangle } from "../geometry/Rectangle";
+import {BaseEvent, BaseListener} from "../models/BaseObject";
+import {CanvasEngine} from "../CanvasEngine";
 
 export interface CanvasElementModelListener extends BaseListener<CanvasElementModel> {
 	selectionChanged(event: BaseEvent & { selected: boolean });
@@ -11,9 +13,23 @@ export abstract class CanvasElementModel extends BaseModel<CanvasLayerModel, Can
 	type: string;
 
 	constructor(type: string) {
-		super();
+		super(type);
 		this.type = type;
 		this.selected = false;
+	}
+
+	serialize(){
+		return {
+			...super.serialize(),
+			type: this.type,
+			selected: this.selected
+		};
+	}
+
+	deSerialize(data: { [p: string]: any }, engine: CanvasEngine): void {
+		super.deSerialize(data, engine);
+		this.type = data['type'];
+		this.selected = data['selected'];
 	}
 
 	setSelected(selected: boolean) {

@@ -1,7 +1,7 @@
-import { StateMachineInput } from "../StateMachineInput";
 import { CanvasElementModel } from "../../models-canvas/CanvasElementModel";
+import {AbstractStateMachineInput} from "./AbstractStateMachineInput";
 
-export class ModelElementInput extends StateMachineInput {
+export class ModelElementInput extends AbstractStateMachineInput {
 	element: CanvasElementModel;
 
 	static NAME = "model-element";
@@ -9,6 +9,5 @@ export class ModelElementInput extends StateMachineInput {
 	constructor(element: CanvasElementModel) {
 		super(ModelElementInput.NAME);
 		this.element = element;
-		this.fallthrough = false;
 	}
 }

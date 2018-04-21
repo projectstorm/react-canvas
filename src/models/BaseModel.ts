@@ -1,26 +1,21 @@
-import { Toolkit } from "../Toolkit";
-import * as _ from "lodash";
-import { Model } from "./Model";
+import {BaseListener, BaseObject} from "./BaseObject";
+import {Toolkit} from "../Toolkit";
+import {CanvasEngine} from "../CanvasEngine";
 
-/**
- * @author Dylan Vorster
- */
-export interface BaseEvent<T extends BaseModel = any> {
-	source: BaseModel<BaseListener>;
-	stopPropagation: () => any;
-	firing: boolean;
+export interface Serializable {
+	_type: string;
 	id: string;
 }
 
-export interface BaseListener<T extends BaseModel = any> {}
-
-export class BaseModel<PARENT = any, LISTENER extends BaseListener = BaseListener> extends Model {
-	public listeners: { [s: string]: LISTENER };
+export class BaseModel<PARENT = any, LISTENER extends BaseListener = BaseListener> extends BaseObject<LISTENER> {
 	protected parent: any;
+	protected id: string;
+	protected serializeType: string;
 
-	constructor() {
+	constructor(type: string) {
 		super();
-		this.listeners = {};
+		this.id = Toolkit.UID();
+		this.serializeType = type;
 	}
 
 	setParent(parent: PARENT) {
@@ -35,48 +30,18 @@ export class BaseModel<PARENT = any, LISTENER extends BaseListener = BaseListene
 		this.listeners = {};
 	}
 
-	public deSerialize(data: { [s: string]: any }) {
+	public deSerialize(data: { [s: string]: any }, engine: CanvasEngine) {
 		this.id = data.id;
 	}
 
-	public serialize() {
+	public serialize(): Serializable & any {
 		return {
-			id: this.id
+			id: this.id,
+			_type: this.serializeType
 		};
 	}
 
-	public iterateListeners(cb: (t: LISTENER, event: BaseEvent) => any) {
-		let event: BaseEvent = {
-			id: Toolkit.UID(),
-			firing: true,
-			source: this,
-			stopPropagation: () => {
-				event.firing = false;
-			}
-		};
-
-		for (var i in this.listeners) {
-			if (this.listeners.hasOwnProperty(i)) {
-				// propagation stopped
-				if (!event.firing) {
-					return;
-				}
-				cb(this.listeners[i], event);
-			}
-		}
-	}
-
-	public removeListener(listener: string) {
-		if (this.listeners[listener]) {
-			delete this.listeners[listener];
-			return true;
-		}
-		return false;
-	}
-
-	public addListener(listener: LISTENER): string {
-		let uid = Toolkit.UID();
-		this.listeners[uid] = listener;
-		return uid;
+	public getID() {
+		return this.id;
 	}
 }

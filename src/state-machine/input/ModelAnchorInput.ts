@@ -1,5 +1,5 @@
-import { StateMachineInput } from "../StateMachineInput";
 import { SelectionElementModel } from "../../primitives/selection/SelectionElementModel";
+import {AbstractStateMachineInput} from "./AbstractStateMachineInput";
 
 export enum ModelAnchorInputPosition {
 	TOP,
@@ -12,7 +12,7 @@ export enum ModelAnchorInputPosition {
 	BOT_RIGHT
 }
 
-export class ModelAnchorInput extends StateMachineInput {
+export class ModelAnchorInput extends AbstractStateMachineInput {
 	selectionModel: SelectionElementModel;
 	anchor: ModelAnchorInputPosition;
 
@@ -22,6 +22,5 @@ export class ModelAnchorInput extends StateMachineInput {
 		super(ModelAnchorInput.NAME);
 		this.selectionModel = model;
 		this.anchor = anchor;
-		this.fallthrough = false;
 	}
 }

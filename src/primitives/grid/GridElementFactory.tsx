@@ -10,7 +10,7 @@ export class GridElementFactory extends AbstractElementFactory<GridElementModel>
 	}
 
 	generateModel(): GridElementModel {
-		return undefined;
+		return new GridElementModel();
 	}
 
 	generateWidget(engine: CanvasEngine, model: GridElementModel): JSX.Element {

@@ -1,12 +1,12 @@
-import { BaseEvent, BaseListener, BaseModel } from "../models/BaseModel";
 import { CanvasEngine } from "../CanvasEngine";
 import { Rectangle } from "../geometry/Rectangle";
+import {BaseEvent, BaseListener, BaseObject} from "../models/BaseObject";
 
 export interface DimensionTrackerListener extends BaseListener<DimensionTracker> {
 	updated(event: BaseEvent);
 }
 
-export class DimensionTracker extends BaseModel<null, DimensionTrackerListener> {
+export class DimensionTracker extends BaseObject<DimensionTrackerListener> {
 	realDimensions: Rectangle;
 	enableTracking: boolean;
 

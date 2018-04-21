@@ -1,10 +1,10 @@
-import { StateMachineInput } from "../StateMachineInput";
+import {AbstractStateMachineInput} from "./AbstractStateMachineInput";
 
 export enum KeyCode {
 	SHIFT = "Shift"
 }
 
-export class KeyInput extends StateMachineInput {
+export class KeyInput extends AbstractStateMachineInput {
 	key: any;
 
 	static identifier(key: string) {
@@ -14,7 +14,6 @@ export class KeyInput extends StateMachineInput {
 	constructor(key: string) {
 		super(KeyInput.identifier(key));
 		this.key = key;
-		this.fallthrough = false;
 	}
 
 	isShift(): boolean {

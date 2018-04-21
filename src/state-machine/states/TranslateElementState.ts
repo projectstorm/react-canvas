@@ -1,18 +1,19 @@
-import { AbstractDisplacementState } from "../state-machine/AbstractDisplacementState";
-import { StateMachine } from "../state-machine/StateMachine";
-import { CanvasEngine } from "../CanvasEngine";
-import { Point } from "../geometry/Point";
-import { ModelElementInput } from "../state-machine/inputs/ModelElementInput";
-import { Rectangle } from "../geometry/Rectangle";
+import { AbstractDisplacementState } from "../AbstractDisplacementState";
+import { StateMachine } from "../StateMachine";
+import { CanvasEngine } from "../../CanvasEngine";
+import { Rectangle } from "../../geometry/Rectangle";
+import {ModelElementInput} from "../input/ModelElementInput";
 
 export class TranslateElementState extends AbstractDisplacementState {
 	engine: CanvasEngine;
 	initialPosition: Rectangle;
 	input: ModelElementInput;
 
+	static NAME = 'translate-element';
+
 	constructor(engine: CanvasEngine) {
-		super("translate-element");
-		this.whitelist(ModelElementInput.NAME);
+		super(TranslateElementState.NAME);
+		this.requireInput(ModelElementInput.NAME);
 		this.engine = engine;
 	}
 

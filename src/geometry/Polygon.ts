@@ -10,6 +10,19 @@ export class Polygon {
 	constructor(points: Point[] = []) {
 		this.points = points;
 	}
+
+	serialize() {
+		return _.map(this.points,(point)=> {
+			return [point.x, point.y];
+		});
+	}
+
+	deserialize(data: any){
+		this.points = _.map(data, (point) => {
+			return new Point(point[0], point[1]);
+		});
+	}
+
 	scale(x, y, origin: Point) {
 		let matrix = Point.createScaleMatrix(x, y, origin);
 		_.forEach(this.points, point => {

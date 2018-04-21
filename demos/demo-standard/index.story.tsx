@@ -13,6 +13,7 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	//setup canvas engine
 	let engine = new CanvasEngine();
 	engine.installDefaults();
+	engine.installHistoryBank();
 
 	let model = new CanvasModel();
 	model.setOffset(100, 100);
@@ -57,6 +58,14 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 
 	button("Fit Width", () => {
 		engine.getCanvasWidget().zoomToFit(15);
+	});
+
+	button("Undo", () => {
+		engine.getHistoryBank().goBackward();
+	});
+
+	button("Redo", () => {
+		engine.getHistoryBank().goForward();
 	});
 
 	return <CanvasWidget engine={engine} />;

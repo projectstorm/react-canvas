@@ -2,6 +2,8 @@ import * as _ from "lodash";
 import { GraphModel } from "../models/GraphModel";
 import { CanvasElementModel } from "./CanvasElementModel";
 import { CanvasModel } from "./CanvasModel";
+import {CanvasEngine} from "../CanvasEngine";
+import {Serializable} from "../models/BaseModel";
 
 export class CanvasLayerModel extends GraphModel<CanvasElementModel, CanvasModel> {
 	name: string;
@@ -10,11 +12,28 @@ export class CanvasLayerModel extends GraphModel<CanvasElementModel, CanvasModel
 	transform: boolean;
 
 	constructor(name: string = "Layer") {
-		super();
+		super("layer");
 		this.elementOrder = [];
 		this.name = name;
 		this.svg = false;
 		this.transform = true;
+	}
+
+	deSerialize(data: { [p: string]: any }, engine: CanvasEngine): void {
+		super.deSerialize(data, engine);
+		this.name = data['name'];
+		this.svg = data['svg'];
+		this.transform = data['transform'];
+	}
+
+
+	serialize(): Serializable & any {
+		return {
+			...super.serialize(),
+			name: this.name,
+			svg: this.svg,
+			transform: this.transform
+		};
 	}
 
 	addElement(element: CanvasElementModel) {

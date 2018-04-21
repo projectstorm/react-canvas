@@ -9,3 +9,13 @@
 | ZoomCanvas			| `MouseWheel`
 | ResizeEntities		| `MouseDown` <br> `Anchor` <br> `MouseMove`
 | ScaleOrigin			| `MouseDown` <br> `Anchor` <br> `MouseMove` <br> `ShiftKey`
+
+
+### SelectionReducer
+
+SelectEntities -> SelectEntity -> SelectCanvas;
+
+
+
+
+

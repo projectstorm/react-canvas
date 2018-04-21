@@ -1,6 +1,6 @@
-import { StateMachineInput } from "../StateMachineInput";
+import {AbstractStateMachineEventInput} from "./AbstractStateMachineEventInput";
 
-export class MouseWheelInput extends StateMachineInput {
+export class MouseWheelEventInput extends AbstractStateMachineEventInput {
 	amount: number;
 	mouseX: number;
 	mouseY: number;
@@ -8,7 +8,7 @@ export class MouseWheelInput extends StateMachineInput {
 	static NAME = "mouse-wheel";
 
 	constructor(amount: number, mouseX: number, mouseY: number) {
-		super(MouseWheelInput.NAME);
+		super(MouseWheelEventInput.NAME);
 		this.amount = amount;
 		this.mouseX = mouseX;
 		this.mouseY = mouseY;
