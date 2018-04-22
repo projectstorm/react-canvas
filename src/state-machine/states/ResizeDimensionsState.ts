@@ -6,7 +6,6 @@ import { Point } from "../../geometry/Point";
 import { AbstractDisplacementState } from "../AbstractDisplacementState";
 import { Matrix } from "mathjs";
 import { ModelAnchorInput, ModelAnchorInputPosition } from "../input/ModelAnchorInput";
-import { MouseDownInput } from "../input/MouseDownInput";
 
 export class ResizeDimensionsState extends AbstractDisplacementState {
 	anchorInput: ModelAnchorInput;
@@ -16,7 +15,6 @@ export class ResizeDimensionsState extends AbstractDisplacementState {
 	constructor(engine: CanvasEngine) {
 		super("resize-dimension", engine);
 		this.requireInput(ModelAnchorInput.NAME);
-		this.requireInput(MouseDownInput.NAME);
 		this.engine = engine;
 	}
 
