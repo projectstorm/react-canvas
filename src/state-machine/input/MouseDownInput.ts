@@ -1,4 +1,9 @@
-import { AbstractStateMachineInput } from "./AbstractStateMachineInput";
+import { AbstractStateMachineInput } from "../AbstractStateMachineInput";
+import { EventBus } from "../../event-bus/EventBus";
+import { KeyDownEvent, KeyUpEvent } from "../../event-bus/events/key";
+import { InlineAction } from "../../event-bus/InlineAction";
+import { StateMachine } from "../StateMachine";
+import { MouseDownEvent, MouseUpEvent } from "../../event-bus/events/mouse";
 
 export class MouseDownInput extends AbstractStateMachineInput {
 	mouseX: number;
@@ -6,17 +11,22 @@ export class MouseDownInput extends AbstractStateMachineInput {
 
 	static NAME = "mouse-down";
 
-	constructor(event: MouseEvent);
-	constructor(clientX: number, clientY: number);
-
-	constructor(event: MouseEvent | number, clientY?: number) {
+	constructor(event: MouseDownEvent) {
 		super(MouseDownInput.NAME);
-		if (event instanceof MouseEvent) {
-			this.mouseX = event.clientX;
-			this.mouseY = event.clientY;
-		} else {
-			this.mouseX = event;
-			this.mouseY = clientY;
-		}
+		this.mouseX = event.mouseX;
+		this.mouseY = event.mouseY;
+	}
+
+	static installActions(machine: StateMachine, eventBus: EventBus) {
+		eventBus.registerAction(
+			new InlineAction<MouseDownEvent>(MouseDownEvent.NAME, event => {
+				machine.addInput(new MouseDownInput(event));
+			})
+		);
+		eventBus.registerAction(
+			new InlineAction<MouseUpEvent>(MouseUpEvent.NAME, event => {
+				machine.removeInput(MouseDownInput.NAME);
+			})
+		);
 	}
 }

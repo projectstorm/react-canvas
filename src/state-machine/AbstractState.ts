@@ -1,21 +1,34 @@
-import * as _ from "lodash";
 import { StateMachine } from "./StateMachine";
+import { Action } from "../event-bus/Action";
+import { CanvasEngine } from "../CanvasEngine";
+import * as _ from "lodash";
 
 export abstract class AbstractState {
+	engine: CanvasEngine;
 	name: string;
 	requiredInputs: string[];
+	actions: Action[];
 
-	constructor(name: string) {
+	constructor(name: string, engine: CanvasEngine) {
+		this.engine = engine;
 		this.name = name;
 		this.requiredInputs = [];
+		this.actions = [];
 	}
 
-	requireInput(name: string) {
-		this.requiredInputs.push(name);
+	registerAction(action: Action) {
+		this.actions.push(action);
+	}
+
+	requireInput(input: string) {
+		this.requiredInputs.push(input);
+	}
+
+	getName() {
+		return this.name;
 	}
 
 	shouldStateActivate(machine: StateMachine): boolean {
-		// now only allow it if all the inputs are matched
 		let keys = _.keys(machine.inputs);
 		if (_.intersection(keys, this.requiredInputs).length === this.requiredInputs.length) {
 			return true;
@@ -24,9 +37,17 @@ export abstract class AbstractState {
 		return false;
 	}
 
-	abstract activated(machine: StateMachine);
+	activated(machine: StateMachine) {
+		console.log("activated state: " + this.name);
+		_.forEach(this.actions, action => {
+			this.engine.getEventBus().registerAction(action);
+		});
+	}
 
-	abstract process(machine: StateMachine);
-
-	abstract deactivate(machine: StateMachine);
+	deactivated(machine: StateMachine) {
+		console.log("deactivated state: " + this.name);
+		_.forEach(this.actions, action => {
+			this.engine.getEventBus().unRegisterAction(action);
+		});
+	}
 }

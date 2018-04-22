@@ -7,19 +7,16 @@ import { AbstractDisplacementState } from "../AbstractDisplacementState";
 import { Matrix } from "mathjs";
 import { ModelAnchorInput, ModelAnchorInputPosition } from "../input/ModelAnchorInput";
 import { MouseDownInput } from "../input/MouseDownInput";
-import { MouseMoveEventInput } from "../input-events/MouseMoveEventInput";
 
 export class ResizeDimensionsState extends AbstractDisplacementState {
 	anchorInput: ModelAnchorInput;
 	initialDimensions: Rectangle[];
 	initialDimension: Rectangle;
-	engine: CanvasEngine;
 
 	constructor(engine: CanvasEngine) {
-		super("resize-dimension");
+		super("resize-dimension", engine);
 		this.requireInput(ModelAnchorInput.NAME);
 		this.requireInput(MouseDownInput.NAME);
-		this.requireInput(MouseMoveEventInput.NAME);
 		this.engine = engine;
 	}
 
@@ -34,8 +31,6 @@ export class ResizeDimensionsState extends AbstractDisplacementState {
 			return model.getDimensions();
 		});
 	}
-
-	deactivate(machine: StateMachine) {}
 
 	processDisplacement(displacementX, displacementY) {
 		const zoom = this.engine.getModel().getZoomLevel();

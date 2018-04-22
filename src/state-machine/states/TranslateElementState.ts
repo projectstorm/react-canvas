@@ -3,18 +3,15 @@ import { StateMachine } from "../StateMachine";
 import { CanvasEngine } from "../../CanvasEngine";
 import { Rectangle } from "../../geometry/Rectangle";
 import { ModelElementInput } from "../input/ModelElementInput";
+import { SelectElementAction } from "../../event-bus/actions/SelectElementAction";
 
 export class TranslateElementState extends AbstractDisplacementState {
-	engine: CanvasEngine;
 	initialPosition: Rectangle;
 	input: ModelElementInput;
 
-	static NAME = "translate-element";
-
 	constructor(engine: CanvasEngine) {
-		super(TranslateElementState.NAME);
+		super("translate-element", engine);
 		this.requireInput(ModelElementInput.NAME);
-		this.engine = engine;
 	}
 
 	activated(machine: StateMachine) {
@@ -22,8 +19,6 @@ export class TranslateElementState extends AbstractDisplacementState {
 		this.input = machine.getInput(ModelElementInput.NAME) as ModelElementInput;
 		this.initialPosition = this.input.element.getDimensions().clone();
 	}
-
-	deactivate(machine: StateMachine) {}
 
 	processDisplacement(displacementX, displacementY) {
 		const dim = this.initialPosition.clone();

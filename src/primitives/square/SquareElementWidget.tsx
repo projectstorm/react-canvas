@@ -2,8 +2,7 @@ import * as React from "react";
 import { BaseWidget, BaseWidgetProps } from "../../widgets/BaseWidget";
 import { SquareElementModel } from "./SquareElementModel";
 import { CanvasEngine } from "../../CanvasEngine";
-import { ModelElementInput } from "../../state-machine/input/ModelElementInput";
-import { MouseDownInput } from "../../state-machine/input/MouseDownInput";
+import { PressElementEvent, UnPressElementEvent } from "../../event-bus/events/elements";
 
 export interface SquareElementWidgetProps extends BaseWidgetProps {
 	model: SquareElementModel;
@@ -28,16 +27,10 @@ export class SquareElementWidget extends BaseWidget<SquareElementWidgetProps, Sq
 				width={dimensions.getWidth()}
 				height={dimensions.getHeight()}
 				onMouseDown={event => {
-					event.stopPropagation();
-					this.props.engine
-						.getStateMachine()
-						.addInput(new MouseDownInput(event.clientX, event.clientY), false);
-					this.props.engine.getStateMachine().addInput(new ModelElementInput(this.props.model));
+					this.props.engine.getEventBus().fireEvent(new PressElementEvent(this, this.props.model));
 				}}
 				onMouseUp={event => {
-					event.stopPropagation();
-					this.props.engine.getStateMachine().removeInput(MouseDownInput.NAME, false);
-					this.props.engine.getStateMachine().removeInput(ModelElementInput.NAME);
+					this.props.engine.getEventBus().fireEvent(new UnPressElementEvent(this, this.props.model));
 				}}
 			/>
 		);

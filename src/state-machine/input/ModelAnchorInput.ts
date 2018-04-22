@@ -1,5 +1,5 @@
 import { SelectionElementModel } from "../../primitives/selection/SelectionElementModel";
-import { AbstractStateMachineInput } from "./AbstractStateMachineInput";
+import { AbstractStateMachineInput } from "../AbstractStateMachineInput";
 
 export enum ModelAnchorInputPosition {
 	TOP,

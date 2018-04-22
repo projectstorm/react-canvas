@@ -1,23 +1,26 @@
 import { AbstractElementFactory } from "./AbstractElementFactory";
 import { SquareElementFactory } from "./primitives/square/SquareElementFactory";
-import { CanvasElementModel } from "./models-canvas/CanvasElementModel";
 import { CanvasModel } from "./models-canvas/CanvasModel";
 import { CanvasWidget } from "./widgets/CanvasWidget";
 import { SelectionElementFactory } from "./primitives/selection/SelectionElementFactory";
 import { StateMachine } from "./state-machine/StateMachine";
 import { TranslateCanvasState } from "./state-machine/states/TranslateCanvasState";
-import { ZoomCanvasState } from "./state-machine/states/ZoomCanvasState";
 import * as _ from "lodash";
 import { GridElementFactory } from "./primitives/grid/GridElementFactory";
 import { CircleElementFactory } from "./primitives/circle/CircleElementFactory";
 import { TranslateElementState } from "./state-machine/states/TranslateElementState";
-import { SelectElementState } from "./state-machine/states/SelectElementState";
-import { StateMachineReducer } from "./state-machine/StateMachineReducer";
-import { SelectCanvasState } from "./state-machine/states/SelectCanvasState";
 import { SelectElementsState } from "./state-machine/states/SelectElementsState";
 import { HistoryBank } from "./history/HistoryBank";
 import { BaseModel } from "./models/BaseModel";
 import { CanvasLayerFactory } from "./CanvasLayerFactory";
+import { EventBus } from "./event-bus/EventBus";
+import { ZoomCanvasAction } from "./event-bus/actions/ZoomCanvasAction";
+import { MouseDownInput } from "./state-machine/input/MouseDownInput";
+import { KeyInput } from "./state-machine/input/KeyInput";
+import { SelectCanvasAction } from "./event-bus/actions/SelectCanvasAction";
+import { SelectElementAction } from "./event-bus/actions/SelectElementAction";
+import { ModelElementInput } from "./state-machine/input/ModelElementInput";
+import { DefaultState } from "./state-machine/states/DefaultState";
 
 export class CanvasEngineError extends Error {}
 
@@ -27,6 +30,7 @@ export class CanvasEngine {
 	protected stateMachine: StateMachine;
 	protected canvasWidget;
 	protected historyBank: HistoryBank;
+	protected eventBus: EventBus;
 
 	constructor() {
 		this.elementFactories = {};
@@ -34,6 +38,11 @@ export class CanvasEngine {
 		this.canvasWidget = null;
 		this.stateMachine = new StateMachine();
 		this.historyBank = new HistoryBank();
+		this.eventBus = new EventBus();
+	}
+
+	getEventBus(): EventBus {
+		return this.eventBus;
 	}
 
 	getHistoryBank(): HistoryBank {
@@ -93,18 +102,19 @@ export class CanvasEngine {
 		this.registerElementFactory(new GridElementFactory());
 		this.registerElementFactory(new CircleElementFactory());
 
-		// possible states
-		this.stateMachine.addState(new TranslateElementState(this));
-		this.stateMachine.addState(new SelectElementState(this));
-		this.stateMachine.addState(new SelectElementsState(this));
-		this.stateMachine.addState(new TranslateCanvasState(this));
-		this.stateMachine.addState(new ZoomCanvasState(this));
-		this.stateMachine.addState(new SelectCanvasState(this));
+		// install actions
+		KeyInput.installActions(this.stateMachine, this.eventBus);
+		MouseDownInput.installActions(this.stateMachine, this.eventBus);
+		ModelElementInput.installActions(this.stateMachine, this.eventBus);
+		this.eventBus.registerAction(new ZoomCanvasAction(this));
 
-		// ordered rules for selecting elements
-		this.stateMachine.addReducer(
-			new StateMachineReducer([SelectElementsState.NAME, SelectElementState.NAME, SelectCanvasState.NAME])
-		);
+		// possible states
+		this.stateMachine.addState(new SelectElementsState(this));
+		this.stateMachine.addState(new TranslateElementState(this));
+		this.stateMachine.addState(new TranslateCanvasState(this));
+		this.stateMachine.addState(new DefaultState(this));
+
+		this.stateMachine.process();
 	}
 
 	getCanvasWidget(): CanvasWidget {

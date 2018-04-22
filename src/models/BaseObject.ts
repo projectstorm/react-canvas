@@ -38,6 +38,7 @@ export class BaseObject<LISTENER extends BaseListener = BaseListener> {
 				cb(this.listeners[i], event);
 			}
 		}
+		return event;
 	}
 
 	public removeListener(listener: string) {

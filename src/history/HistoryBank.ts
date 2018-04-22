@@ -1,4 +1,5 @@
 import { BaseEvent, BaseListener, BaseObject } from "../models/BaseObject";
+import * as _ from "lodash";
 
 export interface HistoryBankListener extends BaseListener<HistoryBank> {
 	forward?(event: BaseEvent<HistoryBank> & { state: any });
@@ -17,14 +18,14 @@ export class HistoryBank extends BaseObject<HistoryBankListener> {
 	}
 
 	pushState(state: any) {
-		if (this.pointer === this.history.length - 1) {
-			this.pointer++;
-			this.history.push(state);
-		} else {
-			this.pointer++;
-			this.history.splice(this.pointer);
-			this.history.push(state);
+		// state is equal, ignore pushing it
+		if (_.isEqual(this.history[this.pointer], state)) {
+			return;
 		}
+
+		this.pointer++;
+		this.history.splice(this.pointer);
+		this.history.push(state);
 	}
 
 	goForward() {

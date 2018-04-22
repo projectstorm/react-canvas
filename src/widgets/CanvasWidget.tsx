@@ -9,10 +9,8 @@ import { DimensionTracker } from "../tracking/DimensionTracker";
 import { SelectionElementModel } from "../primitives/selection/SelectionElementModel";
 import { Rectangle } from "../geometry/Rectangle";
 import { CircleElementModel } from "../primitives/circle/CircleElementModel";
-import { KeyInput } from "../state-machine/input/KeyInput";
-import { MouseDownInput } from "../state-machine/input/MouseDownInput";
-import { MouseMoveEventInput } from "../state-machine/input-events/MouseMoveEventInput";
-import { MouseWheelEventInput } from "../state-machine/input-events/MouseWheelEventInput";
+import { KeyDownEvent, KeyUpEvent } from "../event-bus/events/key";
+import { MouseDownEvent, MouseMoveEvent, MouseUpEvent, MouseWheelEvent } from "../event-bus/events/mouse";
 
 export interface CanvasWidgetProps extends BaseWidgetProps {
 	engine: CanvasEngine;
@@ -54,32 +52,31 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		this.ref = (React as any).createRef();
 
 		this.onKeyDownHandle = (event: any) => {
-			this.props.engine.getStateMachine().addInput(new KeyInput(event.key));
+			this.props.engine.getEventBus().fireEvent(new KeyDownEvent(this, event.key));
 		};
 
 		this.onKeyUpHandle = (event: any) => {
-			this.props.engine.getStateMachine().removeInput(KeyInput.identifier(event.key));
+			this.props.engine.getEventBus().fireEvent(new KeyUpEvent(this, event.key));
 		};
 
-		this.onMouseMoveHandle = event => {
-			this.props.engine.getStateMachine().addInput(new MouseMoveEventInput(event));
+		this.onMouseMoveHandle = (event: MouseEvent) => {
+			this.props.engine.getEventBus().fireEvent(new MouseMoveEvent(this, event.clientX, event.clientY));
 		};
 
-		this.onMouseDownHandle = event => {
-			this.props.engine.getStateMachine().addInput(new MouseDownInput(event));
+		this.onMouseDownHandle = (event: MouseEvent) => {
+			this.props.engine.getEventBus().fireEvent(new MouseDownEvent(this, event.clientX, event.clientY));
 		};
 
-		this.onMouseUpHandle = () => {
-			this.props.engine.getStateMachine().removeInput(MouseDownInput.NAME);
+		this.onMouseUpHandle = (event: MouseEvent) => {
+			this.props.engine.getEventBus().fireEvent(new MouseUpEvent(this, event.clientX, event.clientY));
 		};
 
 		this.onMouseWheelHandle = event => {
 			this.props.engine
-				.getStateMachine()
-				.addInput(
-					new MouseWheelEventInput(CanvasWidget.normalizeScrollWheel(event), event.clientX, event.clientY)
+				.getEventBus()
+				.fireEvent(
+					new MouseWheelEvent(this, event.clientX, event.clientY, CanvasWidget.normalizeScrollWheel(event))
 				);
-
 			event.stopPropagation();
 			event.preventDefault();
 		};
@@ -134,7 +131,7 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 	componentWillUnmount() {
 		document.removeEventListener("mousemove", this.onMouseMoveHandle);
 		document.removeEventListener("keyup", this.onKeyUpHandle);
-		document.removeEventListener("keyup", this.onKeyUpHandle);
+		document.removeEventListener("keydown", this.onKeyDownHandle);
 	}
 
 	componentWillUpdate() {
