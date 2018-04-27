@@ -15,6 +15,7 @@ export * from "./geometry/Rectangle";
 export * from "./models/BaseObject";
 export * from "./models/BaseModel";
 export * from "./models/GraphModel";
+export * from "./models/GraphModelOrdered";
 
 export * from "./models-canvas/CanvasElementModel";
 export * from "./models-canvas/CanvasLayerModel";

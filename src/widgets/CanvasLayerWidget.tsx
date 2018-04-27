@@ -22,7 +22,7 @@ export class CanvasLayerWidget extends BaseWidget<CanvasLayerWidgetProps, Canvas
 		let props = super.getProps();
 
 		// do we apply
-		if (this.props.layer.transform) {
+		if (this.props.layer.isTransformable()) {
 			props["style"] = {
 				...props["style"],
 				transform:
@@ -50,7 +50,7 @@ export class CanvasLayerWidget extends BaseWidget<CanvasLayerWidgetProps, Canvas
 
 	render() {
 		// it might be an SVG layer
-		if (this.props.layer.svg) {
+		if (this.props.layer.isSVG()) {
 			return <svg {...this.getProps()}>{this.getChildren()}</svg>;
 		}
 		return <div {...this.getProps()}>{this.getChildren()}</div>;

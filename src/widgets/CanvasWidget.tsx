@@ -41,13 +41,13 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 
 		// selection layer
 		this.selectionLayer = new CanvasLayerModel();
-		this.selectionLayer.svg = false;
-		this.selectionLayer.transform = false;
+		this.selectionLayer.setSVG(false);
+		this.selectionLayer.setTransformable(false);
 
 		// debug layer
 		this.debugLayer = new CanvasLayerModel();
-		this.debugLayer.svg = true;
-		this.debugLayer.transform = true;
+		this.debugLayer.setSVG(true);
+		this.debugLayer.setTransformable(true);
 
 		this.ref = (React as any).createRef();
 
@@ -110,14 +110,14 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		if (selected.length > 0) {
 			let model = new SelectionElementModel();
 			model.setModels(selected);
-			this.selectionLayer.addElement(model);
+			this.selectionLayer.addEntity(model);
 		}
 
 		// debug
 		this.debugLayer.clearEntities();
 		let models = CircleElementModel.createPointCloudFrom(this.getViewPort());
 		_.forEach(models, model => {
-			this.debugLayer.addElement(model);
+			this.debugLayer.addEntity(model);
 		});
 	}
 

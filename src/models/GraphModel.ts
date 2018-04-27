@@ -4,9 +4,9 @@ import { BaseEvent, BaseListener } from "./BaseObject";
 import { CanvasEngine } from "../CanvasEngine";
 
 export interface GraphModelListener<CHILD = BaseModel> extends BaseListener {
-	modelAdded: (event: BaseEvent & { model: CHILD }) => any;
+	modelsAdded: (event: BaseEvent & { models: CHILD[] }) => any;
 
-	modelRemoved: (event: BaseEvent & { model: CHILD }) => any;
+	modelsRemoved: (event: BaseEvent & { models: CHILD[] }) => any;
 }
 
 /**
@@ -18,30 +18,57 @@ export class GraphModel<
 	LISTENER extends GraphModelListener<CHILD> = any
 > extends BaseModel<PARENT, LISTENER> {
 	protected entities: { [id: string]: CHILD };
+	protected parentDelegate: BaseModel;
 
-	constructor(type: string) {
+	constructor(type: string = "graph") {
 		super(type);
 		this.entities = {};
+		this.parentDelegate = this;
 	}
 
-	addEntity(entity: CHILD) {
-		this.entities[entity.getID()] = entity;
-		entity.setParent(this);
+	setParentDelegate(parent: BaseModel) {
+		this.parentDelegate = parent;
+	}
+
+	count(): number {
+		return _.values(this.entities).length;
+	}
+
+	addEntities(entities: CHILD[]) {
+		_.forEach(entities, entity => {
+			this.entities[entity.getID()] = entity;
+			entity.setParent(this.parentDelegate);
+		});
 		this.iterateListeners((listener, event) => {
-			if (listener.modelAdded) {
-				listener.modelAdded({ ...event, model: entity });
+			if (listener.modelsAdded) {
+				listener.modelsAdded({ ...event, models: entities });
+			}
+		});
+	}
+
+	removeEntities(entities: CHILD[]) {
+		_.forEach(entities, entity => {
+			delete this.entities[entity.getID()];
+			entity.setParent(null);
+		});
+
+		this.iterateListeners((listener, event) => {
+			if (listener.modelsRemoved) {
+				listener.modelsRemoved({ ...event, models: entities });
 			}
 		});
 	}
 
 	removeEntity(entity: CHILD) {
-		delete this.entities[entity.getID()];
-		entity.setParent(null);
-		this.iterateListeners((listener, event) => {
-			if (listener.modelRemoved) {
-				listener.modelRemoved({ ...event, model: entity });
-			}
-		});
+		this.removeEntities([entity]);
+	}
+
+	addEntity(entity: CHILD) {
+		this.addEntities([entity]);
+	}
+
+	getEntity(id: string): CHILD {
+		return this.entities[id];
 	}
 
 	serialize(): Serializable {

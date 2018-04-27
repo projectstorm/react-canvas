@@ -71,24 +71,24 @@ export abstract class CanvasElementModel<
 
 	moveToLayer(layer: CanvasLayerModel) {
 		if (this.parent) {
-			this.parent.removeElement(this);
+			this.parent.removeEntity(this);
 		}
-		layer.addElement(this);
+		layer.addEntity(this);
 	}
 
 	moveToFront() {
-		this.parent.moveElementToFront(this);
+		this.parent.moveEntityToFront(this);
 	}
 
 	moveToBack() {
-		this.parent.moveElementToBack(this);
+		this.parent.moveEntityToBack(this);
 	}
 
 	moveForward() {
-		this.parent.moveElement(this, true);
+		this.parent.moveEntity(this, true);
 	}
 
 	moveBackward() {
-		this.parent.moveElement(this, false);
+		this.parent.moveEntity(this, false);
 	}
 }

@@ -21,6 +21,7 @@ import { SelectCanvasAction } from "./event-bus/actions/SelectCanvasAction";
 import { SelectElementAction } from "./event-bus/actions/SelectElementAction";
 import { ModelElementInput } from "./state-machine/input/ModelElementInput";
 import { DefaultState } from "./state-machine/states/DefaultState";
+import { Toolkit } from "./Toolkit";
 
 export class CanvasEngineError extends Error {}
 
@@ -39,6 +40,10 @@ export class CanvasEngine {
 		this.stateMachine = new StateMachine();
 		this.historyBank = new HistoryBank();
 		this.eventBus = new EventBus();
+
+		if (Toolkit.TESTING) {
+			Toolkit.TESTING_UID = 0;
+		}
 	}
 
 	getEventBus(): EventBus {
