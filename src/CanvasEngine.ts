@@ -134,6 +134,6 @@ export class CanvasEngine {
 	}
 
 	getFactoryForElement(element: BaseModel): AbstractElementFactory {
-		return this.getFactory(element.type);
+		return this.getFactory(element.getType());
 	}
 }

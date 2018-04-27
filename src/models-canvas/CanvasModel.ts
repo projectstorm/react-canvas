@@ -12,7 +12,7 @@ export interface CanvasModelListener extends BaseListener<CanvasModel> {
 	zoomUpdated?(event: BaseEvent<CanvasModel> & { zoom: number }): void;
 }
 
-export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> extends BaseModel<T> {
+export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> extends BaseModel<null, T> {
 	selectedLayer: CanvasLayerModel;
 	layers: GraphModel<CanvasLayerModel, CanvasModel>;
 

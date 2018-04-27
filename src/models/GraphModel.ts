@@ -14,7 +14,7 @@ export interface GraphModelListener<CHILD = BaseModel> extends BaseListener {
  */
 export class GraphModel<
 	CHILD extends BaseModel,
-	PARENT = any,
+	PARENT extends BaseModel,
 	LISTENER extends GraphModelListener<CHILD> = any
 > extends BaseModel<PARENT, LISTENER> {
 	protected entities: { [id: string]: CHILD };

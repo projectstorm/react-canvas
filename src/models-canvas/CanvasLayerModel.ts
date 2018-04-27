@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import { GraphModel } from "../models/GraphModel";
+import { GraphModel, GraphModelListener } from "../models/GraphModel";
 import { CanvasElementModel } from "./CanvasElementModel";
 import { CanvasModel } from "./CanvasModel";
 import { CanvasEngine } from "../CanvasEngine";
