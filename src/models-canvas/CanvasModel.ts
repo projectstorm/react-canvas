@@ -4,8 +4,15 @@ import { GraphModel } from "../models/GraphModel";
 import { CanvasElementModel } from "./CanvasElementModel";
 import { BaseModel } from "../models/BaseModel";
 import { CanvasEngine } from "../CanvasEngine";
+import { BaseEvent, BaseListener } from "../models/BaseObject";
 
-export class CanvasModel extends BaseModel {
+export interface CanvasModelListener extends BaseListener<CanvasModel> {
+	offsetUpdated?(event: BaseEvent<CanvasModel> & { offsetX: number; offsetY: number }): void;
+
+	zoomUpdated?(event: BaseEvent<CanvasModel> & { zoom: number }): void;
+}
+
+export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> extends BaseModel<T> {
 	selectedLayer: CanvasLayerModel;
 	layers: GraphModel<CanvasLayerModel, CanvasModel>;
 
@@ -56,15 +63,25 @@ export class CanvasModel extends BaseModel {
 
 	setZoomLevel(zoom: number) {
 		this.zoom = zoom;
+		this.iterateListeners((listener: CanvasModelListener, event) => {
+			if (listener.zoomUpdated) {
+				listener.zoomUpdated({ ...event, zoom: zoom });
+			}
+		});
 	}
 
 	setZoomPercent(percent: number) {
-		this.zoom = percent / 100.0;
+		this.setZoomLevel(percent / 100.0);
 	}
 
 	setOffset(offsetX: number, offsetY: number) {
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
+		this.iterateListeners((listener: CanvasModelListener, event) => {
+			if (listener.offsetUpdated) {
+				listener.offsetUpdated({ ...event, offsetX: offsetX, offsetY: offsetY });
+			}
+		});
 	}
 
 	addLayer(layer: CanvasLayerModel) {

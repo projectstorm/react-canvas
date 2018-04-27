@@ -126,10 +126,14 @@ export class CanvasEngine {
 		this.historyBank.pushState(this.model.serialize());
 	}
 
-	getFactoryForElement(element: BaseModel): AbstractElementFactory {
-		if (!this.elementFactories[element.type]) {
-			throw new CanvasEngineError("Cannot find Element factory with name: " + element.type);
+	getFactory(type: string): AbstractElementFactory {
+		if (!this.elementFactories[type]) {
+			throw new CanvasEngineError("Cannot find Element factory with type: " + type);
 		}
-		return this.elementFactories[element.type];
+		return this.elementFactories[type];
+	}
+
+	getFactoryForElement(element: BaseModel): AbstractElementFactory {
+		return this.getFactory(element.type);
 	}
 }

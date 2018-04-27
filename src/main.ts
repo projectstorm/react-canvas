@@ -16,6 +16,10 @@ export * from "./models/BaseObject";
 export * from "./models/BaseModel";
 export * from "./models/GraphModel";
 
+export * from "./models-canvas/CanvasElementModel";
+export * from "./models-canvas/CanvasLayerModel";
+export * from "./models-canvas/CanvasModel";
+
 export * from "./history/HistoryBank";
 
 export * from "./event-bus/Action";
