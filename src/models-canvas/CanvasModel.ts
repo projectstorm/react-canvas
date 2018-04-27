@@ -97,7 +97,7 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
 
 	getSelectedEntities(): CanvasElementModel[] {
 		return _.filter(this.getElements(), element => {
-			return element.selected;
+			return element.isSelected();
 		});
 	}
 }

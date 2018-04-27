@@ -8,8 +8,8 @@ export interface CanvasElementModelListener extends BaseListener<CanvasElementMo
 	selectionChanged(event: BaseEvent & { selected: boolean });
 }
 
-export abstract class CanvasElementModel extends BaseModel<CanvasLayerModel, CanvasElementModelListener> {
-	selected: boolean;
+export abstract class CanvasElementModel<T extends CanvasElementModelListener = CanvasElementModelListener> extends BaseModel<CanvasLayerModel, CanvasElementModelListener> {
+	protected selected: boolean;
 
 	constructor(type: string) {
 		super(type);
@@ -37,6 +37,10 @@ export abstract class CanvasElementModel extends BaseModel<CanvasLayerModel, Can
 				listener.selectionChanged(event);
 			}
 		});
+	}
+
+	isSelected(): boolean{
+		return this.selected;
 	}
 
 	abstract getDimensions(): Rectangle;

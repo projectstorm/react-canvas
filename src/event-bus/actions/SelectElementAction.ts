@@ -15,7 +15,7 @@ export class SelectElementAction extends Action<PressElementEvent> {
 
 	doAction(event: PressElementEvent) {
 		event.stopPropagation();
-		if (!event.element.selected) {
+		if (!event.element.isSelected()) {
 			if (!this.selectMultiple) {
 				_.forEach(this.engine.getModel().getSelectedEntities(), entity => {
 					entity.setSelected(false);

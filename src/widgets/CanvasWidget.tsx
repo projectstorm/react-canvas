@@ -105,7 +105,7 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		this.selectionLayer.clearEntities();
 		let model = this.props.engine.getModel();
 		let selected = _.filter(model.getElements(), element => {
-			return element.selected;
+			return element.isSelected();
 		});
 		if (selected.length > 0) {
 			let model = new SelectionElementModel();
