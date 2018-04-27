@@ -1,6 +1,8 @@
 {
 	"name": "@projectstorm/react-canvas",
 	"version": "0.0.1",
+	"main": "./dist/main.js",
+	"typings": "./dist/@types/src/main",
 	"scripts": {
 		"pretty": "prettier --use-tabs --write \"{src,demos,tests}/**/*.{ts,tsx}\" --print-width 120",
 		"storybook": "start-storybook -p 9001 -c .storybook",
