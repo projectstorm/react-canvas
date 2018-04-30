@@ -15,6 +15,10 @@ export class GraphModelOrdered<
 		this.entitiesOrdered = [];
 	}
 
+	getArray(): CHILD[] {
+		return this.entitiesOrdered;
+	}
+
 	serialize() {
 		return {
 			...super.serialize(),

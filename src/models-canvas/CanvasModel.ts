@@ -6,10 +6,10 @@ import { BaseModel } from "../models/BaseModel";
 import { CanvasEngine } from "../CanvasEngine";
 import { BaseEvent, BaseListener } from "../models/BaseObject";
 
-export interface CanvasModelListener extends BaseListener<CanvasModel> {
-	offsetUpdated?(event: BaseEvent<CanvasModel> & { offsetX: number; offsetY: number }): void;
+export interface CanvasModelListener<T extends CanvasModel = any> extends BaseListener<T> {
+	offsetUpdated?(event: BaseEvent<T> & { offsetX: number; offsetY: number }): void;
 
-	zoomUpdated?(event: BaseEvent<CanvasModel> & { zoom: number }): void;
+	zoomUpdated?(event: BaseEvent<T> & { zoom: number }): void;
 }
 
 export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> extends BaseModel<null, T> {

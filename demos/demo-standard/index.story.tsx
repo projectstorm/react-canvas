@@ -23,7 +23,7 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	// grid layer
 	let layer2 = new CanvasLayerModel();
 	layer2.setSVG(true);
-	layer2.setTransformable(true);
+	layer2.setTransformable(false);
 	model.addLayer(layer2);
 
 	// add the grid

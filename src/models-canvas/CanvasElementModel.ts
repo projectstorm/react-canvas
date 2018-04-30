@@ -4,7 +4,7 @@ import { Rectangle } from "../geometry/Rectangle";
 import { BaseEvent, BaseListener } from "../models/BaseObject";
 import { CanvasEngine } from "../CanvasEngine";
 
-export interface CanvasElementModelListener extends BaseListener<CanvasElementModel> {
+export interface CanvasElementModelListener<T extends CanvasElementModel = any> extends BaseListener<T> {
 	selectionChanged(event: BaseEvent & { selected: boolean });
 
 	lockChanged(event: BaseEvent & { locked: boolean });

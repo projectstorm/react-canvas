@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import { AbstractElementFactory } from "./AbstractElementFactory";
 import { SquareElementFactory } from "./primitives/square/SquareElementFactory";
 import { CanvasModel } from "./models-canvas/CanvasModel";
@@ -5,7 +6,6 @@ import { CanvasWidget } from "./widgets/CanvasWidget";
 import { SelectionElementFactory } from "./primitives/selection/SelectionElementFactory";
 import { StateMachine } from "./state-machine/StateMachine";
 import { TranslateCanvasState } from "./state-machine/states/TranslateCanvasState";
-import * as _ from "lodash";
 import { GridElementFactory } from "./primitives/grid/GridElementFactory";
 import { CircleElementFactory } from "./primitives/circle/CircleElementFactory";
 import { TranslateElementState } from "./state-machine/states/TranslateElementState";
@@ -17,17 +17,15 @@ import { EventBus } from "./event-bus/EventBus";
 import { ZoomCanvasAction } from "./event-bus/actions/ZoomCanvasAction";
 import { MouseDownInput } from "./state-machine/input/MouseDownInput";
 import { KeyInput } from "./state-machine/input/KeyInput";
-import { SelectCanvasAction } from "./event-bus/actions/SelectCanvasAction";
-import { SelectElementAction } from "./event-bus/actions/SelectElementAction";
 import { ModelElementInput } from "./state-machine/input/ModelElementInput";
 import { DefaultState } from "./state-machine/states/DefaultState";
 import { Toolkit } from "./Toolkit";
 
 export class CanvasEngineError extends Error {}
 
-export class CanvasEngine {
+export class CanvasEngine<T extends CanvasModel = CanvasModel> {
 	protected elementFactories: { [type: string]: AbstractElementFactory };
-	protected model: CanvasModel;
+	protected model: T;
 	protected stateMachine: StateMachine;
 	protected canvasWidget;
 	protected historyBank: HistoryBank;
@@ -58,11 +56,11 @@ export class CanvasEngine {
 		return this.stateMachine;
 	}
 
-	setModel(model: CanvasModel) {
+	setModel(model: T) {
 		this.model = model;
 	}
 
-	getModel(): CanvasModel {
+	getModel(): T {
 		return this.model;
 	}
 

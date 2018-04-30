@@ -132,6 +132,7 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		document.removeEventListener("mousemove", this.onMouseMoveHandle);
 		document.removeEventListener("keyup", this.onKeyUpHandle);
 		document.removeEventListener("keydown", this.onKeyDownHandle);
+		this.props.engine.setCanvasWidget(null);
 	}
 
 	componentWillUpdate() {
