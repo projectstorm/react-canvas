@@ -6,7 +6,7 @@ export * from "./CanvasLayerFactory";
 export * from "./widgets/BaseWidget";
 export * from "./widgets/CanvasLayerWidget";
 export * from "./widgets/AnchorWidget";
-export * from "./widgets/SelectionGroupWidget";
+export * from "./primitives/selection/SelectionGroupWidget";
 
 export * from "./geometry/Point";
 export * from "./geometry/Polygon";

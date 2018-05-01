@@ -4,8 +4,8 @@ import { BaseEvent, BaseListener, BaseObject } from "../models/BaseObject";
 import * as _ from "lodash";
 
 export interface EventBusListener extends BaseListener {
-	eventWillFire: (event: BaseEvent & { event: Event }) => any;
-	eventDidFire: (event: BaseEvent & { event: Event }) => any;
+	eventWillFire?: (event: BaseEvent & { event: Event }) => any;
+	eventDidFire?: (event: BaseEvent & { event: Event }) => any;
 }
 
 export class EventBus extends BaseObject<EventBusListener> {

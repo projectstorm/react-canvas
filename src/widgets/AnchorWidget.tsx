@@ -15,6 +15,10 @@ export class AnchorWidget extends BaseWidget<AnchorWidgetProps> {
 		super("src-anchor", props);
 	}
 
+	componentWillUnmount() {
+		this.props.engine.getStateMachine().removeInput(ModelAnchorInput.NAME);
+	}
+
 	render() {
 		return (
 			<div

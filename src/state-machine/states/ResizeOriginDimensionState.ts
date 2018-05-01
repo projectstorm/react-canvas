@@ -6,7 +6,7 @@ import { Point } from "../../geometry/Point";
 import { AbstractDisplacementState } from "../AbstractDisplacementState";
 import { Matrix } from "mathjs";
 import { ModelAnchorInput, ModelAnchorInputPosition } from "../input/ModelAnchorInput";
-import {KeyCode, KeyInput} from "../input/KeyInput";
+import { KeyCode, KeyInput } from "../input/KeyInput";
 
 export class ResizeOriginDimensionsState extends AbstractDisplacementState {
 	anchorInput: ModelAnchorInput;
@@ -40,10 +40,10 @@ export class ResizeOriginDimensionsState extends AbstractDisplacementState {
 		const distanceY = displacementY / zoom;
 
 		// work out the scaling factors for both positive and negative cases
-		const scaleX = (this.initialDimension.getWidth() + distanceX) *2 / this.initialDimension.getWidth();
-		const scaleY = (this.initialDimension.getHeight() + distanceY)*2 / this.initialDimension.getHeight();
-		const scaleX2 = (this.initialDimension.getWidth() - distanceX)*2 / this.initialDimension.getWidth();
-		const scaleY2 = (this.initialDimension.getHeight() - distanceY)*2 / this.initialDimension.getHeight();
+		const scaleX = (this.initialDimension.getWidth() + distanceX) * 2 / this.initialDimension.getWidth();
+		const scaleY = (this.initialDimension.getHeight() + distanceY) * 2 / this.initialDimension.getHeight();
+		const scaleX2 = (this.initialDimension.getWidth() - distanceX) * 2 / this.initialDimension.getWidth();
+		const scaleY2 = (this.initialDimension.getHeight() - distanceY) * 2 / this.initialDimension.getHeight();
 
 		// construct the correct transform matrix
 		let transform: Matrix = null;

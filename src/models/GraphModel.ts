@@ -1,9 +1,9 @@
-import { BaseModel, Serializable } from "./BaseModel";
+import { BaseModel, BaseModelListener, Serializable } from "./BaseModel";
 import * as _ from "lodash";
-import { BaseEvent, BaseListener } from "./BaseObject";
+import { BaseEvent } from "./BaseObject";
 import { CanvasEngine } from "../CanvasEngine";
 
-export interface GraphModelListener<CHILD = BaseModel> extends BaseListener {
+export interface GraphModelListener<CHILD = BaseModel> extends BaseModelListener {
 	modelsAdded: (event: BaseEvent & { models: CHILD[] }) => any;
 
 	modelsRemoved: (event: BaseEvent & { models: CHILD[] }) => any;

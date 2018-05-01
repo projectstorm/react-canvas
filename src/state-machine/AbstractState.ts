@@ -38,14 +38,12 @@ export abstract class AbstractState {
 	}
 
 	activated(machine: StateMachine) {
-		console.log("activated state: " + this.name);
 		_.forEach(this.actions, action => {
 			this.engine.getEventBus().registerAction(action);
 		});
 	}
 
 	deactivated(machine: StateMachine) {
-		console.log("deactivated state: " + this.name);
 		_.forEach(this.actions, action => {
 			this.engine.getEventBus().unRegisterAction(action);
 		});

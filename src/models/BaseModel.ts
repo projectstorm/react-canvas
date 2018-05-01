@@ -7,13 +7,15 @@ export interface Serializable {
 	id: string;
 }
 
-export interface BaseModelListener extends BaseListener {
-	lockChanged(event: BaseEvent & { locked: boolean });
+export interface BaseModelListener<T extends BaseModel = BaseModel> extends BaseListener<T> {
+	lockChanged?(event: BaseEvent & { locked: boolean });
+	delegateEvent?(event: BaseEvent);
 }
 
-export class BaseModel<PARENT extends BaseModel = any, LISTENER extends BaseListener = BaseListener> extends BaseObject<
-	LISTENER
-> {
+export class BaseModel<
+	PARENT extends BaseModel<any, BaseModelListener> = any,
+	LISTENER extends BaseModelListener = BaseListener
+> extends BaseObject<LISTENER> {
 	protected parent: PARENT;
 	protected id: string;
 	protected type: string;
@@ -43,6 +45,18 @@ export class BaseModel<PARENT extends BaseModel = any, LISTENER extends BaseList
 
 	public clearListeners() {
 		this.listeners = {};
+	}
+
+	iterateListeners(cb: (t: LISTENER, event: BaseEvent) => any) {
+		// optionally delegate the event up the stack so the event bus can grab it
+		if (this.parent) {
+			this.parent.iterateListeners((listener, event) => {
+				if (listener.delegateEvent) {
+					listener.delegateEvent(event);
+				}
+			});
+		}
+		return super.iterateListeners(cb);
 	}
 
 	public deSerialize(data: { [s: string]: any }, engine: CanvasEngine, cache: { [id: string]: BaseModel }) {

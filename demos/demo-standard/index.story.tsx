@@ -13,7 +13,6 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	//setup canvas engine
 	let engine = new CanvasEngine();
 	engine.installDefaults();
-	engine.installHistoryBank();
 
 	let model = new CanvasModel();
 	model.setOffset(100, 100);

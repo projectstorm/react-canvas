@@ -1,6 +1,6 @@
 import * as React from "react";
 import { BaseWidget, BaseWidgetProps } from "../../widgets/BaseWidget";
-import { SelectionGroupWidget } from "../../widgets/SelectionGroupWidget";
+import { SelectionGroupWidget } from "./SelectionGroupWidget";
 import { CanvasEngine } from "../../CanvasEngine";
 import { SelectionElementModel } from "./SelectionElementModel";
 

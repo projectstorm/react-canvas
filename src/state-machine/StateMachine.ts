@@ -85,7 +85,6 @@ export class StateMachine extends BaseObject<StateMachineListener> {
 	}
 
 	process() {
-		console.log(_.keys(this.inputs));
 		// check for possible reactions to current inputs
 		let possibleReactions = _.map(
 			_.filter(this.states, state => {

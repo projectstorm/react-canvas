@@ -20,10 +20,18 @@ import { KeyInput } from "./state-machine/input/KeyInput";
 import { ModelElementInput } from "./state-machine/input/ModelElementInput";
 import { DefaultState } from "./state-machine/states/DefaultState";
 import { Toolkit } from "./Toolkit";
+import { CanvasLayerModel } from "./models-canvas/CanvasLayerModel";
+import { SelectionElementModel } from "./primitives/selection/SelectionElementModel";
+import { ModelEvent } from "./event-bus/events/ModelEvent";
+import { BaseEvent, BaseObject } from "./models/BaseObject";
 
 export class CanvasEngineError extends Error {}
 
-export class CanvasEngine<T extends CanvasModel = CanvasModel> {
+export interface CanvasEngineListener<T> {
+	modelChanged?: (event: BaseEvent & { model: T; oldModel: T }) => any;
+}
+
+export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObject<CanvasEngineListener<T>> {
 	protected elementFactories: { [type: string]: AbstractElementFactory };
 	protected model: T;
 	protected stateMachine: StateMachine;
@@ -31,13 +39,17 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> {
 	protected historyBank: HistoryBank;
 	protected eventBus: EventBus;
 
+	private modelListener: string;
+
 	constructor() {
+		super();
 		this.elementFactories = {};
 		this.model = null;
 		this.canvasWidget = null;
 		this.stateMachine = new StateMachine();
 		this.historyBank = new HistoryBank();
 		this.eventBus = new EventBus();
+		this.modelListener = null;
 
 		if (Toolkit.TESTING) {
 			Toolkit.TESTING_UID = 0;
@@ -57,7 +69,28 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> {
 	}
 
 	setModel(model: T) {
+		// uninstall the old model
+		if (this.modelListener) {
+			this.model.removeListener(this.modelListener);
+		}
+		let oldModel = this.model;
 		this.model = model;
+		this.iterateListeners((listener, event) => {
+			if (listener.modelChanged) {
+				listener.modelChanged({ ...event, model: model, oldModel: oldModel });
+			}
+		});
+
+		// install the new model
+		if (model) {
+			this.modelListener = model.addListener({
+				delegateEvent: event => {
+					this.eventBus.fireEvent(new ModelEvent(event));
+				}
+			});
+		} else {
+			this.modelListener = null;
+		}
 	}
 
 	getModel(): T {
@@ -76,7 +109,9 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> {
 	installHistoryBank() {
 		this.stateMachine.addListener({
 			stateChanged: event => {
-				this.historyBank.pushState(this.model.serialize());
+				if (this.model) {
+					this.historyBank.pushState(this.model.serialize());
+				}
 			}
 		});
 		this.historyBank.addListener({
@@ -85,6 +120,42 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> {
 			},
 			backward: event => {
 				this.deserialize(event.state);
+			}
+		});
+	}
+
+	installDefaultInteractivity() {
+		// selection layer
+		let selectionLayer = new CanvasLayerModel();
+		selectionLayer.setSVG(false);
+		selectionLayer.setTransformable(false);
+
+		// listen for a new model
+		this.addListener({
+			modelChanged: event => {
+				if (event.oldModel) {
+					event.oldModel.removeLayer(selectionLayer);
+				}
+				if (event.model) {
+					event.model.addLayer(selectionLayer);
+				}
+			}
+		});
+
+		this.eventBus.addListener({
+			eventWillFire: event => {
+				if (event instanceof ModelEvent) {
+					let selected = _.filter(this.model.getElements(), element => {
+						return element.isSelected();
+					});
+					if (selected.length > 0) {
+						selectionLayer.clearEntities();
+						let model = new SelectionElementModel();
+						model.setModels(selected);
+						selectionLayer.addEntity(model);
+						this.canvasWidget.forceUpdate();
+					}
+				}
 			}
 		});
 	}
@@ -117,6 +188,11 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> {
 		this.stateMachine.addState(new TranslateCanvasState(this));
 		this.stateMachine.addState(new DefaultState(this));
 
+		// default wiring
+		this.installHistoryBank();
+		this.installDefaultInteractivity();
+
+		// process to set the initial state
 		this.stateMachine.process();
 	}
 

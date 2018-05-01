@@ -4,7 +4,7 @@ import { CanvasEngine } from "../../CanvasEngine";
 import { SelectionElementWidget } from "./SelectionElementWidget";
 import * as React from "react";
 import { ResizeDimensionsState } from "../../state-machine/states/ResizeDimensionsState";
-import {ResizeOriginDimensionsState} from "../../state-machine/states/ResizeOriginDimensionState";
+import { ResizeOriginDimensionsState } from "../../state-machine/states/ResizeOriginDimensionState";
 
 export class SelectionElementFactory extends AbstractElementFactory<SelectionElementModel> {
 	constructor() {
@@ -16,10 +16,7 @@ export class SelectionElementFactory extends AbstractElementFactory<SelectionEle
 	}
 
 	getCanvasStates() {
-		return [
-			new ResizeOriginDimensionsState(this.engine),
-			new ResizeDimensionsState(this.engine)
-		];
+		return [new ResizeOriginDimensionsState(this.engine), new ResizeDimensionsState(this.engine)];
 	}
 
 	generateWidget(engine: CanvasEngine, model: SelectionElementModel): JSX.Element {

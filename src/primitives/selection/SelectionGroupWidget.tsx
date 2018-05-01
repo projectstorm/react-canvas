@@ -1,9 +1,9 @@
 import * as React from "react";
-import { BaseWidget, BaseWidgetProps } from "./BaseWidget";
-import { AnchorWidget } from "./AnchorWidget";
-import { CanvasEngine } from "../CanvasEngine";
-import { SelectionElementModel } from "../primitives/selection/SelectionElementModel";
-import { ModelAnchorInputPosition } from "../state-machine/input/ModelAnchorInput";
+import { BaseWidget, BaseWidgetProps } from "../../widgets/BaseWidget";
+import { AnchorWidget } from "../../widgets/AnchorWidget";
+import { CanvasEngine } from "../../CanvasEngine";
+import { SelectionElementModel } from "./SelectionElementModel";
+import { ModelAnchorInputPosition } from "../../state-machine/input/ModelAnchorInput";
 
 export interface SelectionGroupWidgetProps extends BaseWidgetProps {
 	model: SelectionElementModel;
@@ -16,6 +16,10 @@ export class SelectionGroupWidget extends BaseWidget<SelectionGroupWidgetProps, 
 	constructor(props: SelectionGroupWidgetProps) {
 		super("src-selection-group", props);
 		this.state = {};
+	}
+
+	componentWillUnmount() {
+		console.log("unmount");
 	}
 
 	render() {

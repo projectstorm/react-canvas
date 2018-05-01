@@ -2,11 +2,12 @@ import { CanvasLayerModel } from "./CanvasLayerModel";
 import * as _ from "lodash";
 import { GraphModel } from "../models/GraphModel";
 import { CanvasElementModel } from "./CanvasElementModel";
-import { BaseModel } from "../models/BaseModel";
+import { BaseModel, BaseModelListener } from "../models/BaseModel";
 import { CanvasEngine } from "../CanvasEngine";
 import { BaseEvent, BaseListener } from "../models/BaseObject";
+import { GraphModelOrdered } from "../models/GraphModelOrdered";
 
-export interface CanvasModelListener<T extends CanvasModel = any> extends BaseListener<T> {
+export interface CanvasModelListener<T extends CanvasModel = any> extends BaseModelListener<T> {
 	offsetUpdated?(event: BaseEvent<T> & { offsetX: number; offsetY: number }): void;
 
 	zoomUpdated?(event: BaseEvent<T> & { zoom: number }): void;
@@ -14,7 +15,7 @@ export interface CanvasModelListener<T extends CanvasModel = any> extends BaseLi
 
 export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> extends BaseModel<null, T> {
 	selectedLayer: CanvasLayerModel;
-	layers: GraphModel<CanvasLayerModel, CanvasModel>;
+	layers: GraphModelOrdered<CanvasLayerModel, CanvasModel>;
 
 	//control variables
 	offsetX: number;
@@ -24,8 +25,8 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
 	constructor() {
 		super("canvas");
 		this.selectedLayer = null;
-		this.layers = new GraphModel("layers");
-		this.layers.setParent(this);
+		this.layers = new GraphModelOrdered("layers");
+		this.layers.setParentDelegate(this);
 		this.offsetX = 0;
 		this.offsetY = 0;
 		this.zoom = 1;
@@ -82,6 +83,10 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
 				listener.offsetUpdated({ ...event, offsetX: offsetX, offsetY: offsetY });
 			}
 		});
+	}
+
+	removeLayer(layer: CanvasLayerModel) {
+		this.layers.removeEntity(layer);
 	}
 
 	addLayer(layer: CanvasLayerModel) {

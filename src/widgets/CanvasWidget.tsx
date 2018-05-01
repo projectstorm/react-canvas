@@ -8,7 +8,6 @@ import { DimensionTrackerWidget } from "../tracking/DimensionTrackerWidget";
 import { DimensionTracker } from "../tracking/DimensionTracker";
 import { SelectionElementModel } from "../primitives/selection/SelectionElementModel";
 import { Rectangle } from "../geometry/Rectangle";
-import { CircleElementModel } from "../primitives/circle/CircleElementModel";
 import { KeyDownEvent, KeyUpEvent } from "../event-bus/events/key";
 import { MouseDownEvent, MouseMoveEvent, MouseUpEvent, MouseWheelEvent } from "../event-bus/events/mouse";
 
@@ -20,9 +19,6 @@ export interface CanvasWidgetProps extends BaseWidgetProps {
 export interface CanvasWidgetState {}
 
 export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetState> {
-	selectionLayer: CanvasLayerModel;
-	debugLayer: CanvasLayerModel;
-
 	dimension: DimensionTracker;
 	ref: { current: HTMLElement };
 
@@ -38,16 +34,6 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		super("src-canvas", props);
 		this.state = {};
 		this.dimension = new DimensionTracker();
-
-		// selection layer
-		this.selectionLayer = new CanvasLayerModel();
-		this.selectionLayer.setSVG(false);
-		this.selectionLayer.setTransformable(false);
-
-		// debug layer
-		this.debugLayer = new CanvasLayerModel();
-		this.debugLayer.setSVG(true);
-		this.debugLayer.setTransformable(true);
 
 		this.ref = (React as any).createRef();
 
@@ -100,29 +86,7 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		this.props.engine.setCanvasWidget(this);
 	}
 
-	computeSelectionLayer() {
-		// selection
-		this.selectionLayer.clearEntities();
-		let model = this.props.engine.getModel();
-		let selected = _.filter(model.getElements(), element => {
-			return element.isSelected();
-		});
-		if (selected.length > 0) {
-			let model = new SelectionElementModel();
-			model.setModels(selected);
-			this.selectionLayer.addEntity(model);
-		}
-
-		// debug
-		this.debugLayer.clearEntities();
-		let models = CircleElementModel.createPointCloudFrom(this.getViewPort());
-		_.forEach(models, model => {
-			this.debugLayer.addEntity(model);
-		});
-	}
-
 	componentDidMount() {
-		this.computeSelectionLayer();
 		document.addEventListener("mousemove", this.onMouseMoveHandle);
 		document.addEventListener("keydown", this.onKeyDownHandle);
 		document.addEventListener("keyup", this.onKeyUpHandle);
@@ -133,10 +97,6 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		document.removeEventListener("keyup", this.onKeyUpHandle);
 		document.removeEventListener("keydown", this.onKeyDownHandle);
 		this.props.engine.setCanvasWidget(null);
-	}
-
-	componentWillUpdate() {
-		this.computeSelectionLayer();
 	}
 
 	getViewPort(): Rectangle {
@@ -194,7 +154,6 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 							}
 						);
 					})}
-					<CanvasLayerWidget key={"selection"} engine={this.props.engine} layer={this.selectionLayer} />
 				</div>
 			</DimensionTrackerWidget>
 		);
