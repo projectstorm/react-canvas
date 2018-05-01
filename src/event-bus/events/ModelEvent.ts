@@ -4,8 +4,10 @@ import { BaseEvent } from "../../models/BaseObject";
 export class ModelEvent extends Event {
 	modelEvent: BaseEvent;
 
+	static NAME = "model-delegate-event";
+
 	constructor(modelEvent: BaseEvent) {
-		super("model-event", modelEvent.source);
+		super(ModelEvent.NAME, modelEvent.source);
 		this.modelEvent = modelEvent;
 	}
 }

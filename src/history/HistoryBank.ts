@@ -34,7 +34,7 @@ export class HistoryBank extends BaseObject<HistoryBankListener> {
 			return;
 		}
 		this.pointer++;
-		this.iterateListeners((listener, event) => {
+		this.iterateListeners("history moved forward", (listener, event) => {
 			if (listener.forward) {
 				listener.forward({ ...event, state: this.history[this.pointer] });
 			}
@@ -47,7 +47,7 @@ export class HistoryBank extends BaseObject<HistoryBankListener> {
 			return;
 		}
 		this.pointer--;
-		this.iterateListeners((listener, event) => {
+		this.iterateListeners("history moved backward", (listener, event) => {
 			if (listener.backward) {
 				listener.backward({ ...event, state: this.history[this.pointer] });
 			}

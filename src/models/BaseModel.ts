@@ -8,8 +8,8 @@ export interface Serializable {
 }
 
 export interface BaseModelListener<T extends BaseModel = BaseModel> extends BaseListener<T> {
-	lockChanged?(event: BaseEvent & { locked: boolean });
-	delegateEvent?(event: BaseEvent);
+	lockChanged?(event: BaseEvent<BaseModel> & { locked: boolean });
+	delegateEvent?(event: BaseEvent<BaseModel>);
 }
 
 export class BaseModel<
@@ -21,10 +21,13 @@ export class BaseModel<
 	protected type: string;
 	protected locked: boolean;
 
+	private parentListener: string;
+
 	constructor(type: string) {
 		super();
 		this.id = Toolkit.UID();
 		this.type = type;
+		this.parentListener = null;
 	}
 
 	isLocked(): boolean {
@@ -32,7 +35,23 @@ export class BaseModel<
 	}
 
 	setParent(parent: PARENT) {
+		if (this.parentListener) {
+			this.parent.removeListener(this.parentListener);
+		}
 		this.parent = parent;
+		if (parent) {
+			this.parentListener = parent.addListener({
+				delegateEvent: event => {
+					if (parent.parent) {
+						parent.parent.iterateListeners("delegating event", listener => {
+							if (listener.delegateEvent) {
+								listener.delegateEvent(event);
+							}
+						});
+					}
+				}
+			});
+		}
 	}
 
 	getType(): string {
@@ -47,16 +66,16 @@ export class BaseModel<
 		this.listeners = {};
 	}
 
-	iterateListeners(cb: (t: LISTENER, event: BaseEvent) => any) {
+	iterateListeners(name: string, cb: (t: LISTENER, event: BaseEvent) => any) {
 		// optionally delegate the event up the stack so the event bus can grab it
 		if (this.parent) {
-			this.parent.iterateListeners((listener, event) => {
+			this.parent.iterateListeners(name, (listener, event) => {
 				if (listener.delegateEvent) {
 					listener.delegateEvent(event);
 				}
 			});
 		}
-		return super.iterateListeners(cb);
+		return super.iterateListeners(name, cb);
 	}
 
 	public deSerialize(data: { [s: string]: any }, engine: CanvasEngine, cache: { [id: string]: BaseModel }) {

@@ -64,7 +64,7 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
 
 	setZoomLevel(zoom: number) {
 		this.zoom = zoom;
-		this.iterateListeners((listener: CanvasModelListener, event) => {
+		this.iterateListeners("zoom changed", (listener: CanvasModelListener, event) => {
 			if (listener.zoomUpdated) {
 				listener.zoomUpdated({ ...event, zoom: zoom });
 			}
@@ -78,7 +78,7 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
 	setOffset(offsetX: number, offsetY: number) {
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
-		this.iterateListeners((listener: CanvasModelListener, event) => {
+		this.iterateListeners("offset changed", (listener: CanvasModelListener, event) => {
 			if (listener.offsetUpdated) {
 				listener.offsetUpdated({ ...event, offsetX: offsetX, offsetY: offsetY });
 			}

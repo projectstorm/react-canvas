@@ -29,7 +29,7 @@ export class DimensionTracker extends BaseObject<DimensionTrackerListener> {
 		this.recompute(canvasEngine, ClientRect);
 
 		// fire the update event
-		this.iterateListeners((listener, event) => {
+		this.iterateListeners("dimensions updated", (listener, event) => {
 			if (listener.updated) {
 				listener.updated(event);
 			}

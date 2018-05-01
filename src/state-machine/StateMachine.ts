@@ -60,7 +60,7 @@ export class StateMachine extends BaseObject<StateMachineListener> {
 	}
 
 	fireStateChanged() {
-		this.iterateListeners((listener, event) => {
+		this.iterateListeners("state changed", (listener, event) => {
 			if (listener.stateChanged) {
 				listener.stateChanged({ ...event, state: this.state });
 			}

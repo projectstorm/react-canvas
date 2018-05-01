@@ -39,7 +39,7 @@ export class GraphModel<
 			this.entities[entity.getID()] = entity;
 			entity.setParent(this.parentDelegate);
 		});
-		this.iterateListeners((listener, event) => {
+		this.iterateListeners("entities added", (listener, event) => {
 			if (listener.modelsAdded) {
 				listener.modelsAdded({ ...event, models: entities });
 			}
@@ -52,7 +52,7 @@ export class GraphModel<
 			entity.setParent(null);
 		});
 
-		this.iterateListeners((listener, event) => {
+		this.iterateListeners("entities removed", (listener, event) => {
 			if (listener.modelsRemoved) {
 				listener.modelsRemoved({ ...event, models: entities });
 			}

@@ -39,7 +39,7 @@ export abstract class CanvasElementModel<
 
 	setSelected(selected: boolean) {
 		this.selected = selected;
-		this.iterateListeners((listener, event: any) => {
+		this.iterateListeners("selection changed", (listener, event: any) => {
 			if (listener.selectionChanged) {
 				event.selected = selected;
 				listener.selectionChanged(event);
@@ -49,7 +49,7 @@ export abstract class CanvasElementModel<
 
 	setLocked(locked: boolean) {
 		this.locked = locked;
-		this.iterateListeners((listener, event: any) => {
+		this.iterateListeners("lock changed", (listener, event: any) => {
 			if (listener.lockChanged) {
 				event.locked = locked;
 				listener.lockChanged(event);

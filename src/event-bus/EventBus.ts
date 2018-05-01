@@ -36,11 +36,12 @@ export class EventBus extends BaseObject<EventBusListener> {
 		}
 	}
 
-	registerAction(action: Action) {
+	registerAction(action: Action): Action {
 		if (!this.actions[action.targetEvent]) {
 			this.actions[action.targetEvent] = {};
 		}
 		this.actions[action.targetEvent][action.id] = action;
+		return action;
 	}
 
 	fireEvent(event: Event) {
@@ -49,7 +50,7 @@ export class EventBus extends BaseObject<EventBusListener> {
 		}
 
 		// before the event fires
-		this.iterateListeners((listener, baseEvent) => {
+		this.iterateListeners("event will fire", (listener, baseEvent) => {
 			if (listener.eventWillFire) {
 				listener.eventWillFire({
 					...baseEvent,
@@ -70,7 +71,7 @@ export class EventBus extends BaseObject<EventBusListener> {
 		} while (!event.stopped && _.keys(this.actions[event.name]).length !== _.keys(processedActions).length);
 
 		if (event.actionsFired.length > 0) {
-			this.iterateListeners((listener, baseEvent) => {
+			this.iterateListeners("event did fire", (listener, baseEvent) => {
 				if (listener.eventDidFire) {
 					listener.eventDidFire({
 						...baseEvent,

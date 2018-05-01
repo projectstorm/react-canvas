@@ -24,6 +24,7 @@ import { CanvasLayerModel } from "./models-canvas/CanvasLayerModel";
 import { SelectionElementModel } from "./primitives/selection/SelectionElementModel";
 import { ModelEvent } from "./event-bus/events/ModelEvent";
 import { BaseEvent, BaseObject } from "./models/BaseObject";
+import { InlineAction } from "./event-bus/InlineAction";
 
 export class CanvasEngineError extends Error {}
 
@@ -75,7 +76,7 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 		}
 		let oldModel = this.model;
 		this.model = model;
-		this.iterateListeners((listener, event) => {
+		this.iterateListeners("Model changed", (listener, event) => {
 			if (listener.modelChanged) {
 				listener.modelChanged({ ...event, model: model, oldModel: oldModel });
 			}
@@ -142,22 +143,23 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 			}
 		});
 
-		this.eventBus.addListener({
-			eventWillFire: event => {
-				if (event instanceof ModelEvent) {
+		this.eventBus.registerAction(
+			new InlineAction(ModelEvent.NAME, (event: ModelEvent) => {
+				if (event.modelEvent.name === "selection changed") {
+					selectionLayer.clearEntities();
+					this.model.layers.moveEntityToFront(selectionLayer);
 					let selected = _.filter(this.model.getElements(), element => {
 						return element.isSelected();
 					});
 					if (selected.length > 0) {
-						selectionLayer.clearEntities();
 						let model = new SelectionElementModel();
 						model.setModels(selected);
 						selectionLayer.addEntity(model);
 						this.canvasWidget.forceUpdate();
 					}
 				}
-			}
-		});
+			})
+		);
 	}
 
 	registerElementFactory(factory: AbstractElementFactory) {
