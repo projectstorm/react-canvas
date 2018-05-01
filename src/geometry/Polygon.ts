@@ -70,7 +70,7 @@ export class Polygon {
 			return null;
 		}
 		let dimensions = this.getBoundingBox();
-		return Point.middlePoint(dimensions.getBottomRight(), dimensions.getBottomLeft());
+		return Point.middlePoint(dimensions.getTopLeft(), dimensions.getBottomRight());
 	}
 
 	static boundingBoxFromPolygons(polygons: Polygon[]): Rectangle {

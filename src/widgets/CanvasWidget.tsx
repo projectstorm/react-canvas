@@ -143,7 +143,6 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 					ref={this.ref}
 					onWheel={this.onMouseWheelHandle}
 					onMouseDown={this.onMouseDownHandle}
-					onMouseMove={this.onMouseMoveHandle}
 					onMouseUp={this.onMouseUpHandle}
 				>
 					{_.map(this.props.engine.getModel().layers.getEntities(), layer => {

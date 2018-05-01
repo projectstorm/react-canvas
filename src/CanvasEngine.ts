@@ -145,6 +145,7 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 
 		this.eventBus.registerAction(
 			new InlineAction(ModelEvent.NAME, (event: ModelEvent) => {
+				// setup a combo box for when there are models
 				if (event.modelEvent.name === "selection changed") {
 					selectionLayer.clearEntities();
 					this.model.layers.moveEntityToFront(selectionLayer);
