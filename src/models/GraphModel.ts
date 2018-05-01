@@ -1,4 +1,4 @@
-import { BaseModel, BaseModelListener, Serializable } from "./BaseModel";
+import { BaseModel, BaseModelListener, DeserializeEvent, Serializable } from "./BaseModel";
 import * as _ from "lodash";
 import { BaseEvent } from "./BaseObject";
 import { CanvasEngine } from "../CanvasEngine";
@@ -80,11 +80,12 @@ export class GraphModel<
 		};
 	}
 
-	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: { [id: string]: BaseModel }): void {
-		super.deSerialize(data, engine, cache);
-		this.entities = _.mapValues(data["entities"], (entity: any) => {
-			let entityOb = engine.generateEntityFor(entity._type);
-			entityOb.deSerialize(entity, engine, cache);
+	deSerialize(event: DeserializeEvent): void {
+		super.deSerialize(event);
+		let entities = event.subset("entities");
+		this.entities = _.mapValues(entities.data, (entity: any, index) => {
+			let entityOb = event.engine.generateEntityFor(entity._type);
+			entityOb.deSerialize(entities.subset(index));
 			return entityOb;
 		}) as any;
 	}

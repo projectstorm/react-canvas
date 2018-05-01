@@ -18,10 +18,6 @@ export class SelectionGroupWidget extends BaseWidget<SelectionGroupWidgetProps, 
 		this.state = {};
 	}
 
-	componentWillUnmount() {
-		console.log("unmount");
-	}
-
 	render() {
 		let dimension = this.props.model.getDimensions().toRealDimensions(this.props.engine.getModel());
 		return (

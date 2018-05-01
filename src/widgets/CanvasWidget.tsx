@@ -145,7 +145,7 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 					onMouseDown={this.onMouseDownHandle}
 					onMouseUp={this.onMouseUpHandle}
 				>
-					{_.map(this.props.engine.getModel().layers.getEntities(), layer => {
+					{_.map(this.props.engine.getModel().layers.getArray(), layer => {
 						return React.cloneElement(
 							this.props.engine.getFactoryForElement(layer).generateWidget(this.props.engine, layer),
 							{

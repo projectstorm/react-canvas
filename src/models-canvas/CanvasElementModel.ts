@@ -1,5 +1,5 @@
 import { CanvasLayerModel } from "./CanvasLayerModel";
-import { BaseModel } from "../models/BaseModel";
+import { BaseModel, DeserializeEvent } from "../models/BaseModel";
 import { Rectangle } from "../geometry/Rectangle";
 import { BaseEvent, BaseListener } from "../models/BaseObject";
 import { CanvasEngine } from "../CanvasEngine";
@@ -31,10 +31,10 @@ export abstract class CanvasElementModel<
 		};
 	}
 
-	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: { [id: string]: BaseModel }): void {
-		super.deSerialize(data, engine, cache);
-		this.selected = !!data["selected"];
-		this.locked = !!data["locked"];
+	deSerialize(event: DeserializeEvent): void {
+		super.deSerialize(event);
+		this.selected = !!event.data["selected"];
+		this.locked = !!event.data["locked"];
 	}
 
 	setSelected(selected: boolean) {

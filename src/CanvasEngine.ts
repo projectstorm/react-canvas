@@ -11,7 +11,7 @@ import { CircleElementFactory } from "./primitives/circle/CircleElementFactory";
 import { TranslateElementState } from "./state-machine/states/TranslateElementState";
 import { SelectElementsState } from "./state-machine/states/SelectElementsState";
 import { HistoryBank } from "./history/HistoryBank";
-import { BaseModel } from "./models/BaseModel";
+import { BaseModel, DeserializeEvent } from "./models/BaseModel";
 import { CanvasLayerFactory } from "./CanvasLayerFactory";
 import { EventBus } from "./event-bus/EventBus";
 import { ZoomCanvasAction } from "./event-bus/actions/ZoomCanvasAction";
@@ -103,8 +103,9 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 		return this.elementFactories[type].generateModel();
 	}
 
-	deserialize(state: any) {
-		this.model.deSerialize(state, this, {});
+	deserialize(data: any) {
+		let event = new DeserializeEvent(data, this);
+		this.model.deSerialize(event);
 		this.canvasWidget.forceUpdate();
 	}
 

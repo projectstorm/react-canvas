@@ -2,7 +2,7 @@ import { CanvasLayerModel } from "./CanvasLayerModel";
 import * as _ from "lodash";
 import { GraphModel } from "../models/GraphModel";
 import { CanvasElementModel } from "./CanvasElementModel";
-import { BaseModel, BaseModelListener } from "../models/BaseModel";
+import { BaseModel, BaseModelListener, DeserializeEvent } from "../models/BaseModel";
 import { CanvasEngine } from "../CanvasEngine";
 import { BaseEvent, BaseListener } from "../models/BaseObject";
 import { GraphModelOrdered } from "../models/GraphModelOrdered";
@@ -42,12 +42,12 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
 		};
 	}
 
-	deSerialize(data: { [p: string]: any; cache }, engine: CanvasEngine, cache: { [id: string]: BaseModel }): void {
-		super.deSerialize(data, engine, cache);
-		this.layers.deSerialize(data["layers"], engine, cache);
-		this.offsetX = data["offsetX"];
-		this.offsetY = data["offsetY"];
-		this.zoom = data["zoom"];
+	deSerialize(event: DeserializeEvent): void {
+		super.deSerialize(event);
+		this.layers.deSerialize(event.subset("layers"));
+		this.offsetX = event.data["offsetX"];
+		this.offsetY = event.data["offsetY"];
+		this.zoom = event.data["zoom"];
 	}
 
 	getOffsetY() {

@@ -1,6 +1,5 @@
 import { GraphModel, GraphModelListener } from "./GraphModel";
-import { BaseModel } from "./BaseModel";
-import { CanvasEngine } from "../CanvasEngine";
+import { BaseModel, DeserializeEvent } from "./BaseModel";
 import * as _ from "lodash";
 
 export class GraphModelOrdered<
@@ -28,9 +27,9 @@ export class GraphModelOrdered<
 		};
 	}
 
-	deSerialize(data: { [p: string]: any }, engine: CanvasEngine, cache: { [p: string]: BaseModel }): void {
-		super.deSerialize(data, engine, cache);
-		this.entitiesOrdered = _.map(data["entitiesOrdered"], entityID => {
+	deSerialize(event: DeserializeEvent): void {
+		super.deSerialize(event);
+		this.entitiesOrdered = _.map(event.data["entitiesOrdered"], entityID => {
 			return this.entities[entityID];
 		});
 	}
@@ -63,7 +62,8 @@ export class GraphModelOrdered<
 		if (index === -1) {
 			return;
 		}
-		this.entitiesOrdered.splice(index, 1, element);
+		this.entitiesOrdered.splice(index, 1);
+		this.entitiesOrdered.push(element);
 	}
 
 	moveEntity(element: CHILD, forward: boolean = true) {

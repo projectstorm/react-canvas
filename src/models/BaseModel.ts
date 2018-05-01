@@ -12,6 +12,24 @@ export interface BaseModelListener<T extends BaseModel = BaseModel> extends Base
 	delegateEvent?(event: BaseEvent<BaseModel>);
 }
 
+export class DeserializeEvent {
+	data: { [p: string]: any };
+	engine: CanvasEngine;
+	cache: { [id: string]: BaseModel };
+
+	constructor(data: any, engine: CanvasEngine) {
+		this.cache = {};
+		this.data = data;
+		this.engine = engine;
+	}
+
+	subset(key: string): DeserializeEvent {
+		let event = new DeserializeEvent(this.data[key], this.engine);
+		event.cache = this.cache;
+		return event;
+	}
+}
+
 export class BaseModel<
 	PARENT extends BaseModel<any, BaseModelListener> = any,
 	LISTENER extends BaseModelListener = BaseListener
@@ -78,16 +96,16 @@ export class BaseModel<
 		return super.iterateListeners(name, cb);
 	}
 
-	public deSerialize(data: { [s: string]: any }, engine: CanvasEngine, cache: { [id: string]: BaseModel }) {
-		this.id = data.id;
-		this.locked = !!data.locked;
-		if (data["parent"]) {
-			if (!cache[data["parent"]]) {
+	public deSerialize(event: DeserializeEvent) {
+		this.id = event.data.id;
+		this.locked = !!event.data.locked;
+		if (event.data["parent"]) {
+			if (!event.cache[event.data["parent"]]) {
 				throw "Cannot deserialize, because of missing parent";
 			}
-			this.parent = cache[data["parent"]] as any;
+			this.setParent(event.cache[event.data["parent"]] as any);
 		}
-		cache[this.id] = this;
+		event.cache[this.id] = this;
 	}
 
 	public serialize(): Serializable & any {
