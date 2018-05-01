@@ -8,6 +8,7 @@ import { SquareElementModel } from "../../src/primitives/square/SquareElementMod
 import { storiesOf } from "@storybook/react";
 import { button } from "@storybook/addon-knobs";
 import { GridElementModel } from "../../src/primitives/grid/GridElementModel";
+import { PaperElementModel } from "../../src/primitives/paper/PaperElementModel";
 
 storiesOf("Simple Usage", module).add("Full example", () => {
 	//setup canvas engine
@@ -25,7 +26,6 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	layer2.setTransformable(false);
 	model.addLayer(layer2);
 
-	// add the grid
 	let gridModel = new GridElementModel();
 	layer2.addEntity(gridModel);
 
@@ -35,6 +35,14 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	gridModel2.color = "cyan";
 	gridModel2.thickness = 2;
 	layer2.addEntity(gridModel2);
+
+	// paper layer
+	let paperLayer = new CanvasLayerModel();
+	paperLayer.setSVG(false);
+	paperLayer.setTransformable(true);
+	let paper = new PaperElementModel();
+	paperLayer.addEntity(paper);
+	model.addLayer(paperLayer);
 
 	// add layer
 	let layer = new CanvasLayerModel();

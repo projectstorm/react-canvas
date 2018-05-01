@@ -25,6 +25,7 @@ import { SelectionElementModel } from "./primitives/selection/SelectionElementMo
 import { ModelEvent } from "./event-bus/events/ModelEvent";
 import { BaseEvent, BaseObject } from "./models/BaseObject";
 import { InlineAction } from "./event-bus/InlineAction";
+import { PaperElementFactory } from "./primitives/paper/PaperElementFactory";
 
 export class CanvasEngineError extends Error {}
 
@@ -178,6 +179,7 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 		this.registerElementFactory(new SelectionElementFactory());
 		this.registerElementFactory(new GridElementFactory());
 		this.registerElementFactory(new CircleElementFactory());
+		this.registerElementFactory(new PaperElementFactory());
 
 		// install actions
 		KeyInput.installActions(this.stateMachine, this.eventBus);

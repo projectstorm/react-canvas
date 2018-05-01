@@ -63,8 +63,7 @@ export class GraphModelOrdered<
 		if (index === -1) {
 			return;
 		}
-		this.entitiesOrdered.splice(index, 1);
-		this.entitiesOrdered.push(element);
+		this.entitiesOrdered.splice(index, 1, element);
 	}
 
 	moveEntity(element: CHILD, forward: boolean = true) {
