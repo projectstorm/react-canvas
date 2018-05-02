@@ -1,5 +1,5 @@
 import { Event } from "../Event";
-import { BaseEvent } from "../../models/BaseObject";
+import { BaseEvent } from "../../base-models/BaseObject";
 
 export class ModelEvent extends Event {
 	modelEvent: BaseEvent;

@@ -1,3 +1,7 @@
+import { Point } from "./geometry/Point";
+import * as _ from "lodash";
+import { CanvasEngine } from "./CanvasEngine";
+
 export class Toolkit {
 	static TESTING: boolean = false;
 	static TESTING_UID = 0;

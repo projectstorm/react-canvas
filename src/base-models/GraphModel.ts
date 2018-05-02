@@ -1,7 +1,6 @@
 import { BaseModel, BaseModelListener, DeserializeEvent, Serializable } from "./BaseModel";
 import * as _ from "lodash";
 import { BaseEvent } from "./BaseObject";
-import { CanvasEngine } from "../CanvasEngine";
 
 export interface GraphModelListener<CHILD = BaseModel> extends BaseModelListener {
 	modelsAdded?: (event: BaseEvent & { models: CHILD[] }) => any;
@@ -17,12 +16,12 @@ export class GraphModel<
 	PARENT extends BaseModel = BaseModel,
 	LISTENER extends GraphModelListener<CHILD> = GraphModelListener
 > extends BaseModel<PARENT, LISTENER> {
-	protected entities: { [id: string]: CHILD };
+	protected children: { [id: string]: CHILD };
 	protected parentDelegate: BaseModel;
 
 	constructor(type: string = "graph") {
 		super(type);
-		this.entities = {};
+		this.children = {};
 		this.parentDelegate = this;
 	}
 
@@ -31,53 +30,53 @@ export class GraphModel<
 	}
 
 	count(): number {
-		return _.values(this.entities).length;
+		return _.values(this.children).length;
 	}
 
-	addEntities(entities: CHILD[]) {
+	addModels(entities: CHILD[]) {
 		_.forEach(entities, entity => {
-			this.entities[entity.getID()] = entity;
+			this.children[entity.getID()] = entity;
 			entity.setParent(this.parentDelegate);
 		});
-		this.iterateListeners("entities added", (listener, event) => {
+		this.iterateListeners("children added", (listener, event) => {
 			if (listener.modelsAdded) {
 				listener.modelsAdded({ ...event, models: entities });
 			}
 		});
 	}
 
-	removeEntities(entities: CHILD[]) {
+	addModel(entity: CHILD) {
+		this.addModels([entity]);
+	}
+
+	removeModels(entities: CHILD[]) {
 		_.forEach(entities, entity => {
-			delete this.entities[entity.getID()];
+			delete this.children[entity.getID()];
 			entity.setParent(null);
 		});
 
-		this.iterateListeners("entities removed", (listener, event) => {
+		this.iterateListeners("children removed", (listener, event) => {
 			if (listener.modelsRemoved) {
 				listener.modelsRemoved({ ...event, models: entities });
 			}
 		});
 	}
 
-	removeEntity(entity: CHILD | string) {
+	removeModel(entity: CHILD | string) {
 		if (typeof entity === "string") {
-			entity = this.getEntity(entity);
+			entity = this.getModel(entity);
 		}
-		this.removeEntities([entity]);
+		this.removeModels([entity]);
 	}
 
-	addEntity(entity: CHILD) {
-		this.addEntities([entity]);
-	}
-
-	getEntity(id: string): CHILD {
-		return this.entities[id];
+	getModel(id: string): CHILD {
+		return this.children[id];
 	}
 
 	serialize(): Serializable {
 		return {
 			...super.serialize(),
-			entities: _.mapValues(this.entities, value => {
+			entities: _.mapValues(this.children, value => {
 				return value.serialize();
 			})
 		};
@@ -85,8 +84,8 @@ export class GraphModel<
 
 	deSerialize(event: DeserializeEvent): void {
 		super.deSerialize(event);
-		let entities = event.subset("entities");
-		this.entities = _.mapValues(entities.data, (entity: any, index) => {
+		let entities = event.subset("children");
+		this.children = _.mapValues(entities.data, (entity: any, index) => {
 			let entityOb = event.engine.generateEntityFor(entity._type);
 			entityOb.deSerialize(entities.subset(index));
 			return entityOb;
@@ -94,15 +93,15 @@ export class GraphModel<
 	}
 
 	getEntities(): { [id: string]: CHILD } {
-		return this.entities;
+		return this.children;
 	}
 
 	clearEntities() {
-		this.entities = {};
+		this.children = {};
 	}
 
 	getAllEntities(): CHILD[] {
-		return _.flatMap(this.entities, entity => {
+		return _.flatMap(this.children, entity => {
 			let arr = [entity];
 			if (entity instanceof GraphModel) {
 				arr = arr.concat(entity.getAllEntities());

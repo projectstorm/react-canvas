@@ -1,7 +1,7 @@
 import { CanvasElementModel } from "../../models-canvas/CanvasElementModel";
 import { Rectangle } from "../../geometry/Rectangle";
-import { CanvasEngine } from "../../CanvasEngine";
-import { BaseModel, DeserializeEvent } from "../../models/BaseModel";
+import { DeserializeEvent } from "../../base-models/BaseModel";
+import { GridElementFactory } from "./GridElementFactory";
 
 export class GridElementModel extends CanvasElementModel {
 	sizeX: number;
@@ -10,7 +10,7 @@ export class GridElementModel extends CanvasElementModel {
 	thickness: number;
 
 	constructor() {
-		super("grid");
+		super(GridElementFactory.NAME);
 		this.sizeX = 50;
 		this.sizeY = 50;
 		this.color = "rgba(0,0,0,0.1)";

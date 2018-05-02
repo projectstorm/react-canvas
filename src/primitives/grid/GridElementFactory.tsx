@@ -5,8 +5,10 @@ import { GridElementWidget } from "./GridElementWidget";
 import * as React from "react";
 
 export class GridElementFactory extends AbstractElementFactory<GridElementModel> {
+	static NAME = "primitive-grid";
+
 	constructor() {
-		super("grid");
+		super(GridElementFactory.NAME);
 	}
 
 	generateModel(): GridElementModel {

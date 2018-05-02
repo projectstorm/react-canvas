@@ -12,10 +12,10 @@ export * from "./geometry/Point";
 export * from "./geometry/Polygon";
 export * from "./geometry/Rectangle";
 
-export * from "./models/BaseObject";
-export * from "./models/BaseModel";
-export * from "./models/GraphModel";
-export * from "./models/GraphModelOrdered";
+export * from "./base-models/BaseObject";
+export * from "./base-models/BaseModel";
+export * from "./base-models/GraphModel";
+export * from "./base-models/GraphModelOrdered";
 
 export * from "./models-canvas/CanvasElementModel";
 export * from "./models-canvas/CanvasLayerModel";

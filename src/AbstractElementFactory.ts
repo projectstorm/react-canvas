@@ -1,6 +1,6 @@
 import { CanvasEngine } from "./CanvasEngine";
 import { AbstractState } from "./state-machine/AbstractState";
-import { BaseModel } from "./models/BaseModel";
+import { BaseModel } from "./base-models/BaseModel";
 
 export abstract class AbstractElementFactory<T extends BaseModel = BaseModel> {
 	public type: string;

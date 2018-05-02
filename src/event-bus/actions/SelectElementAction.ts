@@ -22,7 +22,7 @@ export class SelectElementAction extends Action<PressElementEvent> {
 				});
 			}
 			event.element.setSelected(true);
-			this.engine.getCanvasWidget().forceUpdate();
+			this.engine.repaint();
 		}
 	}
 }

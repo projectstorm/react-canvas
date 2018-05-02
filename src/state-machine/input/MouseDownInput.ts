@@ -1,6 +1,5 @@
 import { AbstractStateMachineInput } from "../AbstractStateMachineInput";
 import { EventBus } from "../../event-bus/EventBus";
-import { KeyDownEvent, KeyUpEvent } from "../../event-bus/events/key";
 import { InlineAction } from "../../event-bus/InlineAction";
 import { StateMachine } from "../StateMachine";
 import { MouseDownEvent, MouseUpEvent } from "../../event-bus/events/mouse";
@@ -8,6 +7,7 @@ import { MouseDownEvent, MouseUpEvent } from "../../event-bus/events/mouse";
 export class MouseDownInput extends AbstractStateMachineInput {
 	mouseX: number;
 	mouseY: number;
+	originalEvent: MouseDownEvent;
 
 	static NAME = "mouse-down";
 
@@ -15,6 +15,7 @@ export class MouseDownInput extends AbstractStateMachineInput {
 		super(MouseDownInput.NAME);
 		this.mouseX = event.mouseX;
 		this.mouseY = event.mouseY;
+		this.originalEvent = event;
 	}
 
 	static installActions(machine: StateMachine, eventBus: EventBus) {

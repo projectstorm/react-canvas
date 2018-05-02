@@ -39,6 +39,6 @@ export class ZoomCanvasAction extends Action<MouseWheelEvent> {
 
 		model.setZoomLevel(newZoomFactor);
 		model.setOffset(model.getOffsetX() - widthDiff * xFactor, model.getOffsetY() - heightDiff * yFactor);
-		this.engine.getCanvasWidget().forceUpdate();
+		this.engine.repaint();
 	}
 }

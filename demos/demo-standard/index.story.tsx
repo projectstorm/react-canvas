@@ -3,7 +3,7 @@ import * as React from "react";
 import { CanvasEngine } from "../../src/CanvasEngine";
 import { CanvasModel } from "../../src/models-canvas/CanvasModel";
 import { CanvasLayerModel } from "../../src/models-canvas/CanvasLayerModel";
-import { SquareElementModel } from "../../src/primitives/square/SquareElementModel";
+import { RectangleElementModel } from "../../src/primitives/rectangle/RectangleElementModel";
 
 import { storiesOf } from "@storybook/react";
 import { button } from "@storybook/addon-knobs";
@@ -13,6 +13,7 @@ import { PaperElementModel } from "../../src/primitives/paper/PaperElementModel"
 storiesOf("Simple Usage", module).add("Full example", () => {
 	//setup canvas engine
 	let engine = new CanvasEngine();
+	engine.enableDebugMode(true);
 	engine.installDefaults();
 
 	let model = new CanvasModel();
@@ -27,21 +28,21 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	model.addLayer(layer2);
 
 	let gridModel = new GridElementModel();
-	layer2.addEntity(gridModel);
+	layer2.addModel(gridModel);
 
 	let gridModel2 = new GridElementModel();
 	gridModel2.sizeX = 200;
 	gridModel2.sizeY = 200;
 	gridModel2.color = "cyan";
 	gridModel2.thickness = 2;
-	layer2.addEntity(gridModel2);
+	layer2.addModel(gridModel2);
 
 	// paper layer
 	let paperLayer = new CanvasLayerModel();
 	paperLayer.setSVG(false);
 	paperLayer.setTransformable(true);
 	let paper = new PaperElementModel();
-	paperLayer.addEntity(paper);
+	paperLayer.addModel(paper);
 	model.addLayer(paperLayer);
 
 	// add layer
@@ -51,16 +52,16 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	model.addLayer(layer);
 
 	// squares
-	let squareModel = new SquareElementModel();
+	let squareModel = new RectangleElementModel();
 	squareModel.dimensions.updateDimensions(-100, -100, 100, 100);
 
-	let squareModel2 = new SquareElementModel();
+	let squareModel2 = new RectangleElementModel();
 	squareModel2.dimensions.updateDimensions(300, 300, 50, 70);
 
-	let squareModel3 = new SquareElementModel();
+	let squareModel3 = new RectangleElementModel();
 	squareModel3.dimensions.updateDimensions(420, 420, 50, 70);
 
-	layer.addEntities([squareModel, squareModel2, squareModel3]);
+	layer.addModels([squareModel, squareModel2, squareModel3]);
 
 	button("Fit Width", () => {
 		engine.getCanvasWidget().zoomToFit(15);

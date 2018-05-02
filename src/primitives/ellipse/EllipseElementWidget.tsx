@@ -1,13 +1,13 @@
 import * as React from "react";
-import { CircleElementModel } from "./CircleElementModel";
+import { EllipseElementModel } from "./EllipseElementModel";
 
 export interface CircleElementWidgetProps {
-	model: CircleElementModel;
+	model: EllipseElementModel;
 }
 
 export interface CircleElementWidgetState {}
 
-export class CircleElementWidget extends React.Component<CircleElementWidgetProps, CircleElementWidgetState> {
+export class EllipseElementWidget extends React.Component<CircleElementWidgetProps, CircleElementWidgetState> {
 	constructor(props: CircleElementWidgetProps) {
 		super(props);
 		this.state = {};

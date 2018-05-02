@@ -1,7 +1,7 @@
 import { Action } from "./Action";
 import { Event } from "./Event";
-import { BaseEvent, BaseListener, BaseObject } from "../models/BaseObject";
 import * as _ from "lodash";
+import { BaseEvent, BaseListener, BaseObject } from "../base-models/BaseObject";
 
 export interface EventBusListener extends BaseListener {
 	eventWillFire?: (event: BaseEvent & { event: Event }) => any;

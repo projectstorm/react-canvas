@@ -20,6 +20,6 @@ export class TranslateCanvasState extends AbstractDisplacementState {
 
 	processDisplacement(displacementX, displacementY) {
 		this.engine.getModel().setOffset(this.initialOffsetX + displacementX, this.initialOffsetY + displacementY);
-		this.engine.getCanvasWidget().forceUpdate();
+		this.engine.repaint();
 	}
 }

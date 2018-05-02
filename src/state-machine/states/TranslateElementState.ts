@@ -37,6 +37,6 @@ export class TranslateElementState extends AbstractDisplacementState {
 			);
 			this.initialEntities[index].setDimensions(dim);
 		});
-		this.engine.getCanvasWidget().forceUpdate();
+		this.engine.repaint();
 	}
 }

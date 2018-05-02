@@ -17,6 +17,6 @@ export class SelectCanvasAction extends Action<MouseDownEvent> {
 		_.forEach(entities, entity => {
 			entity.setSelected(false);
 		});
-		this.engine.getCanvasWidget().forceUpdate();
+		this.engine.repaint();
 	}
 }

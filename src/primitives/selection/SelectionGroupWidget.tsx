@@ -3,7 +3,8 @@ import { BaseWidget, BaseWidgetProps } from "../../widgets/BaseWidget";
 import { AnchorWidget } from "../../widgets/AnchorWidget";
 import { CanvasEngine } from "../../CanvasEngine";
 import { SelectionElementModel } from "./SelectionElementModel";
-import { ModelAnchorInputPosition } from "../../state-machine/input/ModelAnchorInput";
+import { ModelAnchorInput, ModelAnchorInputPosition } from "../../state-machine/input/ModelAnchorInput";
+import { ModelRotateInput } from "../../state-machine/input/ModelRotateInput";
 
 export interface SelectionGroupWidgetProps extends BaseWidgetProps {
 	model: SelectionElementModel;
@@ -30,6 +31,15 @@ export class SelectionGroupWidget extends BaseWidget<SelectionGroupWidgetProps, 
 				}}
 				{...this.getProps()}
 			>
+				<div
+					className={this.bem("__rotate")}
+					onMouseDown={() => {
+						this.props.engine.getStateMachine().addInput(new ModelRotateInput(this.props.model));
+					}}
+					onMouseUp={() => {
+						this.props.engine.getStateMachine().removeInput(ModelRotateInput.NAME);
+					}}
+				/>
 				<AnchorWidget
 					pos={ModelAnchorInputPosition.TOP_LEFT}
 					selectionModel={this.props.model}

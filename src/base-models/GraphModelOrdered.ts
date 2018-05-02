@@ -30,26 +30,34 @@ export class GraphModelOrdered<
 	deSerialize(event: DeserializeEvent): void {
 		super.deSerialize(event);
 		this.entitiesOrdered = _.map(event.data["entitiesOrdered"], entityID => {
-			return this.entities[entityID];
+			return this.children[entityID];
 		});
 	}
 
-	addEntities(entities: CHILD[]) {
-		this.entitiesOrdered = this.entitiesOrdered.concat(entities);
-		super.addEntities(entities);
+	addModels(entities: CHILD[], position?: number) {
+		super.addModels(entities);
+		if (position == null) {
+			this.entitiesOrdered = this.entitiesOrdered.concat(entities);
+		} else {
+			this.entitiesOrdered.splice(position, 0, ...entities);
+		}
 	}
 
-	removeEntities(entities: CHILD[]) {
+	addModel(entity: CHILD, position?: number) {
+		this.addModels([entity], position);
+	}
+
+	removeModels(entities: CHILD[]) {
 		for (let i = this.entitiesOrdered.length; i >= 0; i--) {
 			let index = this.entitiesOrdered.indexOf(this.entitiesOrdered[i]);
 			if (index !== -1) {
 				this.entitiesOrdered.splice(index, 1);
 			}
 		}
-		super.removeEntities(entities);
+		super.removeModels(entities);
 	}
 
-	moveEntityToBack(element: CHILD) {
+	moveModelToBack(element: CHILD) {
 		let index = this.entitiesOrdered.indexOf(element);
 		if (index === -1) {
 			return;
@@ -57,7 +65,7 @@ export class GraphModelOrdered<
 		this.entitiesOrdered.splice(0, 0, element);
 	}
 
-	moveEntityToFront(element: CHILD) {
+	moveModelToFront(element: CHILD) {
 		let index = this.entitiesOrdered.indexOf(element);
 		if (index === -1) {
 			return;
@@ -66,12 +74,12 @@ export class GraphModelOrdered<
 		this.entitiesOrdered.push(element);
 	}
 
-	moveEntity(element: CHILD, forward: boolean = true) {
+	moveModel(element: CHILD, newIndex: number) {
 		let index = this.entitiesOrdered.indexOf(element);
 		if (index === -1) {
 			return;
 		}
 		this.entitiesOrdered.splice(index, 1);
-		this.entitiesOrdered.splice(forward ? index : index - 1, 0, element);
+		this.entitiesOrdered.splice(newIndex, 0, element);
 	}
 }

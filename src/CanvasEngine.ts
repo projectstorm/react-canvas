@@ -1,17 +1,16 @@
 import * as _ from "lodash";
 import { AbstractElementFactory } from "./AbstractElementFactory";
-import { SquareElementFactory } from "./primitives/square/SquareElementFactory";
+import { RectangleElementFactory } from "./primitives/rectangle/RectangleElementFactory";
 import { CanvasModel } from "./models-canvas/CanvasModel";
 import { CanvasWidget } from "./widgets/CanvasWidget";
 import { SelectionElementFactory } from "./primitives/selection/SelectionElementFactory";
 import { StateMachine } from "./state-machine/StateMachine";
 import { TranslateCanvasState } from "./state-machine/states/TranslateCanvasState";
 import { GridElementFactory } from "./primitives/grid/GridElementFactory";
-import { CircleElementFactory } from "./primitives/circle/CircleElementFactory";
+import { EllipseElementFactory } from "./primitives/ellipse/EllipseElementFactory";
 import { TranslateElementState } from "./state-machine/states/TranslateElementState";
 import { SelectElementsState } from "./state-machine/states/SelectElementsState";
 import { HistoryBank } from "./history/HistoryBank";
-import { BaseModel, DeserializeEvent } from "./models/BaseModel";
 import { CanvasLayerFactory } from "./CanvasLayerFactory";
 import { EventBus } from "./event-bus/EventBus";
 import { ZoomCanvasAction } from "./event-bus/actions/ZoomCanvasAction";
@@ -23,9 +22,13 @@ import { Toolkit } from "./Toolkit";
 import { CanvasLayerModel } from "./models-canvas/CanvasLayerModel";
 import { SelectionElementModel } from "./primitives/selection/SelectionElementModel";
 import { ModelEvent } from "./event-bus/events/ModelEvent";
-import { BaseEvent, BaseObject } from "./models/BaseObject";
 import { InlineAction } from "./event-bus/InlineAction";
 import { PaperElementFactory } from "./primitives/paper/PaperElementFactory";
+import { BaseEvent, BaseObject } from "./base-models/BaseObject";
+import { BaseModel, DeserializeEvent } from "./base-models/BaseModel";
+import { EllipseElementModel } from "./primitives/ellipse/EllipseElementModel";
+import { VirtualDimensionTracker } from "./tracking/VirtualDimensionTracker";
+import { DeselectModelsAction } from "./event-bus/actions/DeselectModelsAction";
 
 export class CanvasEngineError extends Error {}
 
@@ -40,8 +43,10 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 	protected canvasWidget;
 	protected historyBank: HistoryBank;
 	protected eventBus: EventBus;
+	protected debugMode: boolean;
 
 	private modelListener: string;
+	protected debugLayer: CanvasLayerModel;
 
 	constructor() {
 		super();
@@ -52,9 +57,20 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 		this.historyBank = new HistoryBank();
 		this.eventBus = new EventBus();
 		this.modelListener = null;
+		this.debugMode = false;
 
 		if (Toolkit.TESTING) {
 			Toolkit.TESTING_UID = 0;
+		}
+	}
+
+	enableDebugMode(debug: boolean) {
+		this.debugMode = debug;
+		if (debug) {
+			// debug layer
+			this.debugLayer = new CanvasLayerModel();
+			this.debugLayer.setSVG(true);
+			this.debugLayer.setTransformable(true);
 		}
 	}
 
@@ -127,6 +143,31 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 		});
 	}
 
+	repaint() {
+		if (this.canvasWidget) {
+			if (this.debugMode) {
+				this.model.layers.moveModelToFront(this.debugLayer);
+				this.debugLayer.clearEntities();
+				_.forEach(this.model.getElements(), element => {
+					let dimensions = element.getDimensions();
+					if (dimensions) {
+						this.debugLayer.addModels(
+							_.map(
+								EllipseElementModel.createPointCloudFrom(dimensions, 3 / this.model.getZoomLevel()),
+								point => {
+									point.background = "mediumpurple";
+									return point;
+								}
+							)
+						);
+					}
+				});
+			}
+
+			this.canvasWidget.forceUpdate();
+		}
+	}
+
 	installDefaultInteractivity() {
 		// selection layer
 		let selectionLayer = new CanvasLayerModel();
@@ -138,9 +179,15 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 			modelChanged: event => {
 				if (event.oldModel) {
 					event.oldModel.removeLayer(selectionLayer);
+					if (this.debugLayer) {
+						event.oldModel.removeLayer(this.debugLayer);
+					}
 				}
 				if (event.model) {
 					event.model.addLayer(selectionLayer);
+					if (this.debugLayer) {
+						event.model.addLayer(this.debugLayer);
+					}
 				}
 			}
 		});
@@ -150,14 +197,14 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 				// setup a combo box for when there are models
 				if (event.modelEvent.name === "selection changed") {
 					selectionLayer.clearEntities();
-					this.model.layers.moveEntityToFront(selectionLayer);
+					this.model.layers.moveModelToFront(selectionLayer);
 					let selected = _.filter(this.model.getElements(), element => {
 						return element.isSelected();
 					});
 					if (selected.length > 0) {
 						let model = new SelectionElementModel();
 						model.setModels(selected);
-						selectionLayer.addEntity(model);
+						selectionLayer.addModel(model);
 						this.canvasWidget.forceUpdate();
 					}
 				}
@@ -176,10 +223,10 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 	installDefaults() {
 		// element factories
 		this.registerElementFactory(new CanvasLayerFactory());
-		this.registerElementFactory(new SquareElementFactory());
+		this.registerElementFactory(new RectangleElementFactory());
 		this.registerElementFactory(new SelectionElementFactory());
 		this.registerElementFactory(new GridElementFactory());
-		this.registerElementFactory(new CircleElementFactory());
+		this.registerElementFactory(new EllipseElementFactory());
 		this.registerElementFactory(new PaperElementFactory());
 
 		// install actions
@@ -187,6 +234,7 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 		MouseDownInput.installActions(this.stateMachine, this.eventBus);
 		ModelElementInput.installActions(this.stateMachine, this.eventBus);
 		this.eventBus.registerAction(new ZoomCanvasAction(this));
+		this.eventBus.registerAction(new DeselectModelsAction(this));
 
 		// possible states
 		this.stateMachine.addState(new SelectElementsState(this));

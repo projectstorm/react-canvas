@@ -1,4 +1,7 @@
 import { Event } from "../Event";
+import { Point } from "../../geometry/Point";
+import * as _ from "lodash";
+import { CanvasEngine } from "../../CanvasEngine";
 
 export abstract class MouseEvent extends Event {
 	mouseX: number;
@@ -8,6 +11,16 @@ export abstract class MouseEvent extends Event {
 		super(name, source);
 		this.mouseX = mouseX;
 		this.mouseY = mouseY;
+	}
+
+	getCanvasCoordinates(engine: CanvasEngine): { x: number; y: number } {
+		let model = engine.getModel();
+		let canDimensions = engine.getCanvasWidget().dimension.realDimensions;
+
+		return {
+			x: (this.mouseX - canDimensions.getTopLeft().x - model.getOffsetX()) / model.getZoomLevel(),
+			y: (this.mouseY - canDimensions.getTopLeft().y - model.getOffsetY()) / model.getZoomLevel()
+		};
 	}
 }
 

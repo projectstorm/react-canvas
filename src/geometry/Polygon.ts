@@ -5,7 +5,7 @@ import { CanvasModel } from "../models-canvas/CanvasModel";
 import { Matrix } from "mathjs";
 
 export class Polygon {
-	points: Point[];
+	protected points: Point[];
 
 	constructor(points: Point[] = []) {
 		this.points = points;
@@ -34,6 +34,10 @@ export class Polygon {
 		_.forEach(this.points, point => {
 			point.transform(matrix);
 		});
+	}
+
+	setPoints(points: Point[]) {
+		this.points = points;
 	}
 
 	getPoints(): Point[] {

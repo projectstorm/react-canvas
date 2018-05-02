@@ -24,6 +24,13 @@ export class Rectangle extends Polygon {
 		this.points = Rectangle.pointsFromBounds(x, y, width, height);
 	}
 
+	setPoints(points: Point[]) {
+		if (points.length !== 4) {
+			throw "Rectangles must always have 4 points";
+		}
+		super.setPoints(points);
+	}
+
 	getWidth(): number {
 		return Math.sqrt(
 			Math.pow(this.getTopLeft().x - this.getTopRight().x, 2) +

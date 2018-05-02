@@ -1,11 +1,10 @@
 import { CanvasLayerModel } from "./CanvasLayerModel";
 import * as _ from "lodash";
-import { GraphModel } from "../models/GraphModel";
 import { CanvasElementModel } from "./CanvasElementModel";
-import { BaseModel, BaseModelListener, DeserializeEvent } from "../models/BaseModel";
 import { CanvasEngine } from "../CanvasEngine";
-import { BaseEvent, BaseListener } from "../models/BaseObject";
-import { GraphModelOrdered } from "../models/GraphModelOrdered";
+import { BaseModel, BaseModelListener, DeserializeEvent } from "../base-models/BaseModel";
+import { BaseEvent } from "../base-models/BaseObject";
+import { GraphModelOrdered } from "../base-models/GraphModelOrdered";
 
 export interface CanvasModelListener<T extends CanvasModel = any> extends BaseModelListener<T> {
 	offsetUpdated?(event: BaseEvent<T> & { offsetX: number; offsetY: number }): void;
@@ -86,11 +85,11 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
 	}
 
 	removeLayer(layer: CanvasLayerModel) {
-		this.layers.removeEntity(layer);
+		this.layers.removeModel(layer);
 	}
 
 	addLayer(layer: CanvasLayerModel) {
-		this.layers.addEntity(layer);
+		this.layers.addModel(layer);
 		this.selectedLayer = layer;
 	}
 

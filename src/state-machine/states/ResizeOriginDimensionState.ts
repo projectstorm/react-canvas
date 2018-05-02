@@ -71,6 +71,6 @@ export class ResizeOriginDimensionsState extends AbstractDisplacementState {
 			model.setDimensions(dimensions);
 		});
 
-		this.engine.getCanvasWidget().forceUpdate();
+		this.engine.repaint();
 	}
 }

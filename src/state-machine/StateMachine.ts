@@ -1,7 +1,7 @@
 import { AbstractState } from "./AbstractState";
 import * as _ from "lodash";
 import { AbstractStateMachineInput } from "./AbstractStateMachineInput";
-import { BaseEvent, BaseListener, BaseObject } from "../models/BaseObject";
+import { BaseEvent, BaseListener, BaseObject } from "../base-models/BaseObject";
 
 export interface StateMachineListener extends BaseListener<StateMachine> {
 	stateChanged(event: BaseEvent<StateMachine> & { state: AbstractState });

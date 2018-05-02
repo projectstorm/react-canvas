@@ -1,12 +1,12 @@
 import { CanvasLayerModel } from "./CanvasLayerModel";
-import { BaseModel, DeserializeEvent } from "../models/BaseModel";
 import { Rectangle } from "../geometry/Rectangle";
-import { BaseEvent, BaseListener } from "../models/BaseObject";
+import { BaseEvent } from "../base-models/BaseObject";
+import { BaseModel, BaseModelListener, DeserializeEvent } from "../base-models/BaseModel";
 
-export interface CanvasElementModelListener<T extends CanvasElementModel = any> extends BaseListener<T> {
-	selectionChanged?(event: BaseEvent & { selected: boolean });
+export interface CanvasElementModelListener<T extends CanvasElementModel = any> extends BaseModelListener<T> {
+	selectionChanged?(event: BaseEvent<CanvasElementModel> & { selected: boolean });
 
-	lockChanged?(event: BaseEvent & { locked: boolean });
+	lockChanged?(event: BaseEvent<CanvasElementModel> & { locked: boolean });
 }
 
 export abstract class CanvasElementModel<
@@ -70,24 +70,20 @@ export abstract class CanvasElementModel<
 
 	moveToLayer(layer: CanvasLayerModel) {
 		if (this.parent) {
-			this.parent.removeEntity(this);
+			this.parent.removeModel(this);
 		}
-		layer.addEntity(this);
+		layer.addModel(this);
 	}
 
 	moveToFront() {
-		this.parent.moveEntityToFront(this);
+		this.parent.moveModelToFront(this);
 	}
 
 	moveToBack() {
-		this.parent.moveEntityToBack(this);
+		this.parent.moveModelToBack(this);
 	}
 
-	moveForward() {
-		this.parent.moveEntity(this, true);
-	}
-
-	moveBackward() {
-		this.parent.moveEntity(this, false);
+	moveTo(index: number) {
+		this.parent.moveModel(this, index);
 	}
 }

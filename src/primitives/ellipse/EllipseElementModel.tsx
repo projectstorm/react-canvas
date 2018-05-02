@@ -3,30 +3,35 @@ import { Rectangle } from "../../geometry/Rectangle";
 import { Point } from "../../geometry/Point";
 import * as _ from "lodash";
 import { Polygon } from "../../geometry/Polygon";
-import { DeserializeEvent } from "../../models/BaseModel";
+import { DeserializeEvent } from "../../base-models/BaseModel";
+import { EllipseElementFactory } from "./EllipseElementFactory";
 
-export class CircleElementModel extends CanvasElementModel {
+export class EllipseElementModel extends CanvasElementModel {
 	radiusX: number;
 	radiusY: number;
 	center: Point;
 	background: string;
 
 	constructor() {
-		super("circle");
+		super(EllipseElementFactory.NAME);
 		this.radiusX = 100;
 		this.radiusY = 100;
 		this.center = new Point(0, 0);
 		this.background = "rgb(0,192,255)";
 	}
 
-	static createPointCloudFrom(rectangle: Polygon, radius: number = 5): CircleElementModel[] {
-		return _.map(rectangle.getPoints(), point => {
-			let model = new CircleElementModel();
+	static createPointCloud(points: Point[], radius: number = 5) {
+		return _.map(points, point => {
+			let model = new EllipseElementModel();
 			model.radiusX = radius;
 			model.radiusY = radius;
 			model.center = point.clone();
 			return model;
 		});
+	}
+
+	static createPointCloudFrom(rectangle: Polygon, radius: number = 5): EllipseElementModel[] {
+		return EllipseElementModel.createPointCloud(rectangle.getPoints().concat(rectangle.getOrigin()), radius);
 	}
 
 	getDimensions(): Rectangle {

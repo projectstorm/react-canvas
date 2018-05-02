@@ -5,8 +5,10 @@ import { PaperElementWidget } from "./PaperElementWidget";
 import * as React from "react";
 
 export class PaperElementFactory extends AbstractElementFactory<PaperElementModel> {
+	static NAME = "primitive-paper";
+
 	constructor() {
-		super("paper");
+		super(PaperElementFactory.NAME);
 	}
 
 	generateModel(): PaperElementModel {

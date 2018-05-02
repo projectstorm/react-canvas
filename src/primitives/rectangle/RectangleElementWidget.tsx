@@ -1,19 +1,19 @@
 import * as React from "react";
 import { BaseWidget, BaseWidgetProps } from "../../widgets/BaseWidget";
-import { SquareElementModel } from "./SquareElementModel";
+import { RectangleElementModel } from "./RectangleElementModel";
 import { CanvasEngine } from "../../CanvasEngine";
 import { PressElementEvent, UnPressElementEvent } from "../../event-bus/events/elements";
 
 export interface SquareElementWidgetProps extends BaseWidgetProps {
-	model: SquareElementModel;
+	model: RectangleElementModel;
 	engine: CanvasEngine;
 }
 
 export interface SquareElementWidgetState {}
 
-export class SquareElementWidget extends BaseWidget<SquareElementWidgetProps, SquareElementWidgetState> {
+export class RectangleElementWidget extends BaseWidget<SquareElementWidgetProps, SquareElementWidgetState> {
 	constructor(props: SquareElementWidgetProps) {
-		super("src-primitive-square", props);
+		super("src-primitive-rectangle", props);
 		this.state = {};
 	}
 

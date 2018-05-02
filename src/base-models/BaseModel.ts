@@ -8,8 +8,8 @@ export interface Serializable {
 }
 
 export interface BaseModelListener<T extends BaseModel = BaseModel> extends BaseListener<T> {
-	lockChanged?(event: BaseEvent<BaseModel> & { locked: boolean });
-	delegateEvent?(event: BaseEvent<BaseModel>);
+	lockChanged?(event: BaseEvent<T> & { locked: boolean });
+	delegateEvent?(event: BaseEvent<T>);
 }
 
 export class DeserializeEvent {
@@ -38,7 +38,6 @@ export class BaseModel<
 	protected id: string;
 	protected type: string;
 	protected locked: boolean;
-
 	private parentListener: string;
 
 	constructor(type: string) {

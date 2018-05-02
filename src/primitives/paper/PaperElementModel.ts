@@ -1,5 +1,6 @@
 import { CanvasElementModel } from "../../models-canvas/CanvasElementModel";
 import { Rectangle } from "../../geometry/Rectangle";
+import { PaperElementFactory } from "./PaperElementFactory";
 
 export class PaperElementModel extends CanvasElementModel {
 	dimensions: Rectangle;
@@ -11,7 +12,7 @@ export class PaperElementModel extends CanvasElementModel {
 	static INCH = 25.4; //mm
 
 	constructor() {
-		super("paper");
+		super(PaperElementFactory.NAME);
 		this.dimensions = new Rectangle();
 		this.setA4();
 	}
