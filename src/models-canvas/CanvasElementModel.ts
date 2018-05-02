@@ -2,12 +2,11 @@ import { CanvasLayerModel } from "./CanvasLayerModel";
 import { BaseModel, DeserializeEvent } from "../models/BaseModel";
 import { Rectangle } from "../geometry/Rectangle";
 import { BaseEvent, BaseListener } from "../models/BaseObject";
-import { CanvasEngine } from "../CanvasEngine";
 
 export interface CanvasElementModelListener<T extends CanvasElementModel = any> extends BaseListener<T> {
-	selectionChanged(event: BaseEvent & { selected: boolean });
+	selectionChanged?(event: BaseEvent & { selected: boolean });
 
-	lockChanged(event: BaseEvent & { locked: boolean });
+	lockChanged?(event: BaseEvent & { locked: boolean });
 }
 
 export abstract class CanvasElementModel<

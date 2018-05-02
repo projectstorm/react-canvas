@@ -4,18 +4,18 @@ import { BaseEvent } from "./BaseObject";
 import { CanvasEngine } from "../CanvasEngine";
 
 export interface GraphModelListener<CHILD = BaseModel> extends BaseModelListener {
-	modelsAdded: (event: BaseEvent & { models: CHILD[] }) => any;
+	modelsAdded?: (event: BaseEvent & { models: CHILD[] }) => any;
 
-	modelsRemoved: (event: BaseEvent & { models: CHILD[] }) => any;
+	modelsRemoved?: (event: BaseEvent & { models: CHILD[] }) => any;
 }
 
 /**
  * Model that supports graph traversal
  */
 export class GraphModel<
-	CHILD extends BaseModel,
-	PARENT extends BaseModel,
-	LISTENER extends GraphModelListener<CHILD> = any
+	CHILD extends BaseModel = BaseModel,
+	PARENT extends BaseModel = BaseModel,
+	LISTENER extends GraphModelListener<CHILD> = GraphModelListener
 > extends BaseModel<PARENT, LISTENER> {
 	protected entities: { [id: string]: CHILD };
 	protected parentDelegate: BaseModel;
@@ -59,7 +59,10 @@ export class GraphModel<
 		});
 	}
 
-	removeEntity(entity: CHILD) {
+	removeEntity(entity: CHILD | string) {
+		if (typeof entity === "string") {
+			entity = this.getEntity(entity);
+		}
 		this.removeEntities([entity]);
 	}
 
