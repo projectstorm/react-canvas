@@ -2,6 +2,8 @@
 
 A brand new foundation for storm-react-diagrams
 
+![](./images/screenshot.jpg)
+
 ## Features
 
 * Virtual and real co-ordinate system
