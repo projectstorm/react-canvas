@@ -1,9 +1,7 @@
-import { Toolkit } from "../Toolkit";
 import { Action } from "./Action";
 
 export class Event {
 	stopped: boolean;
-	id: string;
 	source: any;
 	name: string;
 	actionsFired: Action[];
@@ -12,7 +10,6 @@ export class Event {
 		this.name = name;
 		this.source = source;
 		this.stopped = false;
-		this.id = Toolkit.UID();
 		this.actionsFired = [];
 	}
 

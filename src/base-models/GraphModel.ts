@@ -97,7 +97,7 @@ export class GraphModel<
 	}
 
 	clearEntities() {
-		this.children = {};
+		this.removeModels(_.values(this.children));
 	}
 
 	getAllEntities(): CHILD[] {

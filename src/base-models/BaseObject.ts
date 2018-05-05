@@ -1,13 +1,9 @@
 import { Toolkit } from "../Toolkit";
 
-/**
- * @author Dylan Vorster
- */
 export interface BaseEvent<T extends BaseObject = any> {
 	source: T;
 	stopPropagation: () => any;
 	firing: boolean;
-	id: string;
 	name: string;
 }
 
@@ -22,7 +18,6 @@ export class BaseObject<LISTENER extends BaseListener = BaseListener> {
 
 	public iterateListeners(name: string, cb: (t: LISTENER, event: BaseEvent) => any) {
 		let event: BaseEvent = {
-			id: Toolkit.UID(),
 			firing: true,
 			source: this,
 			name: name,
