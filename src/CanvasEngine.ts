@@ -256,7 +256,9 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 
 	setCanvasWidget(widget: CanvasWidget) {
 		this.canvasWidget = widget;
-		this.historyBank.pushState(this.model.serialize());
+		if (widget) {
+			this.historyBank.pushState(this.model.serialize());
+		}
 	}
 
 	getFactory(type: string): AbstractElementFactory {

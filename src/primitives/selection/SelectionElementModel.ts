@@ -1,6 +1,7 @@
 import { CanvasElementModel } from "../../models-canvas/CanvasElementModel";
 import * as _ from "lodash";
 import { Rectangle } from "../../geometry/Rectangle";
+import { DeserializeEvent } from "../../base-models/BaseModel";
 
 export class SelectionElementModel extends CanvasElementModel {
 	models: CanvasElementModel[];
@@ -27,4 +28,20 @@ export class SelectionElementModel extends CanvasElementModel {
 	}
 
 	setDimensions(dimensions: Rectangle) {}
+
+	deSerialize(event: DeserializeEvent): void {
+		super.deSerialize(event);
+		this.models = _.map(event.data["models"], modelID => {
+			return event.cache[modelID];
+		}) as any;
+	}
+
+	serialize() {
+		return {
+			...super.serialize(),
+			models: _.map(this.models, model => {
+				return model.getID();
+			})
+		};
+	}
 }

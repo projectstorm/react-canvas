@@ -84,7 +84,7 @@ export class GraphModel<
 
 	deSerialize(event: DeserializeEvent): void {
 		super.deSerialize(event);
-		let entities = event.subset("children");
+		let entities = event.subset("entities");
 		this.children = _.mapValues(entities.data, (entity: any, index) => {
 			let entityOb = event.engine.generateEntityFor(entity._type);
 			entityOb.deSerialize(entities.subset(index));
