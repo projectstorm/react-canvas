@@ -49,10 +49,22 @@ export class Point {
 		return mathjs.matrix([[1, 0, x], [0, 1, y], [0, 0, 1]]);
 	}
 
+	public static rotateMatrix(deg: number): Matrix {
+		return mathjs.matrix([[Math.cos(deg), -1 * Math.sin(deg), 0], [Math.sin(deg), Math.cos(deg), 0], [0, 0, 1]]);
+	}
+
 	static createScaleMatrix(x, y, origin: Point): Matrix {
 		return this.multiply(
 			Point.translateMatrix(origin.x, origin.y),
 			Point.scaleMatrix(x, y),
+			Point.translateMatrix(-origin.x, -origin.y)
+		);
+	}
+
+	static createRotateMatrix(deg: number, origin: Point): Matrix {
+		return this.multiply(
+			Point.translateMatrix(origin.x, origin.y),
+			Point.rotateMatrix(deg),
 			Point.translateMatrix(-origin.x, -origin.y)
 		);
 	}

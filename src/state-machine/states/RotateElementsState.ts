@@ -6,11 +6,14 @@ import { MouseDownInput } from "../input/MouseDownInput";
 import { MouseMoveEvent } from "../../event-bus/events/mouse";
 import { ModelRotateInput } from "../input/ModelRotateInput";
 import { Point } from "../../geometry/Point";
+import * as _ from "lodash";
+import { Rectangle } from "../../geometry/Rectangle";
 
 export class RotateElementsState extends AbstractState {
 	initialMouse: MouseDownInput;
 	modelRotateInput: ModelRotateInput;
 	initialOrigin: Point;
+	initialDimensions: Rectangle[];
 
 	constructor(engine: CanvasEngine) {
 		super("rotate-elements", engine);
@@ -25,12 +28,19 @@ export class RotateElementsState extends AbstractState {
 								this.initialMouse.originalEvent.getCanvasCoordinates(this.engine).x,
 							this.initialOrigin.y - event.getCanvasCoordinates(this.engine).y
 						) *
-						180 /
-						Math.PI;
+						(180 / Math.PI);
 
 					if (degrees < 0) {
 						degrees = 360.0 + degrees;
 					}
+
+					let transform = Point.createRotateMatrix(degrees / (180 / Math.PI), this.initialOrigin);
+
+					_.forEach(this.modelRotateInput.selectionModel.getModels(), (model, index) => {
+						let dimensions = this.initialDimensions[index].clone();
+						dimensions.transform(transform);
+						model.setDimensions(dimensions);
+					});
 
 					this.engine.repaint();
 				}
@@ -47,6 +57,9 @@ export class RotateElementsState extends AbstractState {
 			.getDimensions()
 			.getOrigin()
 			.clone();
+		this.initialDimensions = _.map(this.modelRotateInput.selectionModel.getModels(), model => {
+			return model.getDimensions();
+		});
 	}
 
 	deactivated(machine: StateMachine) {

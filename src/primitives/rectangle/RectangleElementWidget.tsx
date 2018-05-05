@@ -20,13 +20,9 @@ export class RectangleElementWidget extends BaseWidget<SquareElementWidgetProps,
 	render() {
 		let dimensions = this.props.model.dimensions;
 		return (
-			<rect
+			<polygon
 				{...this.getProps()}
-				x={dimensions.getTopLeft().x}
-				y={dimensions.getTopLeft().y}
-				rotate={45}
-				width={dimensions.getWidth()}
-				height={dimensions.getHeight()}
+				points={dimensions.getSVGPoints()}
 				onMouseDown={event => {
 					this.props.engine.getEventBus().fireEvent(new PressElementEvent(this, this.props.model));
 				}}

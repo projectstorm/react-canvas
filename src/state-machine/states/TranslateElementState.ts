@@ -29,12 +29,7 @@ export class TranslateElementState extends AbstractDisplacementState {
 	processDisplacement(displacementX, displacementY) {
 		_.forEach(this.initialPosition, (initialPosition, index) => {
 			const dim = initialPosition.clone();
-			dim.updateDimensions(
-				initialPosition.getTopLeft().x + displacementX / this.engine.getModel().getZoomLevel(),
-				initialPosition.getTopLeft().y + displacementY / this.engine.getModel().getZoomLevel(),
-				dim.getWidth(),
-				dim.getHeight()
-			);
+			dim.translate(displacementX, displacementY);
 			this.initialEntities[index].setDimensions(dim);
 		});
 		this.engine.repaint();

@@ -6,11 +6,13 @@
 	overflow: visible !important;
 	pointer-events: none;
 
+	polygon {
+		pointer-events: all;
+	}
 	rect{
 		pointer-events: all;
 	}
 	ellipse{
 		pointer-events: all;
 	}
-	//transition: transform 0.3s;
 }
