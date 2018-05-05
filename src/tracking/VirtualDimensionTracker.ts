@@ -1,8 +1,6 @@
 import { DimensionTracker } from "./DimensionTracker";
 import { CanvasEngine } from "../CanvasEngine";
 import { Rectangle } from "../geometry/Rectangle";
-import { Point } from "../geometry/Point";
-import * as _ from "lodash";
 
 export class VirtualDimensionTracker extends DimensionTracker {
 	virtualDimensions: Rectangle;
@@ -10,20 +8,6 @@ export class VirtualDimensionTracker extends DimensionTracker {
 	constructor() {
 		super();
 		this.virtualDimensions = new Rectangle();
-	}
-
-	static projectPoints(engine: CanvasEngine, points: Point[]): Point[] {
-		let model = engine.getModel();
-		let canDimensions = engine.getCanvasWidget().dimension.realDimensions;
-		// store the virtual dimensions
-		let zoomLevel = model.getZoomLevel();
-
-		return _.map(points, point => {
-			return new Point(
-				(point.x - canDimensions.getTopLeft().x - model.getOffsetX()) / zoomLevel,
-				(point.y - canDimensions.getTopLeft().y - model.getOffsetY()) / zoomLevel
-			);
-		});
 	}
 
 	recompute(engine: CanvasEngine, clientRect: ClientRect) {

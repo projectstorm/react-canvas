@@ -29,12 +29,10 @@ export class DimensionTrackerWidget extends BaseWidget<DimensionTrackerWidgetPro
 	}
 
 	componentDidMount() {
-		// if resize observer is present, rather use that
+		//if resize observer is present, rather use that
 		if (window["ResizeObserver"]) {
 			this.observer = new window["ResizeObserver"](entries => {
-				for (let entry of entries) {
-					this.props.dimensionTracker.updateDimensions(this.props.engine, entry.contentRect);
-				}
+				this.updateDimensions();
 			});
 			this.observer.observe(this.props.reference.current);
 		}

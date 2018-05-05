@@ -3,6 +3,7 @@ import * as React from "react";
 import { CanvasEngine } from "../CanvasEngine";
 import { SelectionElementModel } from "../primitives/selection/SelectionElementModel";
 import { ModelAnchorInput, ModelAnchorInputPosition } from "../state-machine/input/ModelAnchorInput";
+import { MouseWidget } from "./MouseWidget";
 
 export interface AnchorWidgetProps extends BaseWidgetProps {
 	engine: CanvasEngine;
@@ -21,16 +22,17 @@ export class AnchorWidget extends BaseWidget<AnchorWidgetProps> {
 
 	render() {
 		return (
-			<div
-				{...this.getProps()}
-				onMouseDown={() => {
+			<MouseWidget
+				element={"div"}
+				mouseDownEvent={() => {
 					this.props.engine
 						.getStateMachine()
 						.addInput(new ModelAnchorInput(this.props.selectionModel, this.props.pos));
 				}}
-				onMouseUp={() => {
+				mouseUpEvent={() => {
 					this.props.engine.getStateMachine().removeInput(ModelAnchorInput.NAME);
 				}}
+				extraProps={{ ...this.getProps() }}
 			/>
 		);
 	}

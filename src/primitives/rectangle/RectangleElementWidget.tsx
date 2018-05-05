@@ -24,6 +24,7 @@ export class RectangleElementWidget extends BaseWidget<SquareElementWidgetProps,
 				{...this.getProps()}
 				x={dimensions.getTopLeft().x}
 				y={dimensions.getTopLeft().y}
+				rotate={45}
 				width={dimensions.getWidth()}
 				height={dimensions.getHeight()}
 				onMouseDown={event => {

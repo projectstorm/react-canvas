@@ -6,7 +6,6 @@ import { MouseDownInput } from "../input/MouseDownInput";
 import { MouseMoveEvent } from "../../event-bus/events/mouse";
 import { ModelRotateInput } from "../input/ModelRotateInput";
 import { Point } from "../../geometry/Point";
-import { VirtualDimensionTracker } from "../../tracking/VirtualDimensionTracker";
 
 export class RotateElementsState extends AbstractState {
 	initialMouse: MouseDownInput;
@@ -28,7 +27,12 @@ export class RotateElementsState extends AbstractState {
 						) *
 						180 /
 						Math.PI;
-					console.log(degrees);
+
+					if (degrees < 0) {
+						degrees = 360.0 + degrees;
+					}
+
+					this.engine.repaint();
 				}
 			})
 		);
@@ -36,14 +40,13 @@ export class RotateElementsState extends AbstractState {
 
 	activated(machine: StateMachine) {
 		super.activated(machine);
+
 		this.initialMouse = machine.getInput(MouseDownInput.NAME) as MouseDownInput;
 		this.modelRotateInput = machine.getInput(ModelRotateInput.NAME) as ModelRotateInput;
-		this.initialOrigin = VirtualDimensionTracker.projectPoints(this.engine, [
-			this.modelRotateInput.selectionModel
-				.getDimensions()
-				.getOrigin()
-				.clone()
-		])[0];
+		this.initialOrigin = this.modelRotateInput.selectionModel
+			.getDimensions()
+			.getOrigin()
+			.clone();
 	}
 
 	deactivated(machine: StateMachine) {

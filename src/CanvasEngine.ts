@@ -46,7 +46,7 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 	protected debugMode: boolean;
 
 	private modelListener: string;
-	protected debugLayer: CanvasLayerModel;
+	debugLayer: CanvasLayerModel;
 
 	constructor() {
 		super();

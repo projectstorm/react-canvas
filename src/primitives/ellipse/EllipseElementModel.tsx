@@ -14,8 +14,8 @@ export class EllipseElementModel extends CanvasElementModel {
 
 	constructor() {
 		super(EllipseElementFactory.NAME);
-		this.radiusX = 100;
-		this.radiusY = 100;
+		this.radiusX = 5;
+		this.radiusY = 5;
 		this.center = new Point(0, 0);
 		this.background = "rgb(0,192,255)";
 	}
