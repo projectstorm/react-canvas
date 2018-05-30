@@ -1,6 +1,6 @@
 import { BaseModel, BaseModelListener, DeserializeEvent, Serializable } from "./BaseModel";
 import * as _ from "lodash";
-import { BaseEvent } from "./BaseObject";
+import { BaseEvent } from "@projectstorm/react-core";
 
 export interface GraphModelListener<CHILD = BaseModel> extends BaseModelListener {
 	modelsAdded?: (event: BaseEvent & { models: CHILD[] }) => any;

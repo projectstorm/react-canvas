@@ -12,9 +12,11 @@ export class Polygon {
 	}
 
 	getSVGPoints(): string {
-		return _.map(this.points, point => {
-			return point.x + "," + point.y;
-		}).join(" ");
+		return _
+			.map(this.points, point => {
+				return point.x + "," + point.y;
+			})
+			.join(" ");
 	}
 
 	serialize() {

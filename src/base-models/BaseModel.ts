@@ -1,5 +1,4 @@
-import { BaseEvent, BaseListener, BaseObject } from "./BaseObject";
-import { Toolkit } from "../Toolkit";
+import { BaseEvent, BaseListener, BaseObject, Toolkit } from "@projectstorm/react-core";
 import { CanvasEngine } from "../CanvasEngine";
 
 export interface Serializable {

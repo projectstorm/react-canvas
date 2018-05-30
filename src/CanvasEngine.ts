@@ -18,16 +18,15 @@ import { MouseDownInput } from "./state-machine/input/MouseDownInput";
 import { KeyInput } from "./state-machine/input/KeyInput";
 import { ModelElementInput } from "./state-machine/input/ModelElementInput";
 import { DefaultState } from "./state-machine/states/DefaultState";
-import { Toolkit } from "./Toolkit";
+import { Toolkit } from "@projectstorm/react-core";
 import { CanvasLayerModel } from "./models-canvas/CanvasLayerModel";
 import { SelectionElementModel } from "./primitives/selection/SelectionElementModel";
 import { ModelEvent } from "./event-bus/events/ModelEvent";
 import { InlineAction } from "./event-bus/InlineAction";
 import { PaperElementFactory } from "./primitives/paper/PaperElementFactory";
-import { BaseEvent, BaseObject } from "./base-models/BaseObject";
+import { BaseEvent, BaseObject } from "@projectstorm/react-core";
 import { BaseModel, DeserializeEvent } from "./base-models/BaseModel";
 import { EllipseElementModel } from "./primitives/ellipse/EllipseElementModel";
-import { VirtualDimensionTracker } from "./tracking/VirtualDimensionTracker";
 import { DeselectModelsAction } from "./event-bus/actions/DeselectModelsAction";
 
 export class CanvasEngineError extends Error {}

@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import { BaseEvent, BaseListener, BaseObject } from "../base-models/BaseObject";
+import { BaseEvent, BaseListener, BaseObject } from "@projectstorm/react-core";
 import { HistoryState } from "./HistoryState";
 
 export interface HistoryBankListener extends BaseListener<HistoryBank> {

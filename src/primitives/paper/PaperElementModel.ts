@@ -32,8 +32,8 @@ export class PaperElementModel extends CanvasElementModel {
 		this.dimensions = new Rectangle(
 			0,
 			0,
-			this.width * this.dpi / PaperElementModel.INCH,
-			this.height * this.dpi / PaperElementModel.INCH
+			(this.width * this.dpi) / PaperElementModel.INCH,
+			(this.height * this.dpi) / PaperElementModel.INCH
 		);
 	}
 

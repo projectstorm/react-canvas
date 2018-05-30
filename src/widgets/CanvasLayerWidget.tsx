@@ -2,7 +2,7 @@ import * as React from "react";
 import { CanvasEngine } from "../CanvasEngine";
 import { CanvasLayerModel } from "../models-canvas/CanvasLayerModel";
 import * as _ from "lodash";
-import { BaseWidget, BaseWidgetProps } from "./BaseWidget";
+import { BaseWidget, BaseWidgetProps } from "@projectstorm/react-core";
 
 export interface CanvasLayerWidgetProps extends BaseWidgetProps {
 	engine: CanvasEngine;

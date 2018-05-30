@@ -1,5 +1,5 @@
 import { Event } from "../Event";
-import { BaseEvent } from "../../base-models/BaseObject";
+import { BaseEvent } from "@projectstorm/react-core";
 
 export class ModelEvent extends Event {
 	modelEvent: BaseEvent;

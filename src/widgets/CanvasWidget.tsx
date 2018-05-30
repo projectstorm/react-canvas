@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BaseWidget, BaseWidgetProps } from "./BaseWidget";
+import { BaseWidget, BaseWidgetProps } from "@projectstorm/react-core";
 import { CanvasEngine } from "../CanvasEngine";
 import * as _ from "lodash";
 import { DimensionTrackerWidget } from "../tracking/DimensionTrackerWidget";

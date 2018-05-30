@@ -1,9 +1,8 @@
-import { BaseWidget, BaseWidgetProps } from "./BaseWidget";
+import { BaseWidget, BaseWidgetProps, MouseWidget } from "@projectstorm/react-core";
 import * as React from "react";
 import { CanvasEngine } from "../CanvasEngine";
 import { SelectionElementModel } from "../primitives/selection/SelectionElementModel";
 import { ModelAnchorInput, ModelAnchorInputPosition } from "../state-machine/input/ModelAnchorInput";
-import { MouseWidget } from "./MouseWidget";
 
 export interface AnchorWidgetProps extends BaseWidgetProps {
 	engine: CanvasEngine;
