@@ -1,7 +1,7 @@
 import * as React from "react";
 import { CanvasEngine } from "../../CanvasEngine";
 import { GridElementModel } from "./GridElementModel";
-import { BaseWidget, BaseWidgetProps } from "../../widgets/BaseWidget";
+import { BaseWidget, BaseWidgetProps } from "@projectstorm/react-core";
 
 export interface GridElementWidgetProps extends BaseWidgetProps {
 	engine: CanvasEngine;

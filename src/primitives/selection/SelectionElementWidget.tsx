@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BaseWidget, BaseWidgetProps } from "../../widgets/BaseWidget";
+import { BaseWidget, BaseWidgetProps } from "@projectstorm/react-core";
 import { SelectionGroupWidget } from "./SelectionGroupWidget";
 import { CanvasEngine } from "../../CanvasEngine";
 import { SelectionElementModel } from "./SelectionElementModel";

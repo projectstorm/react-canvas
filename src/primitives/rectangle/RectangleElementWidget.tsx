@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BaseWidget, BaseWidgetProps } from "../../widgets/BaseWidget";
+import { BaseWidget, BaseWidgetProps } from "@projectstorm/react-core";
 import { RectangleElementModel } from "./RectangleElementModel";
 import { CanvasEngine } from "../../CanvasEngine";
 import { PressElementEvent, UnPressElementEvent } from "../../event-bus/events/elements";

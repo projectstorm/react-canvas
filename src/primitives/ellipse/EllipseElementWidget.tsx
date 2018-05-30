@@ -1,21 +1,23 @@
 import * as React from "react";
 import { EllipseElementModel } from "./EllipseElementModel";
+import { BaseWidget, BaseWidgetProps } from "@projectstorm/react-core";
 
-export interface CircleElementWidgetProps {
+export interface EllipseElementWidgetProps extends BaseWidgetProps {
 	model: EllipseElementModel;
 }
 
-export interface CircleElementWidgetState {}
+export interface EllipseElementWidgetState {}
 
-export class EllipseElementWidget extends React.Component<CircleElementWidgetProps, CircleElementWidgetState> {
-	constructor(props: CircleElementWidgetProps) {
-		super(props);
+export class EllipseElementWidget extends BaseWidget<EllipseElementWidgetProps, EllipseElementWidgetState> {
+	constructor(props: EllipseElementWidgetProps) {
+		super("src-ellipsse-element", props);
 		this.state = {};
 	}
 
 	render() {
 		return (
 			<ellipse
+				{...this.getProps()}
 				cx={this.props.model.center.x}
 				cy={this.props.model.center.y}
 				rx={this.props.model.radiusX}
