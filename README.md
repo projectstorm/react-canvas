@@ -1,5 +1,7 @@
 # STORM React canvas (WIP)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/projectstorm/react-canvas.svg)](https://greenkeeper.io/)
+
 A brand new foundation for storm-react-diagrams
 
 ![](./images/screenshot.jpg)
