@@ -3,6 +3,16 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.story\.tsx?$/,
+				loaders: [
+					{
+						loader: require.resolve('@storybook/addon-storysource/loader'),
+						options: { parser: 'typescript' }
+					}
+				],
+				enforce: 'pre',
+			},
+			{
 				test: /\.scss$/,
 				loaders: ["style-loader", "css-loader", "sass-loader"],
 				include: path.resolve(__dirname, '../')
@@ -27,7 +37,7 @@ module.exports = {
 			{
 				test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
 				loader: "file-loader"
-			}
+			},
 		]
 	},
 	resolve: {

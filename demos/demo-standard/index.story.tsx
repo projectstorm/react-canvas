@@ -75,5 +75,5 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 		engine.getHistoryBank().goForward();
 	});
 
-	return <CanvasWidget engine={engine} />;
+	return <CanvasWidget className={"demo-canvas"} engine={engine} />;
 });

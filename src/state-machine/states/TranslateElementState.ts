@@ -27,9 +27,16 @@ export class TranslateElementState extends AbstractDisplacementState {
 	}
 
 	processDisplacement(displacementX, displacementY) {
+
+		const zoom = this.engine.getModel().getZoomLevel();
+
+		// work out the distance difference
+		const distanceX = displacementX / zoom;
+		const distanceY = displacementY / zoom;
+
 		_.forEach(this.initialPosition, (initialPosition, index) => {
 			const dim = initialPosition.clone();
-			dim.translate(displacementX, displacementY);
+			dim.translate(distanceX, distanceY);
 			this.initialEntities[index].setDimensions(dim);
 		});
 		this.engine.repaint();
