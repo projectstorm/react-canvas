@@ -1,13 +1,13 @@
-import { CanvasElementModel } from "../../models-canvas/CanvasElementModel";
-import * as _ from "lodash";
-import { Rectangle } from "../../geometry/Rectangle";
-import { DeserializeEvent } from "../../base-models/BaseModel";
+import { CanvasElementModel } from '../../models-canvas/CanvasElementModel';
+import * as _ from 'lodash';
+import { Rectangle } from '../../geometry/Rectangle';
+import { DeserializeEvent } from '../../base-models/BaseModel';
 
 export class SelectionElementModel extends CanvasElementModel {
 	models: CanvasElementModel[];
 
 	constructor() {
-		super("selection");
+		super('selection');
 		this.models = [];
 	}
 
@@ -31,7 +31,7 @@ export class SelectionElementModel extends CanvasElementModel {
 
 	deSerialize(event: DeserializeEvent): void {
 		super.deSerialize(event);
-		this.models = _.map(event.data["models"], modelID => {
+		this.models = _.map(event.data['models'], modelID => {
 			return event.cache[modelID];
 		}) as any;
 	}

@@ -1,8 +1,8 @@
-import * as React from "react";
-import { CanvasEngine } from "../CanvasEngine";
-import { CanvasLayerModel } from "../models-canvas/CanvasLayerModel";
-import * as _ from "lodash";
-import { BaseWidget, BaseWidgetProps } from "@projectstorm/react-core";
+import * as React from 'react';
+import { CanvasEngine } from '../CanvasEngine';
+import { CanvasLayerModel } from '../models-canvas/CanvasLayerModel';
+import * as _ from 'lodash';
+import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 
 export interface CanvasLayerWidgetProps extends BaseWidgetProps {
 	engine: CanvasEngine;
@@ -13,7 +13,7 @@ export interface CanvasLayerWidgetState {}
 
 export class CanvasLayerWidget extends BaseWidget<CanvasLayerWidgetProps, CanvasLayerWidgetState> {
 	constructor(props: CanvasLayerWidgetProps) {
-		super("src-canvas-layer", props);
+		super('src-canvas-layer', props);
 		this.state = {};
 	}
 
@@ -23,16 +23,10 @@ export class CanvasLayerWidget extends BaseWidget<CanvasLayerWidgetProps, Canvas
 
 		// do we apply
 		if (this.props.layer.isTransformable()) {
-			props["style"] = {
-				...props["style"],
+			props['style'] = {
+				...props['style'],
 				transform:
-					"translate(" +
-					canvas.getOffsetX() +
-					"px," +
-					canvas.getOffsetY() +
-					"px) scale(" +
-					canvas.getZoomLevel() +
-					")"
+					'translate(' + canvas.getOffsetX() + 'px,' + canvas.getOffsetY() + 'px) scale(' + canvas.getZoomLevel() + ')'
 			};
 		}
 

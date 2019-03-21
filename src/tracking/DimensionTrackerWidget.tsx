@@ -1,7 +1,7 @@
-import * as React from "react";
-import { BaseWidget, BaseWidgetProps } from "@projectstorm/react-core";
-import { DimensionTracker } from "./DimensionTracker";
-import { CanvasEngine } from "../CanvasEngine";
+import * as React from 'react';
+import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
+import { DimensionTracker } from './DimensionTracker';
+import { CanvasEngine } from '../CanvasEngine';
 
 export interface DimensionTrackerWidgetProps extends BaseWidgetProps {
 	dimensionTracker: DimensionTracker;
@@ -15,7 +15,7 @@ export class DimensionTrackerWidget extends BaseWidget<DimensionTrackerWidgetPro
 	observer: any;
 
 	constructor(props: DimensionTrackerWidgetProps) {
-		super("src-dimension-tracker", props);
+		super('src-dimension-tracker', props);
 		this.state = {};
 	}
 
@@ -30,8 +30,8 @@ export class DimensionTrackerWidget extends BaseWidget<DimensionTrackerWidgetPro
 
 	componentDidMount() {
 		//if resize observer is present, rather use that
-		if (window["ResizeObserver"]) {
-			this.observer = new window["ResizeObserver"](entries => {
+		if (window['ResizeObserver']) {
+			this.observer = new window['ResizeObserver'](entries => {
 				this.updateDimensions();
 			});
 			this.observer.observe(this.props.reference.current);

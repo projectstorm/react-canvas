@@ -1,7 +1,7 @@
-import { Event } from "../Event";
-import { Point } from "../../geometry/Point";
-import * as _ from "lodash";
-import { CanvasEngine } from "../../CanvasEngine";
+import { Event } from '../Event';
+import { Point } from '../../geometry/Point';
+import * as _ from 'lodash';
+import { CanvasEngine } from '../../CanvasEngine';
 
 export abstract class MouseEvent extends Event {
 	mouseX: number;
@@ -25,7 +25,7 @@ export abstract class MouseEvent extends Event {
 }
 
 export class MouseDownEvent extends MouseEvent {
-	static NAME = "mouse-down";
+	static NAME = 'mouse-down';
 
 	constructor(source: any, mouseX: number, mouseY: number) {
 		super(MouseDownEvent.NAME, source, mouseX, mouseY);
@@ -33,7 +33,7 @@ export class MouseDownEvent extends MouseEvent {
 }
 
 export class MouseUpEvent extends MouseEvent {
-	static NAME = "mouse-up";
+	static NAME = 'mouse-up';
 
 	constructor(source: any, mouseX: number, mouseY: number) {
 		super(MouseUpEvent.NAME, source, mouseX, mouseY);
@@ -41,7 +41,7 @@ export class MouseUpEvent extends MouseEvent {
 }
 
 export class MouseMoveEvent extends MouseEvent {
-	static NAME = "mouse-move";
+	static NAME = 'mouse-move';
 
 	constructor(source: any, mouseX: number, mouseY: number) {
 		super(MouseMoveEvent.NAME, source, mouseX, mouseY);
@@ -51,7 +51,7 @@ export class MouseMoveEvent extends MouseEvent {
 export class MouseWheelEvent extends MouseEvent {
 	amount: number;
 
-	static NAME = "mouse-wheel";
+	static NAME = 'mouse-wheel';
 
 	constructor(source: any, mouseX: number, mouseY: number, amount: number) {
 		super(MouseWheelEvent.NAME, source, mouseX, mouseY);

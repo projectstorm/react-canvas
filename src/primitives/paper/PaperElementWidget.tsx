@@ -1,6 +1,6 @@
-import * as React from "react";
-import { BaseWidget, BaseWidgetProps } from "@projectstorm/react-core";
-import { PaperElementModel } from "./PaperElementModel";
+import * as React from 'react';
+import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
+import { PaperElementModel } from './PaperElementModel';
 
 export interface PaperElementWidgetProps extends BaseWidgetProps {
 	model: PaperElementModel;
@@ -8,7 +8,7 @@ export interface PaperElementWidgetProps extends BaseWidgetProps {
 
 export class PaperElementWidget extends BaseWidget<PaperElementWidgetProps> {
 	constructor(props) {
-		super("src-paper", props);
+		super('src-paper', props);
 	}
 
 	render() {

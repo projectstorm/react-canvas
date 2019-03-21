@@ -1,7 +1,7 @@
-import { Action } from "../Action";
-import { PressElementEvent } from "../events/elements";
-import * as _ from "lodash";
-import { CanvasEngine } from "../../CanvasEngine";
+import { Action } from '../Action';
+import { PressElementEvent } from '../events/elements';
+import * as _ from 'lodash';
+import { CanvasEngine } from '../../CanvasEngine';
 
 export class SelectElementAction extends Action<PressElementEvent> {
 	engine: CanvasEngine;

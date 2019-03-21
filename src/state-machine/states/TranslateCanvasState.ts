@@ -1,14 +1,14 @@
-import { StateMachine } from "../StateMachine";
-import { CanvasEngine } from "../../CanvasEngine";
-import { AbstractDisplacementState } from "../AbstractDisplacementState";
-import { SelectCanvasAction } from "../../event-bus/actions/SelectCanvasAction";
+import { StateMachine } from '../StateMachine';
+import { CanvasEngine } from '../../CanvasEngine';
+import { AbstractDisplacementState } from '../AbstractDisplacementState';
+import { SelectCanvasAction } from '../../event-bus/actions/SelectCanvasAction';
 
 export class TranslateCanvasState extends AbstractDisplacementState {
 	initialOffsetX: number;
 	initialOffsetY: number;
 
 	constructor(engine: CanvasEngine) {
-		super("translate-canvas", engine);
+		super('translate-canvas', engine);
 		this.registerAction(new SelectCanvasAction(engine));
 	}
 

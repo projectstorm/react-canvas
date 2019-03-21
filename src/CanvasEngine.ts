@@ -1,33 +1,33 @@
-import * as _ from "lodash";
-import { AbstractElementFactory } from "./AbstractElementFactory";
-import { RectangleElementFactory } from "./primitives/rectangle/RectangleElementFactory";
-import { CanvasModel } from "./models-canvas/CanvasModel";
-import { CanvasWidget } from "./widgets/CanvasWidget";
-import { SelectionElementFactory } from "./primitives/selection/SelectionElementFactory";
-import { StateMachine } from "./state-machine/StateMachine";
-import { TranslateCanvasState } from "./state-machine/states/TranslateCanvasState";
-import { GridElementFactory } from "./primitives/grid/GridElementFactory";
-import { EllipseElementFactory } from "./primitives/ellipse/EllipseElementFactory";
-import { TranslateElementState } from "./state-machine/states/TranslateElementState";
-import { SelectElementsState } from "./state-machine/states/SelectElementsState";
-import { HistoryBank } from "./history/HistoryBank";
-import { CanvasLayerFactory } from "./CanvasLayerFactory";
-import { EventBus } from "./event-bus/EventBus";
-import { ZoomCanvasAction } from "./event-bus/actions/ZoomCanvasAction";
-import { MouseDownInput } from "./state-machine/input/MouseDownInput";
-import { KeyInput } from "./state-machine/input/KeyInput";
-import { ModelElementInput } from "./state-machine/input/ModelElementInput";
-import { DefaultState } from "./state-machine/states/DefaultState";
-import { Toolkit } from "@projectstorm/react-core";
-import { CanvasLayerModel } from "./models-canvas/CanvasLayerModel";
-import { SelectionElementModel } from "./primitives/selection/SelectionElementModel";
-import { ModelEvent } from "./event-bus/events/ModelEvent";
-import { InlineAction } from "./event-bus/InlineAction";
-import { PaperElementFactory } from "./primitives/paper/PaperElementFactory";
-import { BaseEvent, BaseObject } from "@projectstorm/react-core";
-import { BaseModel, DeserializeEvent } from "./base-models/BaseModel";
-import { EllipseElementModel } from "./primitives/ellipse/EllipseElementModel";
-import { DeselectModelsAction } from "./event-bus/actions/DeselectModelsAction";
+import * as _ from 'lodash';
+import { AbstractElementFactory } from './AbstractElementFactory';
+import { RectangleElementFactory } from './primitives/rectangle/RectangleElementFactory';
+import { CanvasModel } from './models-canvas/CanvasModel';
+import { CanvasWidget } from './widgets/CanvasWidget';
+import { SelectionElementFactory } from './primitives/selection/SelectionElementFactory';
+import { StateMachine } from './state-machine/StateMachine';
+import { TranslateCanvasState } from './state-machine/states/TranslateCanvasState';
+import { GridElementFactory } from './primitives/grid/GridElementFactory';
+import { EllipseElementFactory } from './primitives/ellipse/EllipseElementFactory';
+import { TranslateElementState } from './state-machine/states/TranslateElementState';
+import { SelectElementsState } from './state-machine/states/SelectElementsState';
+import { HistoryBank } from './history/HistoryBank';
+import { CanvasLayerFactory } from './CanvasLayerFactory';
+import { EventBus } from './event-bus/EventBus';
+import { ZoomCanvasAction } from './event-bus/actions/ZoomCanvasAction';
+import { MouseDownInput } from './state-machine/input/MouseDownInput';
+import { KeyInput } from './state-machine/input/KeyInput';
+import { ModelElementInput } from './state-machine/input/ModelElementInput';
+import { DefaultState } from './state-machine/states/DefaultState';
+import { Toolkit } from '@projectstorm/react-core';
+import { CanvasLayerModel } from './models-canvas/CanvasLayerModel';
+import { SelectionElementModel } from './primitives/selection/SelectionElementModel';
+import { ModelEvent } from './event-bus/events/ModelEvent';
+import { InlineAction } from './event-bus/InlineAction';
+import { PaperElementFactory } from './primitives/paper/PaperElementFactory';
+import { BaseEvent, BaseObject } from '@projectstorm/react-core';
+import { BaseModel, DeserializeEvent } from './base-models/BaseModel';
+import { EllipseElementModel } from './primitives/ellipse/EllipseElementModel';
+import { DeselectModelsAction } from './event-bus/actions/DeselectModelsAction';
 
 export class CanvasEngineError extends Error {}
 
@@ -92,7 +92,7 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 		}
 		let oldModel = this.model;
 		this.model = model;
-		this.iterateListeners("Model changed", (listener, event) => {
+		this.iterateListeners('Model changed', (listener, event) => {
 			if (listener.modelChanged) {
 				listener.modelChanged({ ...event, model: model, oldModel: oldModel });
 			}
@@ -151,13 +151,10 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 					let dimensions = element.getDimensions();
 					if (dimensions) {
 						this.debugLayer.addModels(
-							_.map(
-								EllipseElementModel.createPointCloudFrom(dimensions, 3 / this.model.getZoomLevel()),
-								point => {
-									point.background = "mediumpurple";
-									return point;
-								}
-							)
+							_.map(EllipseElementModel.createPointCloudFrom(dimensions, 3 / this.model.getZoomLevel()), point => {
+								point.background = 'mediumpurple';
+								return point;
+							})
 						);
 					}
 				});
@@ -194,7 +191,7 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 		this.eventBus.registerAction(
 			new InlineAction(ModelEvent.NAME, (event: ModelEvent) => {
 				// setup a combo box for when there are models
-				if (event.modelEvent.name === "selection changed") {
+				if (event.modelEvent.name === 'selection changed') {
 					selectionLayer.clearEntities();
 					this.model.layers.moveModelToFront(selectionLayer);
 					let selected = _.filter(this.model.getElements(), element => {
@@ -262,7 +259,7 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
 
 	getFactory(type: string): AbstractElementFactory {
 		if (!this.elementFactories[type]) {
-			throw new CanvasEngineError("Cannot find Element factory with type: " + type);
+			throw new CanvasEngineError('Cannot find Element factory with type: ' + type);
 		}
 		return this.elementFactories[type];
 	}

@@ -1,4 +1,4 @@
-import * as mathjs from "mathjs";
+import * as mathjs from 'mathjs';
 import Matrix = mathjs.Matrix;
 
 export class Point {

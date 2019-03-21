@@ -1,7 +1,7 @@
-import { CanvasLayerModel } from "./CanvasLayerModel";
-import { Rectangle } from "../geometry/Rectangle";
-import { BaseEvent } from "../base-models/BaseObject";
-import { BaseModel, BaseModelListener, DeserializeEvent } from "../base-models/BaseModel";
+import { CanvasLayerModel } from './CanvasLayerModel';
+import { Rectangle } from '../geometry/Rectangle';
+import { BaseModel, BaseModelListener, DeserializeEvent } from '../base-models/BaseModel';
+import { BaseEvent } from '@projectstorm/react-core';
 
 export interface CanvasElementModelListener<T extends CanvasElementModel = any> extends BaseModelListener<T> {
 	selectionChanged?(event: BaseEvent<CanvasElementModel> & { selected: boolean });
@@ -32,13 +32,13 @@ export abstract class CanvasElementModel<
 
 	deSerialize(event: DeserializeEvent): void {
 		super.deSerialize(event);
-		this.selected = !!event.data["selected"];
-		this.locked = !!event.data["locked"];
+		this.selected = !!event.data['selected'];
+		this.locked = !!event.data['locked'];
 	}
 
 	setSelected(selected: boolean) {
 		this.selected = selected;
-		this.iterateListeners("selection changed", (listener, event: any) => {
+		this.iterateListeners('selection changed', (listener, event: any) => {
 			if (listener.selectionChanged) {
 				event.selected = selected;
 				listener.selectionChanged(event);
@@ -48,7 +48,7 @@ export abstract class CanvasElementModel<
 
 	setLocked(locked: boolean) {
 		this.locked = locked;
-		this.iterateListeners("lock changed", (listener, event: any) => {
+		this.iterateListeners('lock changed', (listener, event: any) => {
 			if (listener.lockChanged) {
 				event.locked = locked;
 				listener.lockChanged(event);

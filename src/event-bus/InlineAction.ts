@@ -1,5 +1,5 @@
-import { Action } from "./Action";
-import { Event } from "./Event";
+import { Action } from './Action';
+import { Event } from './Event';
 
 export class InlineAction<T extends Event> extends Action<T> {
 	cb: (event: T) => any;

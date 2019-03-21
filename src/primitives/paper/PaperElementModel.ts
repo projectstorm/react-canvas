@@ -1,6 +1,6 @@
-import { CanvasElementModel } from "../../models-canvas/CanvasElementModel";
-import { Rectangle } from "../../geometry/Rectangle";
-import { PaperElementFactory } from "./PaperElementFactory";
+import { CanvasElementModel } from '../../models-canvas/CanvasElementModel';
+import { Rectangle } from '../../geometry/Rectangle';
+import { PaperElementFactory } from './PaperElementFactory';
 
 export class PaperElementModel extends CanvasElementModel {
 	dimensions: Rectangle;

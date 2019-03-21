@@ -1,6 +1,6 @@
-import { GraphModel, GraphModelListener } from "./GraphModel";
-import { BaseModel, DeserializeEvent } from "./BaseModel";
-import * as _ from "lodash";
+import { GraphModel, GraphModelListener } from './GraphModel';
+import { BaseModel, DeserializeEvent } from './BaseModel';
+import * as _ from 'lodash';
 
 export class GraphModelOrdered<
 	CHILD extends BaseModel,
@@ -9,7 +9,7 @@ export class GraphModelOrdered<
 > extends GraphModel<CHILD, PARENT, LISTENER> {
 	protected entitiesOrdered: CHILD[];
 
-	constructor(type: string = "graph") {
+	constructor(type: string = 'graph') {
 		super(type);
 		this.entitiesOrdered = [];
 	}
@@ -29,7 +29,7 @@ export class GraphModelOrdered<
 
 	deSerialize(event: DeserializeEvent): void {
 		super.deSerialize(event);
-		this.entitiesOrdered = _.map(event.data["entitiesOrdered"], entityID => {
+		this.entitiesOrdered = _.map(event.data['entitiesOrdered'], entityID => {
 			return this.children[entityID];
 		});
 	}

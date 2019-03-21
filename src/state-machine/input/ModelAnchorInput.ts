@@ -1,5 +1,5 @@
-import { SelectionElementModel } from "../../primitives/selection/SelectionElementModel";
-import { AbstractStateMachineInput } from "../AbstractStateMachineInput";
+import { SelectionElementModel } from '../../primitives/selection/SelectionElementModel';
+import { AbstractStateMachineInput } from '../AbstractStateMachineInput';
 
 export enum ModelAnchorInputPosition {
 	TOP,
@@ -16,7 +16,7 @@ export class ModelAnchorInput extends AbstractStateMachineInput {
 	selectionModel: SelectionElementModel;
 	anchor: ModelAnchorInputPosition;
 
-	static NAME = "model-anchor";
+	static NAME = 'model-anchor';
 
 	constructor(model: SelectionElementModel, anchor: ModelAnchorInputPosition) {
 		super(ModelAnchorInput.NAME);

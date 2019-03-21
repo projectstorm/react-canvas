@@ -1,10 +1,10 @@
-import { CanvasElementModel } from "../../models-canvas/CanvasElementModel";
-import { Rectangle } from "../../geometry/Rectangle";
-import { Point } from "../../geometry/Point";
-import * as _ from "lodash";
-import { Polygon } from "../../geometry/Polygon";
-import { DeserializeEvent } from "../../base-models/BaseModel";
-import { EllipseElementFactory } from "./EllipseElementFactory";
+import { CanvasElementModel } from '../../models-canvas/CanvasElementModel';
+import { Rectangle } from '../../geometry/Rectangle';
+import { Point } from '../../geometry/Point';
+import * as _ from 'lodash';
+import { Polygon } from '../../geometry/Polygon';
+import { DeserializeEvent } from '../../base-models/BaseModel';
+import { EllipseElementFactory } from './EllipseElementFactory';
 
 export class EllipseElementModel extends CanvasElementModel {
 	radiusX: number;
@@ -17,7 +17,7 @@ export class EllipseElementModel extends CanvasElementModel {
 		this.radiusX = 5;
 		this.radiusY = 5;
 		this.center = new Point(0, 0);
-		this.background = "rgb(0,192,255)";
+		this.background = 'rgb(0,192,255)';
 	}
 
 	static createPointCloud(points: Point[], radius: number = 5) {
@@ -45,10 +45,10 @@ export class EllipseElementModel extends CanvasElementModel {
 
 	deSerialize(event: DeserializeEvent): void {
 		super.deSerialize(event);
-		this.radiusX = event.data["radiusX"];
-		this.radiusY = event.data["radiusY"];
-		this.background = event.data["background"];
-		this.center = new Point(event.data["centerX"], event.data["centerY"]);
+		this.radiusX = event.data['radiusX'];
+		this.radiusY = event.data['radiusY'];
+		this.background = event.data['background'];
+		this.center = new Point(event.data['centerX'], event.data['centerY']);
 	}
 
 	serialize() {

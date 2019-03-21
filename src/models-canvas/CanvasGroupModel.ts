@@ -1,5 +1,5 @@
-import { CanvasElementModel } from "./CanvasElementModel";
-import { Rectangle } from "../geometry/Rectangle";
+import { CanvasElementModel } from './CanvasElementModel';
+import { Rectangle } from '../geometry/Rectangle';
 
 export class CanvasGroupModel extends CanvasElementModel {
 	getDimensions(): Rectangle {

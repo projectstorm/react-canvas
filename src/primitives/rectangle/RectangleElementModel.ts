@@ -1,7 +1,7 @@
-import { CanvasElementModel } from "../../models-canvas/CanvasElementModel";
-import { Rectangle } from "../../geometry/Rectangle";
-import { DeserializeEvent } from "../../base-models/BaseModel";
-import { RectangleElementFactory } from "./RectangleElementFactory";
+import { CanvasElementModel } from '../../models-canvas/CanvasElementModel';
+import { Rectangle } from '../../geometry/Rectangle';
+import { DeserializeEvent } from '../../base-models/BaseModel';
+import { RectangleElementFactory } from './RectangleElementFactory';
 
 export class RectangleElementModel extends CanvasElementModel {
 	border: number;
@@ -12,8 +12,8 @@ export class RectangleElementModel extends CanvasElementModel {
 	constructor() {
 		super(RectangleElementFactory.NAME);
 		this.border = 2;
-		this.borderColor = "black";
-		this.background = "rgb(0,192,255)";
+		this.borderColor = 'black';
+		this.background = 'rgb(0,192,255)';
 		this.dimensions = new Rectangle(0, 0, 100, 100);
 		this.selected = false;
 	}
@@ -27,7 +27,7 @@ export class RectangleElementModel extends CanvasElementModel {
 
 	deSerialize(event: DeserializeEvent): void {
 		super.deSerialize(event);
-		this.dimensions.deserialize(event.data["dimensions"]);
+		this.dimensions.deserialize(event.data['dimensions']);
 	}
 
 	getDimensions(): Rectangle {

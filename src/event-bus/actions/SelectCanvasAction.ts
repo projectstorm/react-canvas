@@ -1,7 +1,7 @@
-import { Action } from "../Action";
-import { MouseDownEvent } from "../events/mouse";
-import * as _ from "lodash";
-import { CanvasEngine } from "../../CanvasEngine";
+import { Action } from '../Action';
+import { MouseDownEvent } from '../events/mouse';
+import * as _ from 'lodash';
+import { CanvasEngine } from '../../CanvasEngine';
 
 export class SelectCanvasAction extends Action<MouseDownEvent> {
 	engine: CanvasEngine;

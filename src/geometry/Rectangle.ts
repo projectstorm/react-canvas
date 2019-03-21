@@ -1,5 +1,5 @@
-import { Polygon } from "./Polygon";
-import { Point } from "./Point";
+import { Polygon } from './Polygon';
+import { Point } from './Point';
 
 export class Rectangle extends Polygon {
 	constructor(tl: Point, tr: Point, br: Point, bl: Point);
@@ -26,15 +26,14 @@ export class Rectangle extends Polygon {
 
 	setPoints(points: Point[]) {
 		if (points.length !== 4) {
-			throw "Rectangles must always have 4 points";
+			throw 'Rectangles must always have 4 points';
 		}
 		super.setPoints(points);
 	}
 
 	getWidth(): number {
 		return Math.sqrt(
-			Math.pow(this.getTopLeft().x - this.getTopRight().x, 2) +
-				Math.pow(this.getTopLeft().y - this.getTopRight().y, 2)
+			Math.pow(this.getTopLeft().x - this.getTopRight().x, 2) + Math.pow(this.getTopLeft().y - this.getTopRight().y, 2)
 		);
 	}
 

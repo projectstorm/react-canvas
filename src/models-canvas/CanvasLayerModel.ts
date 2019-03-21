@@ -1,7 +1,7 @@
-import { CanvasElementModel } from "./CanvasElementModel";
-import { CanvasModel } from "./CanvasModel";
-import { DeserializeEvent, Serializable } from "../base-models/BaseModel";
-import { GraphModelOrdered } from "../base-models/GraphModelOrdered";
+import { CanvasElementModel } from './CanvasElementModel';
+import { CanvasModel } from './CanvasModel';
+import { DeserializeEvent, Serializable } from '../base-models/BaseModel';
+import { GraphModelOrdered } from '../base-models/GraphModelOrdered';
 
 export class CanvasLayerModel<T extends CanvasElementModel = CanvasElementModel> extends GraphModelOrdered<
 	T,
@@ -11,8 +11,8 @@ export class CanvasLayerModel<T extends CanvasElementModel = CanvasElementModel>
 	protected svg: boolean;
 	protected transform: boolean;
 
-	constructor(name: string = "Layer") {
-		super("layer");
+	constructor(name: string = 'Layer') {
+		super('layer');
 		this.name = name;
 		this.svg = false;
 		this.transform = true;
@@ -20,9 +20,9 @@ export class CanvasLayerModel<T extends CanvasElementModel = CanvasElementModel>
 
 	deSerialize(event: DeserializeEvent): void {
 		super.deSerialize(event);
-		this.name = event.data["name"];
-		this.svg = event.data["svg"];
-		this.transform = event.data["transform"];
+		this.name = event.data['name'];
+		this.svg = event.data['svg'];
+		this.transform = event.data['transform'];
 	}
 
 	serialize(): Serializable & any {

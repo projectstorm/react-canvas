@@ -1,6 +1,6 @@
-import { DimensionTracker } from "./DimensionTracker";
-import { CanvasEngine } from "../CanvasEngine";
-import { Rectangle } from "../geometry/Rectangle";
+import { DimensionTracker } from './DimensionTracker';
+import { CanvasEngine } from '../CanvasEngine';
+import { Rectangle } from '../geometry/Rectangle';
 
 export class VirtualDimensionTracker extends DimensionTracker {
 	virtualDimensions: Rectangle;

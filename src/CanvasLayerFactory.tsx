@@ -1,12 +1,12 @@
-import * as React from "react";
-import { AbstractElementFactory } from "./AbstractElementFactory";
-import { CanvasLayerModel } from "./models-canvas/CanvasLayerModel";
-import { CanvasEngine } from "./CanvasEngine";
-import { CanvasLayerWidget } from "./widgets/CanvasLayerWidget";
+import * as React from 'react';
+import { AbstractElementFactory } from './AbstractElementFactory';
+import { CanvasLayerModel } from './models-canvas/CanvasLayerModel';
+import { CanvasEngine } from './CanvasEngine';
+import { CanvasLayerWidget } from './widgets/CanvasLayerWidget';
 
 export class CanvasLayerFactory extends AbstractElementFactory<CanvasLayerModel> {
 	constructor() {
-		super("layer");
+		super('layer');
 	}
 
 	generateModel(): CanvasLayerModel {

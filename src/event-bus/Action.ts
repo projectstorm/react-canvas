@@ -1,5 +1,5 @@
-import { Event } from "./Event";
-import { Toolkit } from "@projectstorm/react-core";
+import { Event } from './Event';
+import { Toolkit } from '@projectstorm/react-core';
 
 export abstract class Action<T extends Event = Event> {
 	targetEvent: string;

@@ -1,7 +1,7 @@
-import { AbstractState } from "./AbstractState";
-import * as _ from "lodash";
-import { AbstractStateMachineInput } from "./AbstractStateMachineInput";
-import { BaseEvent, BaseListener, BaseObject } from "@projectstorm/react-core";
+import { AbstractState } from './AbstractState';
+import * as _ from 'lodash';
+import { AbstractStateMachineInput } from './AbstractStateMachineInput';
+import { BaseEvent, BaseListener, BaseObject } from '@projectstorm/react-core';
 
 export interface StateMachineListener extends BaseListener<StateMachine> {
 	stateChanged(event: BaseEvent<StateMachine> & { state: AbstractState });
@@ -21,7 +21,7 @@ export class StateMachine extends BaseObject<StateMachineListener> {
 
 	addState(state: AbstractState) {
 		if (this.states[state.getName()]) {
-			throw "A state with name: " + state.getName() + " is already registered";
+			throw 'A state with name: ' + state.getName() + ' is already registered';
 		}
 		this.states[state.getName()] = state;
 	}
@@ -60,7 +60,7 @@ export class StateMachine extends BaseObject<StateMachineListener> {
 	}
 
 	fireStateChanged() {
-		this.iterateListeners("state changed", (listener, event) => {
+		this.iterateListeners('state changed', (listener, event) => {
 			if (listener.stateChanged) {
 				listener.stateChanged({ ...event, state: this.state });
 			}

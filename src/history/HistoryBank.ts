@@ -1,6 +1,6 @@
-import * as _ from "lodash";
-import { BaseEvent, BaseListener, BaseObject } from "@projectstorm/react-core";
-import { HistoryState } from "./HistoryState";
+import * as _ from 'lodash';
+import { BaseEvent, BaseListener, BaseObject } from '@projectstorm/react-core';
+import { HistoryState } from './HistoryState';
 
 export interface HistoryBankListener extends BaseListener<HistoryBank> {
 	forward?(event: BaseEvent<HistoryBank> & { state: HistoryState });
@@ -35,7 +35,7 @@ export class HistoryBank extends BaseObject<HistoryBankListener> {
 			return;
 		}
 		this.pointer++;
-		this.iterateListeners("history moved forward", (listener, event) => {
+		this.iterateListeners('history moved forward', (listener, event) => {
 			if (listener.forward) {
 				listener.forward({ ...event, state: this.history[this.pointer] });
 			}
@@ -48,7 +48,7 @@ export class HistoryBank extends BaseObject<HistoryBankListener> {
 			return;
 		}
 		this.pointer--;
-		this.iterateListeners("history moved backward", (listener, event) => {
+		this.iterateListeners('history moved backward', (listener, event) => {
 			if (listener.backward) {
 				listener.backward({ ...event, state: this.history[this.pointer] });
 			}

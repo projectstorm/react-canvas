@@ -1,4 +1,4 @@
-import { Event } from "../Event";
+import { Event } from '../Event';
 
 export abstract class KeyEvent extends Event {
 	key: string;
@@ -10,7 +10,7 @@ export abstract class KeyEvent extends Event {
 }
 
 export class KeyDownEvent extends KeyEvent {
-	static NAME = "key-down";
+	static NAME = 'key-down';
 
 	constructor(source: any, key: string) {
 		super(KeyDownEvent.NAME, source, key);
@@ -18,7 +18,7 @@ export class KeyDownEvent extends KeyEvent {
 }
 
 export class KeyUpEvent extends KeyEvent {
-	static NAME = "key-up";
+	static NAME = 'key-up';
 
 	constructor(source: any, key: string) {
 		super(KeyUpEvent.NAME, source, key);

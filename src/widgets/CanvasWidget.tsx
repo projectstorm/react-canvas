@@ -1,12 +1,12 @@
-import * as React from "react";
-import { BaseWidget, BaseWidgetProps } from "@projectstorm/react-core";
-import { CanvasEngine } from "../CanvasEngine";
-import * as _ from "lodash";
-import { DimensionTrackerWidget } from "../tracking/DimensionTrackerWidget";
-import { DimensionTracker } from "../tracking/DimensionTracker";
-import { Rectangle } from "../geometry/Rectangle";
-import { KeyDownEvent, KeyUpEvent } from "../event-bus/events/key";
-import { MouseDownEvent, MouseMoveEvent, MouseUpEvent, MouseWheelEvent } from "../event-bus/events/mouse";
+import * as React from 'react';
+import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
+import { CanvasEngine } from '../CanvasEngine';
+import * as _ from 'lodash';
+import { DimensionTrackerWidget } from '../tracking/DimensionTrackerWidget';
+import { DimensionTracker } from '../tracking/DimensionTracker';
+import { Rectangle } from '../geometry/Rectangle';
+import { KeyDownEvent, KeyUpEvent } from '../event-bus/events/key';
+import { MouseDownEvent, MouseMoveEvent, MouseUpEvent, MouseWheelEvent } from '../event-bus/events/mouse';
 
 export interface CanvasWidgetProps extends BaseWidgetProps {
 	engine: CanvasEngine;
@@ -28,7 +28,7 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 	onMouseWheelHandle: (event: WheelEvent) => any;
 
 	constructor(props: CanvasWidgetProps) {
-		super("src-canvas", props);
+		super('src-canvas', props);
 		this.state = {};
 		this.dimension = new DimensionTracker();
 
@@ -57,9 +57,7 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 		this.onMouseWheelHandle = event => {
 			this.props.engine
 				.getEventBus()
-				.fireEvent(
-					new MouseWheelEvent(this, event.clientX, event.clientY, CanvasWidget.normalizeScrollWheel(event))
-				);
+				.fireEvent(new MouseWheelEvent(this, event.clientX, event.clientY, CanvasWidget.normalizeScrollWheel(event)));
 			event.stopPropagation();
 			event.preventDefault();
 		};
@@ -84,15 +82,15 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 	}
 
 	componentDidMount() {
-		document.addEventListener("mousemove", this.onMouseMoveHandle);
-		document.addEventListener("keydown", this.onKeyDownHandle);
-		document.addEventListener("keyup", this.onKeyUpHandle);
+		document.addEventListener('mousemove', this.onMouseMoveHandle);
+		document.addEventListener('keydown', this.onKeyDownHandle);
+		document.addEventListener('keyup', this.onKeyUpHandle);
 	}
 
 	componentWillUnmount() {
-		document.removeEventListener("mousemove", this.onMouseMoveHandle);
-		document.removeEventListener("keyup", this.onKeyUpHandle);
-		document.removeEventListener("keydown", this.onKeyDownHandle);
+		document.removeEventListener('mousemove', this.onMouseMoveHandle);
+		document.removeEventListener('keyup', this.onKeyUpHandle);
+		document.removeEventListener('keydown', this.onKeyDownHandle);
 		this.props.engine.setCanvasWidget(null);
 	}
 
@@ -140,8 +138,7 @@ export class CanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidgetStat
 					ref={this.ref}
 					onWheel={this.onMouseWheelHandle}
 					onMouseDown={this.onMouseDownHandle}
-					onMouseUp={this.onMouseUpHandle}
-				>
+					onMouseUp={this.onMouseUpHandle}>
 					{_.map(this.props.engine.getModel().layers.getArray(), layer => {
 						return React.cloneElement(
 							this.props.engine.getFactoryForElement(layer).generateWidget(this.props.engine, layer),

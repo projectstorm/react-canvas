@@ -1,16 +1,16 @@
-import { CanvasWidget } from "../../src/widgets/CanvasWidget";
-import * as React from "react";
-import { CanvasEngine } from "../../src/CanvasEngine";
-import { CanvasModel } from "../../src/models-canvas/CanvasModel";
-import { CanvasLayerModel } from "../../src/models-canvas/CanvasLayerModel";
-import { RectangleElementModel } from "../../src/primitives/rectangle/RectangleElementModel";
+import { CanvasWidget } from '../../src/widgets/CanvasWidget';
+import * as React from 'react';
+import { CanvasEngine } from '../../src/CanvasEngine';
+import { CanvasModel } from '../../src/models-canvas/CanvasModel';
+import { CanvasLayerModel } from '../../src/models-canvas/CanvasLayerModel';
+import { RectangleElementModel } from '../../src/primitives/rectangle/RectangleElementModel';
 
-import { storiesOf } from "@storybook/react";
-import { button } from "@storybook/addon-knobs";
-import { GridElementModel } from "../../src/primitives/grid/GridElementModel";
-import { PaperElementModel } from "../../src/primitives/paper/PaperElementModel";
+import { storiesOf } from '@storybook/react';
+import { button } from '@storybook/addon-knobs';
+import { GridElementModel } from '../../src/primitives/grid/GridElementModel';
+import { PaperElementModel } from '../../src/primitives/paper/PaperElementModel';
 
-storiesOf("Simple Usage", module).add("Full example", () => {
+storiesOf('Simple Usage', module).add('Full example', () => {
 	//setup canvas engine
 	let engine = new CanvasEngine();
 	engine.enableDebugMode(true);
@@ -33,7 +33,7 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 	let gridModel2 = new GridElementModel();
 	gridModel2.sizeX = 200;
 	gridModel2.sizeY = 200;
-	gridModel2.color = "cyan";
+	gridModel2.color = 'cyan';
 	gridModel2.thickness = 2;
 	layer2.addModel(gridModel2);
 
@@ -63,17 +63,17 @@ storiesOf("Simple Usage", module).add("Full example", () => {
 
 	layer.addModels([squareModel, squareModel2, squareModel3]);
 
-	button("Fit Width", () => {
+	button('Fit Width', () => {
 		engine.getCanvasWidget().zoomToFit(15);
 	});
 
-	button("Undo", () => {
+	button('Undo', () => {
 		engine.getHistoryBank().goBackward();
 	});
 
-	button("Redo", () => {
+	button('Redo', () => {
 		engine.getHistoryBank().goForward();
 	});
 
-	return <CanvasWidget className={"demo-canvas"} engine={engine} />;
+	return <CanvasWidget className={'demo-canvas'} engine={engine} />;
 });

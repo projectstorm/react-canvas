@@ -1,9 +1,9 @@
-import { AbstractState } from "./AbstractState";
-import { StateMachine } from "./StateMachine";
-import { CanvasEngine } from "../CanvasEngine";
-import { MouseDownInput } from "./input/MouseDownInput";
-import { InlineAction } from "../event-bus/InlineAction";
-import { MouseMoveEvent } from "../event-bus/events/mouse";
+import { AbstractState } from './AbstractState';
+import { StateMachine } from './StateMachine';
+import { CanvasEngine } from '../CanvasEngine';
+import { MouseDownInput } from './input/MouseDownInput';
+import { InlineAction } from '../event-bus/InlineAction';
+import { MouseMoveEvent } from '../event-bus/events/mouse';
 
 export abstract class AbstractDisplacementState extends AbstractState {
 	initialMouse: MouseDownInput;
@@ -14,10 +14,7 @@ export abstract class AbstractDisplacementState extends AbstractState {
 		this.registerAction(
 			new InlineAction<MouseMoveEvent>(MouseMoveEvent.NAME, event => {
 				if (this.initialMouse) {
-					this.processDisplacement(
-						event.mouseX - this.initialMouse.mouseX,
-						event.mouseY - this.initialMouse.mouseY
-					);
+					this.processDisplacement(event.mouseX - this.initialMouse.mouseX, event.mouseY - this.initialMouse.mouseY);
 				}
 			})
 		);

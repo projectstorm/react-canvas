@@ -1,6 +1,6 @@
-import { Action } from "../Action";
-import { MouseWheelEvent } from "../events/mouse";
-import { CanvasEngine } from "../../CanvasEngine";
+import { Action } from '../Action';
+import { MouseWheelEvent } from '../events/mouse';
+import { CanvasEngine } from '../../CanvasEngine';
 
 export class ZoomCanvasAction extends Action<MouseWheelEvent> {
 	engine: CanvasEngine;

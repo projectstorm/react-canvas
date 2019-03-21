@@ -1,7 +1,7 @@
-import { Action } from "../Action";
-import { KeyDownEvent } from "../events/key";
-import { CanvasEngine } from "../../CanvasEngine";
-import * as _ from "lodash";
+import { Action } from '../Action';
+import { KeyDownEvent } from '../events/key';
+import { CanvasEngine } from '../../CanvasEngine';
+import * as _ from 'lodash';
 
 export class DeselectModelsAction extends Action<KeyDownEvent> {
 	engine: CanvasEngine;
@@ -12,7 +12,7 @@ export class DeselectModelsAction extends Action<KeyDownEvent> {
 	}
 
 	doAction(event: KeyDownEvent) {
-		if (event.key === "Escape") {
+		if (event.key === 'Escape') {
 			let entities = this.engine.getModel().getSelectedEntities();
 			_.forEach(entities, entity => {
 				entity.setSelected(false);

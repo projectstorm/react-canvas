@@ -1,11 +1,11 @@
-import { StateMachine } from "../StateMachine";
-import * as _ from "lodash";
-import { CanvasEngine } from "../../CanvasEngine";
-import { Rectangle } from "../../geometry/Rectangle";
-import { Point } from "../../geometry/Point";
-import { AbstractDisplacementState } from "../AbstractDisplacementState";
-import { Matrix } from "mathjs";
-import { ModelAnchorInput, ModelAnchorInputPosition } from "../input/ModelAnchorInput";
+import { StateMachine } from '../StateMachine';
+import * as _ from 'lodash';
+import { CanvasEngine } from '../../CanvasEngine';
+import { Rectangle } from '../../geometry/Rectangle';
+import { Point } from '../../geometry/Point';
+import { AbstractDisplacementState } from '../AbstractDisplacementState';
+import { Matrix } from 'mathjs';
+import { ModelAnchorInput, ModelAnchorInputPosition } from '../input/ModelAnchorInput';
 
 export class ResizeDimensionsState extends AbstractDisplacementState {
 	anchorInput: ModelAnchorInput;
@@ -13,7 +13,7 @@ export class ResizeDimensionsState extends AbstractDisplacementState {
 	initialDimension: Rectangle;
 
 	constructor(engine: CanvasEngine) {
-		super("resize-dimension", engine);
+		super('resize-dimension', engine);
 		this.requireInput(ModelAnchorInput.NAME);
 		this.engine = engine;
 	}

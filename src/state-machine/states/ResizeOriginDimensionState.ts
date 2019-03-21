@@ -1,12 +1,12 @@
-import { StateMachine } from "../StateMachine";
-import * as _ from "lodash";
-import { CanvasEngine } from "../../CanvasEngine";
-import { Rectangle } from "../../geometry/Rectangle";
-import { Point } from "../../geometry/Point";
-import { AbstractDisplacementState } from "../AbstractDisplacementState";
-import { Matrix } from "mathjs";
-import { ModelAnchorInput, ModelAnchorInputPosition } from "../input/ModelAnchorInput";
-import { KeyCode, KeyInput } from "../input/KeyInput";
+import { StateMachine } from '../StateMachine';
+import * as _ from 'lodash';
+import { CanvasEngine } from '../../CanvasEngine';
+import { Rectangle } from '../../geometry/Rectangle';
+import { Point } from '../../geometry/Point';
+import { AbstractDisplacementState } from '../AbstractDisplacementState';
+import { Matrix } from 'mathjs';
+import { ModelAnchorInput, ModelAnchorInputPosition } from '../input/ModelAnchorInput';
+import { KeyCode, KeyInput } from '../input/KeyInput';
 
 export class ResizeOriginDimensionsState extends AbstractDisplacementState {
 	anchorInput: ModelAnchorInput;
@@ -14,7 +14,7 @@ export class ResizeOriginDimensionsState extends AbstractDisplacementState {
 	initialDimension: Rectangle;
 
 	constructor(engine: CanvasEngine) {
-		super("resize-origin-dimension", engine);
+		super('resize-origin-dimension', engine);
 		this.requireInput(ModelAnchorInput.NAME);
 		this.requireInput(KeyInput.identifier(KeyCode.SHIFT));
 		this.engine = engine;

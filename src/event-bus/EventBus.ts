@@ -1,7 +1,7 @@
-import { Action } from "./Action";
-import { Event } from "./Event";
-import * as _ from "lodash";
-import { BaseEvent, BaseListener, BaseObject } from "@projectstorm/react-core";
+import { Action } from './Action';
+import { Event } from './Event';
+import * as _ from 'lodash';
+import { BaseEvent, BaseListener, BaseObject } from '@projectstorm/react-core';
 
 export interface EventBusListener extends BaseListener {
 	eventWillFire?: (event: BaseEvent & { event: Event }) => any;
@@ -50,7 +50,7 @@ export class EventBus extends BaseObject<EventBusListener> {
 		}
 
 		// before the event fires
-		this.iterateListeners("event will fire", (listener, baseEvent) => {
+		this.iterateListeners('event will fire', (listener, baseEvent) => {
 			if (listener.eventWillFire) {
 				listener.eventWillFire({
 					...baseEvent,
@@ -71,7 +71,7 @@ export class EventBus extends BaseObject<EventBusListener> {
 		} while (!event.stopped && _.keys(this.actions[event.name]).length !== _.keys(processedActions).length);
 
 		if (event.actionsFired.length > 0) {
-			this.iterateListeners("event did fire", (listener, baseEvent) => {
+			this.iterateListeners('event did fire', (listener, baseEvent) => {
 				if (listener.eventDidFire) {
 					listener.eventDidFire({
 						...baseEvent,

@@ -1,6 +1,6 @@
-import { BaseModel, BaseModelListener, DeserializeEvent, Serializable } from "./BaseModel";
-import * as _ from "lodash";
-import { BaseEvent } from "@projectstorm/react-core";
+import { BaseModel, BaseModelListener, DeserializeEvent, Serializable } from './BaseModel';
+import * as _ from 'lodash';
+import { BaseEvent } from '@projectstorm/react-core';
 
 export interface GraphModelListener<CHILD = BaseModel> extends BaseModelListener {
 	modelsAdded?: (event: BaseEvent & { models: CHILD[] }) => any;
@@ -19,7 +19,7 @@ export class GraphModel<
 	protected children: { [id: string]: CHILD };
 	protected parentDelegate: BaseModel;
 
-	constructor(type: string = "graph") {
+	constructor(type: string = 'graph') {
 		super(type);
 		this.children = {};
 		this.parentDelegate = this;
@@ -38,7 +38,7 @@ export class GraphModel<
 			this.children[entity.getID()] = entity;
 			entity.setParent(this.parentDelegate);
 		});
-		this.iterateListeners("children added", (listener, event) => {
+		this.iterateListeners('children added', (listener, event) => {
 			if (listener.modelsAdded) {
 				listener.modelsAdded({ ...event, models: entities });
 			}
@@ -55,7 +55,7 @@ export class GraphModel<
 			entity.setParent(null);
 		});
 
-		this.iterateListeners("children removed", (listener, event) => {
+		this.iterateListeners('children removed', (listener, event) => {
 			if (listener.modelsRemoved) {
 				listener.modelsRemoved({ ...event, models: entities });
 			}
@@ -63,7 +63,7 @@ export class GraphModel<
 	}
 
 	removeModel(entity: CHILD | string) {
-		if (typeof entity === "string") {
+		if (typeof entity === 'string') {
 			entity = this.getModel(entity);
 		}
 		this.removeModels([entity]);
@@ -84,7 +84,7 @@ export class GraphModel<
 
 	deSerialize(event: DeserializeEvent): void {
 		super.deSerialize(event);
-		let entities = event.subset("entities");
+		let entities = event.subset('entities');
 		this.children = _.mapValues(entities.data, (entity: any, index) => {
 			let entityOb = event.engine.generateEntityFor(entity._type);
 			entityOb.deSerialize(entities.subset(index));

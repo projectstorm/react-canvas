@@ -1,6 +1,6 @@
-import * as React from "react";
-import { EllipseElementModel } from "./EllipseElementModel";
-import { BaseWidget, BaseWidgetProps } from "@projectstorm/react-core";
+import * as React from 'react';
+import { EllipseElementModel } from './EllipseElementModel';
+import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
 
 export interface EllipseElementWidgetProps extends BaseWidgetProps {
 	model: EllipseElementModel;
@@ -10,7 +10,7 @@ export interface EllipseElementWidgetState {}
 
 export class EllipseElementWidget extends BaseWidget<EllipseElementWidgetProps, EllipseElementWidgetState> {
 	constructor(props: EllipseElementWidgetProps) {
-		super("src-ellipsse-element", props);
+		super('src-ellipsse-element', props);
 		this.state = {};
 	}
 

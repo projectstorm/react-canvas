@@ -1,5 +1,5 @@
-import { BaseEvent, BaseListener, BaseObject, Toolkit } from "@projectstorm/react-core";
-import { CanvasEngine } from "../CanvasEngine";
+import { BaseEvent, BaseListener, BaseObject, Toolkit } from '@projectstorm/react-core';
+import { CanvasEngine } from '../CanvasEngine';
 
 export interface Serializable {
 	_type: string;
@@ -59,7 +59,7 @@ export class BaseModel<
 			this.parentListener = parent.addListener({
 				delegateEvent: event => {
 					if (parent.parent) {
-						parent.parent.iterateListeners("delegating event", listener => {
+						parent.parent.iterateListeners('delegating event', listener => {
 							if (listener.delegateEvent) {
 								listener.delegateEvent(event);
 							}
@@ -97,11 +97,11 @@ export class BaseModel<
 	public deSerialize(event: DeserializeEvent) {
 		this.id = event.data.id;
 		this.locked = !!event.data.locked;
-		if (event.data["parent"]) {
-			if (!event.cache[event.data["parent"]]) {
-				throw "Cannot deserialize, because of missing parent";
+		if (event.data['parent']) {
+			if (!event.cache[event.data['parent']]) {
+				throw 'Cannot deserialize, because of missing parent';
 			}
-			this.setParent(event.cache[event.data["parent"]] as any);
+			this.setParent(event.cache[event.data['parent']] as any);
 		}
 		event.cache[this.id] = this;
 	}

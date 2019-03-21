@@ -1,7 +1,7 @@
-import { StateMachine } from "./StateMachine";
-import { Action } from "../event-bus/Action";
-import { CanvasEngine } from "../CanvasEngine";
-import * as _ from "lodash";
+import { StateMachine } from './StateMachine';
+import { Action } from '../event-bus/Action';
+import { CanvasEngine } from '../CanvasEngine';
+import * as _ from 'lodash';
 
 export abstract class AbstractState {
 	engine: CanvasEngine;

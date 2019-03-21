@@ -1,8 +1,8 @@
-import * as React from "react";
-import { BaseWidget, BaseWidgetProps } from "@projectstorm/react-core";
-import { RectangleElementModel } from "./RectangleElementModel";
-import { CanvasEngine } from "../../CanvasEngine";
-import { PressElementEvent, UnPressElementEvent } from "../../event-bus/events/elements";
+import * as React from 'react';
+import { BaseWidget, BaseWidgetProps } from '@projectstorm/react-core';
+import { RectangleElementModel } from './RectangleElementModel';
+import { CanvasEngine } from '../../CanvasEngine';
+import { PressElementEvent, UnPressElementEvent } from '../../event-bus/events/elements';
 
 export interface SquareElementWidgetProps extends BaseWidgetProps {
 	model: RectangleElementModel;
@@ -13,7 +13,7 @@ export interface SquareElementWidgetState {}
 
 export class RectangleElementWidget extends BaseWidget<SquareElementWidgetProps, SquareElementWidgetState> {
 	constructor(props: SquareElementWidgetProps) {
-		super("src-primitive-rectangle", props);
+		super('src-primitive-rectangle', props);
 		this.state = {};
 	}
 

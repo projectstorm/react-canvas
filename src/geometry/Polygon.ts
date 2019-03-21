@@ -1,8 +1,8 @@
-import { Point } from "./Point";
-import { Rectangle } from "./Rectangle";
-import * as _ from "lodash";
-import { CanvasModel } from "../models-canvas/CanvasModel";
-import { Matrix } from "mathjs";
+import { Point } from './Point';
+import { Rectangle } from './Rectangle';
+import * as _ from 'lodash';
+import { CanvasModel } from '../models-canvas/CanvasModel';
+import { Matrix } from 'mathjs';
 
 export class Polygon {
 	protected points: Point[];
@@ -12,11 +12,9 @@ export class Polygon {
 	}
 
 	getSVGPoints(): string {
-		return _
-			.map(this.points, point => {
-				return point.x + "," + point.y;
-			})
-			.join(" ");
+		return _.map(this.points, point => {
+			return point.x + ',' + point.y;
+		}).join(' ');
 	}
 
 	serialize() {
@@ -114,12 +112,7 @@ export class Polygon {
 			}
 		}
 
-		return new Rectangle(
-			new Point(minX, minY),
-			new Point(maxX, minY),
-			new Point(maxX, maxY),
-			new Point(minX, maxY)
-		);
+		return new Rectangle(new Point(minX, minY), new Point(maxX, minY), new Point(maxX, maxY), new Point(minX, maxY));
 	}
 
 	getBoundingBox(): Rectangle {
@@ -143,11 +136,6 @@ export class Polygon {
 			}
 		}
 
-		return new Rectangle(
-			new Point(minX, minY),
-			new Point(maxX, minY),
-			new Point(maxX, maxY),
-			new Point(minX, maxY)
-		);
+		return new Rectangle(new Point(minX, minY), new Point(maxX, minY), new Point(maxX, maxY), new Point(minX, maxY));
 	}
 }

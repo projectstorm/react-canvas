@@ -1,11 +1,11 @@
-import { AbstractElementFactory } from "../../AbstractElementFactory";
-import { RectangleElementModel } from "./RectangleElementModel";
-import { RectangleElementWidget } from "./RectangleElementWidget";
-import * as React from "react";
-import { CanvasEngine } from "../../CanvasEngine";
+import { AbstractElementFactory } from '../../AbstractElementFactory';
+import { RectangleElementModel } from './RectangleElementModel';
+import { RectangleElementWidget } from './RectangleElementWidget';
+import * as React from 'react';
+import { CanvasEngine } from '../../CanvasEngine';
 
 export class RectangleElementFactory extends AbstractElementFactory<RectangleElementModel> {
-	static NAME = "primitive-rectangle";
+	static NAME = 'primitive-rectangle';
 
 	constructor() {
 		super(RectangleElementFactory.NAME);

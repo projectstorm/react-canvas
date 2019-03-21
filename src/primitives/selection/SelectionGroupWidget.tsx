@@ -1,10 +1,11 @@
-import * as React from "react";
-import { BaseWidget, BaseWidgetProps, MouseWidget } from "@projectstorm/react-core";
-import { AnchorWidget } from "../../widgets/AnchorWidget";
-import { CanvasEngine } from "../../CanvasEngine";
-import { SelectionElementModel } from "./SelectionElementModel";
-import { ModelAnchorInputPosition } from "../../state-machine/input/ModelAnchorInput";
-import { ModelRotateInput } from "../../state-machine/input/ModelRotateInput";
+import * as React from 'react';
+import { BaseWidget, BaseWidgetProps, MouseWidget } from '@projectstorm/react-core';
+import { AnchorWidget } from '../../widgets/AnchorWidget';
+import { CanvasEngine } from '../../CanvasEngine';
+import { SelectionElementModel } from './SelectionElementModel';
+import { ModelAnchorInputPosition } from '../../state-machine/input/ModelAnchorInput';
+import { ModelRotateInput } from '../../state-machine/input/ModelRotateInput';
+import { SmartAnchorWidget } from '../../widgets/SmartAnchorWidget';
 
 export interface SelectionGroupWidgetProps extends BaseWidgetProps {
 	model: SelectionElementModel;
@@ -15,7 +16,7 @@ export interface SelectionGroupWidgetState {}
 
 export class SelectionGroupWidget extends BaseWidget<SelectionGroupWidgetProps, SelectionGroupWidgetState> {
 	constructor(props: SelectionGroupWidgetProps) {
-		super("src-selection-group", props);
+		super('src-selection-group', props);
 		this.state = {};
 	}
 
@@ -29,12 +30,11 @@ export class SelectionGroupWidget extends BaseWidget<SelectionGroupWidgetProps, 
 					width: dimension.getWidth(),
 					height: dimension.getHeight()
 				}}
-				{...this.getProps()}
-			>
+				{...this.getProps()}>
 				<MouseWidget
 					element="div"
 					extraProps={{
-						className: this.bem("__rotate")
+						className: this.bem('__rotate')
 					}}
 					mouseDownEvent={() => {
 						this.props.engine.getStateMachine().addInput(new ModelRotateInput(this.props.model));
@@ -43,53 +43,53 @@ export class SelectionGroupWidget extends BaseWidget<SelectionGroupWidgetProps, 
 						this.props.engine.getStateMachine().removeInput(ModelRotateInput.NAME);
 					}}
 				/>
-				<AnchorWidget
+				<SmartAnchorWidget
 					pos={ModelAnchorInputPosition.TOP_LEFT}
 					selectionModel={this.props.model}
 					engine={this.props.engine}
-					className={this.bem("__top-left")}
+					className={this.bem('__top-left')}
 				/>
-				<AnchorWidget
+				<SmartAnchorWidget
 					pos={ModelAnchorInputPosition.TOP}
 					selectionModel={this.props.model}
 					engine={this.props.engine}
-					className={this.bem("__top")}
+					className={this.bem('__top')}
 				/>
-				<AnchorWidget
+				<SmartAnchorWidget
 					pos={ModelAnchorInputPosition.TOP_RIGHT}
 					selectionModel={this.props.model}
 					engine={this.props.engine}
-					className={this.bem("__top-right")}
+					className={this.bem('__top-right')}
 				/>
-				<AnchorWidget
+				<SmartAnchorWidget
 					pos={ModelAnchorInputPosition.LEFT}
 					selectionModel={this.props.model}
 					engine={this.props.engine}
-					className={this.bem("__left")}
+					className={this.bem('__left')}
 				/>
-				<AnchorWidget
+				<SmartAnchorWidget
 					pos={ModelAnchorInputPosition.RIGHT}
 					selectionModel={this.props.model}
 					engine={this.props.engine}
-					className={this.bem("__right")}
+					className={this.bem('__right')}
 				/>
-				<AnchorWidget
+				<SmartAnchorWidget
 					pos={ModelAnchorInputPosition.BOT_LEFT}
 					selectionModel={this.props.model}
 					engine={this.props.engine}
-					className={this.bem("__bot-left")}
+					className={this.bem('__bot-left')}
 				/>
-				<AnchorWidget
+				<SmartAnchorWidget
 					pos={ModelAnchorInputPosition.BOT}
 					selectionModel={this.props.model}
 					engine={this.props.engine}
-					className={this.bem("__bot")}
+					className={this.bem('__bot')}
 				/>
-				<AnchorWidget
+				<SmartAnchorWidget
 					pos={ModelAnchorInputPosition.BOT_RIGHT}
 					selectionModel={this.props.model}
 					engine={this.props.engine}
-					className={this.bem("__bot-right")}
+					className={this.bem('__bot-right')}
 				/>
 			</div>
 		);

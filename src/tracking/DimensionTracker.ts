@@ -1,6 +1,6 @@
-import { CanvasEngine } from "../CanvasEngine";
-import { Rectangle } from "../geometry/Rectangle";
-import { BaseEvent, BaseListener, BaseObject } from "@projectstorm/react-core";
+import { CanvasEngine } from '../CanvasEngine';
+import { Rectangle } from '../geometry/Rectangle';
+import { BaseEvent, BaseListener, BaseObject } from '@projectstorm/react-core';
 
 export interface DimensionTrackerListener extends BaseListener<DimensionTracker> {
 	updated(event: BaseEvent);
@@ -29,7 +29,7 @@ export class DimensionTracker extends BaseObject<DimensionTrackerListener> {
 		this.recompute(canvasEngine, ClientRect);
 
 		// fire the update event
-		this.iterateListeners("dimensions updated", (listener, event) => {
+		this.iterateListeners('dimensions updated', (listener, event) => {
 			if (listener.updated) {
 				listener.updated(event);
 			}

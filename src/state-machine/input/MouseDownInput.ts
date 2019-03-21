@@ -1,15 +1,15 @@
-import { AbstractStateMachineInput } from "../AbstractStateMachineInput";
-import { EventBus } from "../../event-bus/EventBus";
-import { InlineAction } from "../../event-bus/InlineAction";
-import { StateMachine } from "../StateMachine";
-import { MouseDownEvent, MouseUpEvent } from "../../event-bus/events/mouse";
+import { AbstractStateMachineInput } from '../AbstractStateMachineInput';
+import { EventBus } from '../../event-bus/EventBus';
+import { InlineAction } from '../../event-bus/InlineAction';
+import { StateMachine } from '../StateMachine';
+import { MouseDownEvent, MouseUpEvent } from '../../event-bus/events/mouse';
 
 export class MouseDownInput extends AbstractStateMachineInput {
 	mouseX: number;
 	mouseY: number;
 	originalEvent: MouseDownEvent;
 
-	static NAME = "mouse-down";
+	static NAME = 'mouse-down';
 
 	constructor(event: MouseDownEvent) {
 		super(MouseDownInput.NAME);

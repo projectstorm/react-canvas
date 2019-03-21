@@ -1,17 +1,17 @@
-import * as _ from "lodash";
-import { AbstractDisplacementState } from "../AbstractDisplacementState";
-import { StateMachine } from "../StateMachine";
-import { CanvasEngine } from "../../CanvasEngine";
-import { Rectangle } from "../../geometry/Rectangle";
-import { ModelElementInput } from "../input/ModelElementInput";
-import { CanvasElementModel } from "../../models-canvas/CanvasElementModel";
+import * as _ from 'lodash';
+import { AbstractDisplacementState } from '../AbstractDisplacementState';
+import { StateMachine } from '../StateMachine';
+import { CanvasEngine } from '../../CanvasEngine';
+import { Rectangle } from '../../geometry/Rectangle';
+import { ModelElementInput } from '../input/ModelElementInput';
+import { CanvasElementModel } from '../../models-canvas/CanvasElementModel';
 
 export class TranslateElementState extends AbstractDisplacementState {
 	initialPosition: { [id: string]: Rectangle };
 	initialEntities: { [id: string]: CanvasElementModel };
 
 	constructor(engine: CanvasEngine) {
-		super("translate-element", engine);
+		super('translate-element', engine);
 		this.requireInput(ModelElementInput.NAME);
 	}
 
@@ -27,7 +27,6 @@ export class TranslateElementState extends AbstractDisplacementState {
 	}
 
 	processDisplacement(displacementX, displacementY) {
-
 		const zoom = this.engine.getModel().getZoomLevel();
 
 		// work out the distance difference

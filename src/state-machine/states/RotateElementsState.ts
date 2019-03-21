@@ -1,13 +1,13 @@
-import { AbstractState } from "../AbstractState";
-import { CanvasEngine } from "../../CanvasEngine";
-import { InlineAction } from "../../event-bus/InlineAction";
-import { StateMachine } from "../StateMachine";
-import { MouseDownInput } from "../input/MouseDownInput";
-import { MouseMoveEvent } from "../../event-bus/events/mouse";
-import { ModelRotateInput } from "../input/ModelRotateInput";
-import { Point } from "../../geometry/Point";
-import * as _ from "lodash";
-import { Rectangle } from "../../geometry/Rectangle";
+import { AbstractState } from '../AbstractState';
+import { CanvasEngine } from '../../CanvasEngine';
+import { InlineAction } from '../../event-bus/InlineAction';
+import { StateMachine } from '../StateMachine';
+import { MouseDownInput } from '../input/MouseDownInput';
+import { MouseMoveEvent } from '../../event-bus/events/mouse';
+import { ModelRotateInput } from '../input/ModelRotateInput';
+import { Point } from '../../geometry/Point';
+import * as _ from 'lodash';
+import { Rectangle } from '../../geometry/Rectangle';
 
 export class RotateElementsState extends AbstractState {
 	initialMouse: MouseDownInput;
@@ -16,7 +16,7 @@ export class RotateElementsState extends AbstractState {
 	initialDimensions: Rectangle[];
 
 	constructor(engine: CanvasEngine) {
-		super("rotate-elements", engine);
+		super('rotate-elements', engine);
 		this.requireInput(ModelRotateInput.NAME);
 		this.requireInput(MouseDownInput.NAME);
 		this.registerAction(

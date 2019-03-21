@@ -1,19 +1,19 @@
-import { AbstractStateMachineInput } from "../AbstractStateMachineInput";
-import { EventBus } from "../../event-bus/EventBus";
-import { InlineAction } from "../../event-bus/InlineAction";
-import { KeyDownEvent, KeyUpEvent } from "../../event-bus/events/key";
-import { StateMachine } from "../StateMachine";
+import { AbstractStateMachineInput } from '../AbstractStateMachineInput';
+import { EventBus } from '../../event-bus/EventBus';
+import { InlineAction } from '../../event-bus/InlineAction';
+import { KeyDownEvent, KeyUpEvent } from '../../event-bus/events/key';
+import { StateMachine } from '../StateMachine';
 
 export enum KeyCode {
-	SHIFT = "Shift",
-	CONTROL = "Control"
+	SHIFT = 'Shift',
+	CONTROL = 'Control'
 }
 
 export class KeyInput extends AbstractStateMachineInput {
 	key: any;
 
 	static identifier(key: string) {
-		return "key-" + key;
+		return 'key-' + key;
 	}
 
 	constructor(key: string) {

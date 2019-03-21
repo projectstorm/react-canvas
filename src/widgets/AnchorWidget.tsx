@@ -1,37 +1,34 @@
-import { BaseWidget, BaseWidgetProps, MouseWidget } from "@projectstorm/react-core";
-import * as React from "react";
-import { CanvasEngine } from "../CanvasEngine";
-import { SelectionElementModel } from "../primitives/selection/SelectionElementModel";
-import { ModelAnchorInput, ModelAnchorInputPosition } from "../state-machine/input/ModelAnchorInput";
+import { BaseWidget, BaseWidgetProps, MouseWidget } from '@projectstorm/react-core';
+import * as React from 'react';
 
 export interface AnchorWidgetProps extends BaseWidgetProps {
-	engine: CanvasEngine;
-	selectionModel: SelectionElementModel;
-	pos: ModelAnchorInputPosition;
+	selected: boolean;
+	events: {
+		mouseUp: () => any;
+		mouseDown: () => any;
+	};
 }
 
 export class AnchorWidget extends BaseWidget<AnchorWidgetProps> {
 	constructor(props) {
-		super("src-anchor", props);
-	}
-
-	componentWillUnmount() {
-		this.props.engine.getStateMachine().removeInput(ModelAnchorInput.NAME);
+		super('src-anchor', props);
 	}
 
 	render() {
 		return (
 			<MouseWidget
-				element={"div"}
+				element={'div'}
 				mouseDownEvent={() => {
-					this.props.engine
-						.getStateMachine()
-						.addInput(new ModelAnchorInput(this.props.selectionModel, this.props.pos));
+					this.props.events.mouseDown();
 				}}
 				mouseUpEvent={() => {
-					this.props.engine.getStateMachine().removeInput(ModelAnchorInput.NAME);
+					this.props.events.mouseUp();
 				}}
-				extraProps={{ ...this.getProps() }}
+				extraProps={{
+					...this.getProps({
+						'--selected': this.props.selected
+					})
+				}}
 			/>
 		);
 	}
