@@ -12,7 +12,6 @@ export class ZoomCanvasAction extends Action<MouseWheelEvent> {
 
   doAction(event: MouseWheelEvent) {
     const model = this.engine.getModel();
-    const canvas = this.engine.getCanvasWidget();
 
     let newZoomFactor = model.getZoomLevel() + event.amount / 100.0;
     if (newZoomFactor <= 0.1) {
@@ -21,17 +20,16 @@ export class ZoomCanvasAction extends Action<MouseWheelEvent> {
 
     const oldZoomFactor = model.getZoomLevel();
 
-    const boundingRect = canvas.dimension.realDimensions;
-    const clientWidth = boundingRect.getWidth();
-    const clientHeight = boundingRect.getHeight();
+    const clientWidth = model.viewport.getWidth();
+    const clientHeight = model.viewport.getHeight();
 
     // compute difference between rect before and after scroll
     const widthDiff = clientWidth * newZoomFactor - clientWidth * oldZoomFactor;
     const heightDiff = clientHeight * newZoomFactor - clientHeight * oldZoomFactor;
 
     // compute mouse coords relative to canvas
-    const clientX = event.mouseX - boundingRect.getTopLeft().x;
-    const clientY = event.mouseY - boundingRect.getTopLeft().y;
+    const clientX = event.mouseX - model.viewport.getTopLeft().x;
+    const clientY = event.mouseY - model.viewport.getTopLeft().y;
 
     // compute width and height increment factor
     const xFactor = (clientX - model.getOffsetX()) / oldZoomFactor / clientWidth;

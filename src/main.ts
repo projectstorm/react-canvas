@@ -1,9 +1,9 @@
 export * from './CanvasEngine';
-export * from './AbstractElementFactory';
-export * from './CanvasLayerFactory';
+export * from './base-factories/AbstractElementFactory';
+export * from './primitives-core/layer/LayerFactory';
 
 export * from './widgets/CanvasLayerWidget';
-export * from './widgets/AnchorWidget';
+export * from './primitives-core/anchor/AnchorWidget';
 export * from './primitives/selection/SelectionGroupWidget';
 
 export * from './geometry/Point';
@@ -15,8 +15,8 @@ export * from './base-models/GraphModel';
 export * from './base-models/GraphModelOrdered';
 
 export * from './models-canvas/CanvasElementModel';
-export * from './models-canvas/CanvasLayerModel';
-export * from './models-canvas/CanvasModel';
+export * from './primitives-core/layer/LayerModel';
+export * from './primitives-core/canvas/CanvasModel';
 
 export * from './history/HistoryBank';
 

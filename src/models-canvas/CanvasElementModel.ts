@@ -1,4 +1,4 @@
-import { CanvasLayerModel } from './CanvasLayerModel';
+import { LayerModel } from '../primitives-core/layer/LayerModel';
 import { Rectangle } from '../geometry/Rectangle';
 import { BaseModel, BaseModelListener, DeserializeEvent } from '../base-models/BaseModel';
 import { BaseEvent } from '@projectstorm/react-core';
@@ -11,7 +11,7 @@ export interface CanvasElementModelListener<T extends CanvasElementModel = any> 
 
 export abstract class CanvasElementModel<
   T extends CanvasElementModelListener = CanvasElementModelListener
-> extends BaseModel<CanvasLayerModel, CanvasElementModelListener> {
+> extends BaseModel<LayerModel, CanvasElementModelListener> {
   protected selected: boolean;
   protected locked: boolean;
 
@@ -68,7 +68,7 @@ export abstract class CanvasElementModel<
 
   abstract setDimensions(dimensions: Rectangle);
 
-  moveToLayer(layer: CanvasLayerModel) {
+  moveToLayer(layer: LayerModel) {
     if (this.parent) {
       this.parent.removeModel(this);
     }

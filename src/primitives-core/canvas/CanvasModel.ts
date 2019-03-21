@@ -1,23 +1,27 @@
-import { CanvasLayerModel } from './CanvasLayerModel';
+import { LayerModel } from '../layer/LayerModel';
 import * as _ from 'lodash';
-import { CanvasElementModel } from './CanvasElementModel';
-import { BaseModel, BaseModelListener, DeserializeEvent } from '../base-models/BaseModel';
-import { GraphModelOrdered } from '../base-models/GraphModelOrdered';
+import { CanvasElementModel } from '../../models-canvas/CanvasElementModel';
+import { BaseModel, BaseModelListener, DeserializeEvent } from '../../base-models/BaseModel';
+import { GraphModelOrdered } from '../../base-models/GraphModelOrdered';
 import { BaseEvent } from '@projectstorm/react-core';
+import {Rectangle} from "../../geometry/Rectangle";
 
 export interface CanvasModelListener<T extends CanvasModel = any> extends BaseModelListener<T> {
   offsetUpdated?(event: BaseEvent<T> & { offsetX: number; offsetY: number }): void;
 
   zoomUpdated?(event: BaseEvent<T> & { zoom: number }): void;
+
+  viewportChanged?(event: BaseEvent<T> & { viewport: Rectangle });
 }
 
 export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> extends BaseModel<null, T> {
-  selectedLayer: CanvasLayerModel;
-  layers: GraphModelOrdered<CanvasLayerModel, CanvasModel>;
+  selectedLayer: LayerModel;
+  layers: GraphModelOrdered<LayerModel, CanvasModel>;
 
   //control variables
   offsetX: number;
   offsetY: number;
+  viewport: Rectangle;
   zoom: number;
 
   constructor() {
@@ -27,6 +31,7 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
     this.layers.setParentDelegate(this);
     this.offsetX = 0;
     this.offsetY = 0;
+    this.viewport = new Rectangle();
     this.zoom = 1;
   }
 
@@ -60,7 +65,19 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
     return this.zoom;
   }
 
+  setViewport(rect: Rectangle){
+    this.viewport = rect;
+    this.iterateListeners('viewport changed', (listener: CanvasModelListener, event) => {
+      if (listener.viewportChanged) {
+        listener.viewportChanged({ ...event, viewport: rect });
+      }
+    });
+  }
+
   setZoomLevel(zoom: number) {
+    if(zoom < 0){
+      throw new Error("Zoom cannot be below zero");
+    }
     this.zoom = zoom;
     this.iterateListeners('zoom changed', (listener: CanvasModelListener, event) => {
       if (listener.zoomUpdated) {
@@ -69,7 +86,11 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
     });
   }
 
-  setZoomPercent(percent: number) {
+  setZoomPercent(percent: number | string) {
+    // also accept string like '100%'
+    if(typeof percent === 'string'){
+      percent = _.parseInt(_.trimEnd(percent, ' %'));
+    }
     this.setZoomLevel(percent / 100.0);
   }
 
@@ -83,11 +104,11 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
     });
   }
 
-  removeLayer(layer: CanvasLayerModel) {
+  removeLayer(layer: LayerModel) {
     this.layers.removeModel(layer);
   }
 
-  addLayer(layer: CanvasLayerModel) {
+  addLayer(layer: LayerModel) {
     this.layers.addModel(layer);
     this.selectedLayer = layer;
   }
@@ -102,5 +123,29 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
     return _.filter(this.getElements(), element => {
       return element.isSelected();
     });
+  }
+
+  zoomToFit(margin: number = 0) {
+    let bounds = Rectangle.boundingBoxFromPolygons(
+      _.filter(
+        _.map(this.getElements(), element => {
+          return element.getDimensions();
+        }),
+        el => {
+          return !!el;
+        }
+      )
+    );
+
+    let zoomFactor = Math.min(
+      (this.viewport.getWidth() - margin - margin) / bounds.getWidth(),
+      (this.viewport.getHeight() - margin - margin) / bounds.getHeight()
+    );
+
+    this.setZoomLevel(zoomFactor);
+    this.setOffset(
+      margin + -1 * bounds.getTopLeft().x * this.zoom,
+      margin + -1 * bounds.getTopLeft().y * this.zoom
+    );
   }
 }

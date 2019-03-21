@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { storiesOf, addDecorator } from '@storybook/react';
+import { addDecorator } from '@storybook/react';
 import { setOptions } from '@storybook/addon-options';
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs/react';
-import { configureViewport } from '@storybook/addon-viewport';
+import { withKnobs} from '@storybook/addon-knobs/react';
 //include the SCSS for the demo
 import './.helpers/demo.scss';
 import '../src/sass/main.scss';

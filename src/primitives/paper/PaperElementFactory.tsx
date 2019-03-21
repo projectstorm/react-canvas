@@ -1,4 +1,4 @@
-import { AbstractElementFactory } from '../../AbstractElementFactory';
+import { AbstractElementFactory } from '../../base-factories/AbstractElementFactory';
 import { PaperElementModel } from './PaperElementModel';
 import { CanvasEngine } from '../../CanvasEngine';
 import { PaperElementWidget } from './PaperElementWidget';

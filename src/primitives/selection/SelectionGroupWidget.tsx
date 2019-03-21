@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { BaseWidget, BaseWidgetProps, MouseWidget } from '@projectstorm/react-core';
-import { AnchorWidget } from '../../widgets/AnchorWidget';
+import { AnchorWidget } from '../../primitives-core/anchor/AnchorWidget';
 import { CanvasEngine } from '../../CanvasEngine';
 import { SelectionElementModel } from './SelectionElementModel';
 import { ModelAnchorInputPosition } from '../../state-machine/input/ModelAnchorInput';
 import { ModelRotateInput } from '../../state-machine/input/ModelRotateInput';
-import { SmartAnchorWidget } from '../../widgets/SmartAnchorWidget';
+import { SmartAnchorWidget } from '../../primitives-core/anchor/SmartAnchorWidget';
 
 export interface SelectionGroupWidgetProps extends BaseWidgetProps {
   model: SelectionElementModel;

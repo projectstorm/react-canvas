@@ -1,7 +1,7 @@
 import { Point } from './Point';
 import { Rectangle } from './Rectangle';
 import * as _ from 'lodash';
-import { CanvasModel } from '../models-canvas/CanvasModel';
+import { CanvasModel } from '../primitives-core/canvas/CanvasModel';
 import { Matrix } from 'mathjs';
 
 export class Polygon {

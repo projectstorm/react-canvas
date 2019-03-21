@@ -1,4 +1,4 @@
-import { AbstractElementFactory } from '../../AbstractElementFactory';
+import { AbstractElementFactory } from '../../base-factories/AbstractElementFactory';
 import { RectangleElementModel } from './RectangleElementModel';
 import { RectangleElementWidget } from './RectangleElementWidget';
 import * as React from 'react';

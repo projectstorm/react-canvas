@@ -1,4 +1,3 @@
-import { CanvasEngine } from '../CanvasEngine';
 import { Rectangle } from '../geometry/Rectangle';
 import { BaseEvent, BaseListener, BaseObject } from '@projectstorm/react-core';
 
@@ -16,17 +15,17 @@ export class DimensionTracker extends BaseObject<DimensionTrackerListener> {
     this.realDimensions = new Rectangle();
   }
 
-  recompute(canvasEngine: CanvasEngine, clientRect: ClientRect) {
+  recompute(clientRect: ClientRect) {
     this.realDimensions.updateDimensions(clientRect.left, clientRect.top, clientRect.width, clientRect.height);
   }
 
-  updateDimensions(canvasEngine: CanvasEngine, ClientRect: ClientRect) {
+  updateDimensions(ClientRect: ClientRect) {
     if (!this.enableTracking) {
       return false;
     }
 
     // store the real dimensions
-    this.recompute(canvasEngine, ClientRect);
+    this.recompute(ClientRect);
 
     // fire the update event
     this.iterateListeners('dimensions updated', (listener, event) => {

@@ -1,28 +1,32 @@
-import { CanvasWidget } from '../../src/widgets/CanvasWidget';
 import * as React from 'react';
 import { CanvasEngine } from '../../src/CanvasEngine';
-import { CanvasModel } from '../../src/models-canvas/CanvasModel';
-import { CanvasLayerModel } from '../../src/models-canvas/CanvasLayerModel';
+import { CanvasModel } from '../../src/primitives-core/canvas/CanvasModel';
+import { LayerModel } from '../../src/primitives-core/layer/LayerModel';
 import { RectangleElementModel } from '../../src/primitives/rectangle/RectangleElementModel';
 
 import { storiesOf } from '@storybook/react';
 import { button } from '@storybook/addon-knobs';
 import { GridElementModel } from '../../src/primitives/grid/GridElementModel';
 import { PaperElementModel } from '../../src/primitives/paper/PaperElementModel';
+import {installDebugInteractivity} from "../../src/interactivity/debug-interactivity";
+import {installDefaultInteractivity} from "../../src/interactivity/default-interactivity";
+import {SmartCanvasWidget} from "../../src/primitives-core/canvas/SmartCanvasWidget";
 
 storiesOf('Simple Usage', module).add('Full example', () => {
   //setup canvas engine
   let engine = new CanvasEngine();
-  engine.enableDebugMode(true);
-  engine.installDefaults();
 
   let model = new CanvasModel();
   model.setOffset(100, 100);
   model.setZoomLevel(1);
   engine.setModel(model);
 
+  installDebugInteractivity(engine);
+  installDefaultInteractivity(engine);
+  engine.installDefaults();
+
   // grid layer
-  let layer2 = new CanvasLayerModel();
+  let layer2 = new LayerModel();
   layer2.setSVG(true);
   layer2.setTransformable(false);
   model.addLayer(layer2);
@@ -38,7 +42,7 @@ storiesOf('Simple Usage', module).add('Full example', () => {
   layer2.addModel(gridModel2);
 
   // paper layer
-  let paperLayer = new CanvasLayerModel();
+  let paperLayer = new LayerModel();
   paperLayer.setSVG(false);
   paperLayer.setTransformable(true);
   let paper = new PaperElementModel();
@@ -46,7 +50,7 @@ storiesOf('Simple Usage', module).add('Full example', () => {
   model.addLayer(paperLayer);
 
   // add layer
-  let layer = new CanvasLayerModel();
+  let layer = new LayerModel();
   layer.setSVG(true);
   layer.setTransformable(true);
   model.addLayer(layer);
@@ -64,7 +68,7 @@ storiesOf('Simple Usage', module).add('Full example', () => {
   layer.addModels([squareModel, squareModel2, squareModel3]);
 
   button('Fit Width', () => {
-    engine.getCanvasWidget().zoomToFit(15);
+    model.zoomToFit(15);
   });
 
   button('Undo', () => {
@@ -75,5 +79,5 @@ storiesOf('Simple Usage', module).add('Full example', () => {
     engine.getHistoryBank().goForward();
   });
 
-  return <CanvasWidget className={'demo-canvas'} engine={engine} />;
+  return <SmartCanvasWidget model={model} className={'demo-canvas'} engine={engine} />;
 });

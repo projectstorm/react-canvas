@@ -21,7 +21,7 @@ export class GridElementWidget extends BaseWidget<GridElementWidgetProps, GridEl
     let offsetX =
       this.props.engine.getModel().offsetX % (this.props.model.sizeX * this.props.engine.getModel().getZoomLevel());
     let spacingX = this.props.model.sizeX * this.props.engine.getModel().getZoomLevel();
-    let totalChildrenX = this.props.engine.getCanvasWidget().dimension.realDimensions.getWidth() / spacingX;
+    let totalChildrenX = this.props.engine.getModel().width / spacingX;
     for (let i = 0; i < totalChildrenX; i++) {
       let x = offsetX + spacingX * i;
       childrenX.push(
@@ -30,7 +30,7 @@ export class GridElementWidget extends BaseWidget<GridElementWidgetProps, GridEl
           stroke={this.props.model.color}
           strokeWidth={this.props.model.thickness}
           y1={0}
-          y2={this.props.engine.getCanvasWidget().dimension.realDimensions.getHeight()}
+          y2={this.props.engine.getModel().height}
           x1={x}
           x2={x}
         />
@@ -41,7 +41,7 @@ export class GridElementWidget extends BaseWidget<GridElementWidgetProps, GridEl
     let offsetY =
       this.props.engine.getModel().offsetY % (this.props.model.sizeY * this.props.engine.getModel().getZoomLevel());
     let spacingY = this.props.model.sizeY * this.props.engine.getModel().getZoomLevel();
-    let totalChildrenY = this.props.engine.getCanvasWidget().dimension.realDimensions.getHeight() / spacingY;
+    let totalChildrenY = this.props.engine.getModel().height / spacingY;
     for (let i = 0; i < totalChildrenY; i++) {
       let y = offsetY + spacingY * i;
       childrenY.push(
@@ -50,7 +50,7 @@ export class GridElementWidget extends BaseWidget<GridElementWidgetProps, GridEl
           stroke={this.props.model.color}
           strokeWidth={this.props.model.thickness}
           x1={0}
-          x2={this.props.engine.getCanvasWidget().dimension.realDimensions.getWidth()}
+          x2={this.props.engine.getModel().width}
           y1={y}
           y2={y}
         />

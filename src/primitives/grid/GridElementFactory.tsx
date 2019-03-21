@@ -1,4 +1,4 @@
-import { AbstractElementFactory } from '../../AbstractElementFactory';
+import { AbstractElementFactory } from '../../base-factories/AbstractElementFactory';
 import { GridElementModel } from './GridElementModel';
 import { CanvasEngine } from '../../CanvasEngine';
 import { GridElementWidget } from './GridElementWidget';

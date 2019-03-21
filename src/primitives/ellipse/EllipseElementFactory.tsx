@@ -1,4 +1,4 @@
-import { AbstractElementFactory } from '../../AbstractElementFactory';
+import { AbstractElementFactory } from '../../base-factories/AbstractElementFactory';
 import { EllipseElementModel } from './EllipseElementModel';
 import { CanvasEngine } from '../../CanvasEngine';
 import { EllipseElementWidget } from './EllipseElementWidget';

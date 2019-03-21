@@ -1,4 +1,4 @@
-import { AbstractElementFactory } from '../../AbstractElementFactory';
+import { AbstractElementFactory } from '../../base-factories/AbstractElementFactory';
 import { SelectionElementModel } from './SelectionElementModel';
 import { CanvasEngine } from '../../CanvasEngine';
 import { SelectionElementWidget } from './SelectionElementWidget';

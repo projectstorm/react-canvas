@@ -1,8 +1,8 @@
 import { BaseWidget, BaseWidgetProps, MouseWidget } from '@projectstorm/react-core';
 import * as React from 'react';
-import { CanvasEngine } from '../CanvasEngine';
-import { SelectionElementModel } from '../primitives/selection/SelectionElementModel';
-import { ModelAnchorInput, ModelAnchorInputPosition } from '../state-machine/input/ModelAnchorInput';
+import { CanvasEngine } from '../../CanvasEngine';
+import { SelectionElementModel } from '../../primitives/selection/SelectionElementModel';
+import { ModelAnchorInput, ModelAnchorInputPosition } from '../../state-machine/input/ModelAnchorInput';
 import { AnchorWidget } from './AnchorWidget';
 import { bool } from 'prop-types';
 
