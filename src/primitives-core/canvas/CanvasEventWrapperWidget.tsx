@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {CanvasEngine} from "../../CanvasEngine";
-import {KeyDownEvent, KeyUpEvent} from "../../event-bus/events/key";
-import {MouseDownEvent, MouseMoveEvent, MouseUpEvent, MouseWheelEvent} from "../../event-bus/events/mouse";
+import { CanvasEngine } from '../../CanvasEngine';
+import { KeyDownEvent, KeyUpEvent } from '../../event-bus/events/key';
+import { MouseDownEvent, MouseMoveEvent, MouseUpEvent, MouseWheelEvent } from '../../event-bus/events/mouse';
 
 export interface CanvasEventWrapperWidgetProps {
   engine: CanvasEngine;
@@ -10,7 +10,6 @@ export interface CanvasEventWrapperWidgetProps {
 }
 
 export class CanvasEventWrapperWidget extends React.Component<CanvasEventWrapperWidgetProps> {
-
   // handles
   onKeyDownHandle: (event: any) => any;
   onKeyUpHandle: (event: any) => any;
@@ -45,7 +44,9 @@ export class CanvasEventWrapperWidget extends React.Component<CanvasEventWrapper
     this.onMouseWheelHandle = event => {
       this.props.engine
         .getEventBus()
-        .fireEvent(new MouseWheelEvent(this, event.clientX, event.clientY, CanvasEventWrapperWidget.normalizeScrollWheel(event)));
+        .fireEvent(
+          new MouseWheelEvent(this, event.clientX, event.clientY, CanvasEventWrapperWidget.normalizeScrollWheel(event))
+        );
       event.stopPropagation();
       event.preventDefault();
     };
@@ -84,6 +85,6 @@ export class CanvasEventWrapperWidget extends React.Component<CanvasEventWrapper
   }
 
   render() {
-    return this.props.children
+    return this.props.children;
   }
 }

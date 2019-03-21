@@ -8,9 +8,9 @@ import { storiesOf } from '@storybook/react';
 import { button } from '@storybook/addon-knobs';
 import { GridElementModel } from '../../src/primitives/grid/GridElementModel';
 import { PaperElementModel } from '../../src/primitives/paper/PaperElementModel';
-import {installDebugInteractivity} from "../../src/interactivity/debug-interactivity";
-import {installDefaultInteractivity} from "../../src/interactivity/default-interactivity";
-import {SmartCanvasWidget} from "../../src/primitives-core/canvas/SmartCanvasWidget";
+import { installDebugInteractivity } from '../../src/interactivity/debug-interactivity';
+import { installDefaultInteractivity } from '../../src/interactivity/default-interactivity';
+import { SmartCanvasWidget } from '../../src/primitives-core/canvas/SmartCanvasWidget';
 
 storiesOf('Simple Usage', module).add('Full example', () => {
   //setup canvas engine

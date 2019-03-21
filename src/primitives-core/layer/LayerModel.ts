@@ -3,10 +3,7 @@ import { CanvasModel } from '../canvas/CanvasModel';
 import { DeserializeEvent, Serializable } from '../../base-models/BaseModel';
 import { GraphModelOrdered } from '../../base-models/GraphModelOrdered';
 
-export class LayerModel<T extends CanvasElementModel = CanvasElementModel> extends GraphModelOrdered<
-  T,
-  CanvasModel
-> {
+export class LayerModel<T extends CanvasElementModel = CanvasElementModel> extends GraphModelOrdered<T, CanvasModel> {
   protected name: string;
   protected svg: boolean;
   protected transform: boolean;

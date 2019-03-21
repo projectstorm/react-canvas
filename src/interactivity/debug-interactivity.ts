@@ -1,7 +1,7 @@
-import {LayerModel} from "../primitives-core/layer/LayerModel";
-import {CanvasEngine} from "../CanvasEngine";
-import * as _ from "lodash";
-import {EllipseElementModel} from "../primitives/ellipse/EllipseElementModel";
+import { LayerModel } from '../primitives-core/layer/LayerModel';
+import { CanvasEngine } from '../CanvasEngine';
+import * as _ from 'lodash';
+import { EllipseElementModel } from '../primitives/ellipse/EllipseElementModel';
 
 export const installDebugInteractivity = (engine: CanvasEngine) => {
   // debug layer

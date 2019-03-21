@@ -4,7 +4,7 @@ import { CanvasElementModel } from '../../models-canvas/CanvasElementModel';
 import { BaseModel, BaseModelListener, DeserializeEvent } from '../../base-models/BaseModel';
 import { GraphModelOrdered } from '../../base-models/GraphModelOrdered';
 import { BaseEvent } from '@projectstorm/react-core';
-import {Rectangle} from "../../geometry/Rectangle";
+import { Rectangle } from '../../geometry/Rectangle';
 
 export interface CanvasModelListener<T extends CanvasModel = any> extends BaseModelListener<T> {
   offsetUpdated?(event: BaseEvent<T> & { offsetX: number; offsetY: number }): void;
@@ -65,7 +65,7 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
     return this.zoom;
   }
 
-  setViewport(rect: Rectangle){
+  setViewport(rect: Rectangle) {
     this.viewport = rect;
     this.iterateListeners('viewport changed', (listener: CanvasModelListener, event) => {
       if (listener.viewportChanged) {
@@ -75,8 +75,8 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
   }
 
   setZoomLevel(zoom: number) {
-    if(zoom < 0){
-      throw new Error("Zoom cannot be below zero");
+    if (zoom < 0) {
+      throw new Error('Zoom cannot be below zero');
     }
     this.zoom = zoom;
     this.iterateListeners('zoom changed', (listener: CanvasModelListener, event) => {
@@ -88,7 +88,7 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
 
   setZoomPercent(percent: number | string) {
     // also accept string like '100%'
-    if(typeof percent === 'string'){
+    if (typeof percent === 'string') {
       percent = _.parseInt(_.trimEnd(percent, ' %'));
     }
     this.setZoomLevel(percent / 100.0);
@@ -143,9 +143,6 @@ export class CanvasModel<T extends CanvasModelListener = CanvasModelListener> ex
     );
 
     this.setZoomLevel(zoomFactor);
-    this.setOffset(
-      margin + -1 * bounds.getTopLeft().x * this.zoom,
-      margin + -1 * bounds.getTopLeft().y * this.zoom
-    );
+    this.setOffset(margin + -1 * bounds.getTopLeft().x * this.zoom, margin + -1 * bounds.getTopLeft().y * this.zoom);
   }
 }

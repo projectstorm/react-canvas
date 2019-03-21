@@ -17,12 +17,18 @@ export class SimpleLayerWidget extends BaseWidget<SimpleLayerWidgetProps> {
   getProps() {
     let props = super.getProps();
 
-    if(this.props.offsetY || this.props.offsetY || this.props.zoom){
+    if (this.props.offsetY || this.props.offsetY || this.props.zoom) {
       // do we apply
       props['style'] = {
         ...props['style'],
         transform:
-          'translate(' + (this.props.offsetX || 0) + 'px,' + (this.props.offsetY || 0) + 'px) scale(' + (this.props.zoom || 0) + ')'
+          'translate(' +
+          (this.props.offsetX || 0) +
+          'px,' +
+          (this.props.offsetY || 0) +
+          'px) scale(' +
+          (this.props.zoom || 0) +
+          ')'
       };
     }
     return props;

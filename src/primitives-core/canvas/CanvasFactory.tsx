@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { AbstractElementFactory } from '../../base-factories/AbstractElementFactory';
 import { CanvasEngine } from '../../CanvasEngine';
-import "./_SimpleCanvasWidget.scss"
-import {CanvasModel} from "./CanvasModel";
-import {SmartCanvasWidget} from "./SmartCanvasWidget";
+import './_SimpleCanvasWidget.scss';
+import { CanvasModel } from './CanvasModel';
+import { SmartCanvasWidget } from './SmartCanvasWidget';
 
 export class CanvasFactory extends AbstractElementFactory<CanvasModel> {
   constructor() {
@@ -15,6 +15,6 @@ export class CanvasFactory extends AbstractElementFactory<CanvasModel> {
   }
 
   generateWidget(engine: CanvasEngine, model: CanvasModel): JSX.Element {
-    return <SmartCanvasWidget model={model} engine={engine} layer={model} canvasModel={model}/>;
+    return <SmartCanvasWidget model={model} engine={engine} layer={model} canvasModel={model} />;
   }
 }

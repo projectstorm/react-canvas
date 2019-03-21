@@ -50,8 +50,8 @@ export class Polygon {
     return this.points;
   }
 
-  rotate(degrees: number){
-    this.transform(Point.createRotateMatrix(degrees / (180 / Math.PI), this.getOrigin()))
+  rotate(degrees: number) {
+    this.transform(Point.createRotateMatrix(degrees / (180 / Math.PI), this.getOrigin()));
   }
 
   translate(offsetX: number, offsetY: number) {

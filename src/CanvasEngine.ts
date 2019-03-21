@@ -1,32 +1,31 @@
 import * as _ from 'lodash';
-import {AbstractElementFactory} from './base-factories/AbstractElementFactory';
-import {RectangleElementFactory} from './primitives/rectangle/RectangleElementFactory';
-import {CanvasModel} from './primitives-core/canvas/CanvasModel';
-import {SelectionElementFactory} from './primitives/selection/SelectionElementFactory';
-import {StateMachine} from './state-machine/StateMachine';
-import {TranslateCanvasState} from './state-machine/states/TranslateCanvasState';
-import {GridElementFactory} from './primitives/grid/GridElementFactory';
-import {EllipseElementFactory} from './primitives/ellipse/EllipseElementFactory';
-import {TranslateElementState} from './state-machine/states/TranslateElementState';
-import {SelectElementsState} from './state-machine/states/SelectElementsState';
-import {HistoryBank} from './history/HistoryBank';
-import {LayerFactory} from './primitives-core/layer/LayerFactory';
-import {EventBus} from './event-bus/EventBus';
-import {ZoomCanvasAction} from './event-bus/actions/ZoomCanvasAction';
-import {MouseDownInput} from './state-machine/input/MouseDownInput';
-import {KeyInput} from './state-machine/input/KeyInput';
-import {ModelElementInput} from './state-machine/input/ModelElementInput';
-import {DefaultState} from './state-machine/states/DefaultState';
-import {Toolkit} from '@projectstorm/react-core';
-import {ModelEvent} from './event-bus/events/ModelEvent';
-import {PaperElementFactory} from './primitives/paper/PaperElementFactory';
-import {BaseEvent, BaseObject} from '@projectstorm/react-core';
-import {BaseModel, DeserializeEvent} from './base-models/BaseModel';
-import {DeselectModelsAction} from './event-bus/actions/DeselectModelsAction';
-import {CanvasFactory} from "./primitives-core/canvas/CanvasFactory";
+import { AbstractElementFactory } from './base-factories/AbstractElementFactory';
+import { RectangleElementFactory } from './primitives/rectangle/RectangleElementFactory';
+import { CanvasModel } from './primitives-core/canvas/CanvasModel';
+import { SelectionElementFactory } from './primitives/selection/SelectionElementFactory';
+import { StateMachine } from './state-machine/StateMachine';
+import { TranslateCanvasState } from './state-machine/states/TranslateCanvasState';
+import { GridElementFactory } from './primitives/grid/GridElementFactory';
+import { EllipseElementFactory } from './primitives/ellipse/EllipseElementFactory';
+import { TranslateElementState } from './state-machine/states/TranslateElementState';
+import { SelectElementsState } from './state-machine/states/SelectElementsState';
+import { HistoryBank } from './history/HistoryBank';
+import { LayerFactory } from './primitives-core/layer/LayerFactory';
+import { EventBus } from './event-bus/EventBus';
+import { ZoomCanvasAction } from './event-bus/actions/ZoomCanvasAction';
+import { MouseDownInput } from './state-machine/input/MouseDownInput';
+import { KeyInput } from './state-machine/input/KeyInput';
+import { ModelElementInput } from './state-machine/input/ModelElementInput';
+import { DefaultState } from './state-machine/states/DefaultState';
+import { Toolkit } from '@projectstorm/react-core';
+import { ModelEvent } from './event-bus/events/ModelEvent';
+import { PaperElementFactory } from './primitives/paper/PaperElementFactory';
+import { BaseEvent, BaseObject } from '@projectstorm/react-core';
+import { BaseModel, DeserializeEvent } from './base-models/BaseModel';
+import { DeselectModelsAction } from './event-bus/actions/DeselectModelsAction';
+import { CanvasFactory } from './primitives-core/canvas/CanvasFactory';
 
-export class CanvasEngineError extends Error {
-}
+export class CanvasEngineError extends Error {}
 
 export interface CanvasEngineListener<T> {
   modelChanged?: (event: BaseEvent & { model: T; oldModel: T }) => any;
@@ -79,7 +78,7 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
     this.model = model;
     this.iterateListeners('Model changed', (listener, event) => {
       if (listener.modelChanged) {
-        listener.modelChanged({...event, model: model, oldModel: oldModel});
+        listener.modelChanged({ ...event, model: model, oldModel: oldModel });
       }
     });
 
@@ -128,7 +127,7 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
   }
 
   repaint() {
-    this.iterateListeners('repaint', (listener) => {
+    this.iterateListeners('repaint', listener => {
       if (listener.repaint) {
         listener.repaint();
       }
@@ -144,7 +143,6 @@ export class CanvasEngine<T extends CanvasModel = CanvasModel> extends BaseObjec
   }
 
   installDefaults() {
-
     // core factories
     this.registerElementFactory(new LayerFactory());
     this.registerElementFactory(new CanvasFactory());

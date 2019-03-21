@@ -19,9 +19,7 @@ export class DimensionTrackerWidget extends BaseWidget<DimensionTrackerWidgetPro
 
   updateDimensions() {
     if (this.props.reference.current) {
-      this.props.dimensionTracker.updateDimensions(
-        this.props.reference.current.getBoundingClientRect()
-      );
+      this.props.dimensionTracker.updateDimensions(this.props.reference.current.getBoundingClientRect());
     }
   }
 

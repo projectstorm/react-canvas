@@ -1,9 +1,9 @@
-import {LayerModel} from "../primitives-core/layer/LayerModel";
-import {InlineAction} from "../event-bus/InlineAction";
-import {ModelEvent} from "../event-bus/events/ModelEvent";
-import * as _ from "lodash";
-import {SelectionElementModel} from "../primitives/selection/SelectionElementModel";
-import {CanvasEngine} from "../CanvasEngine";
+import { LayerModel } from '../primitives-core/layer/LayerModel';
+import { InlineAction } from '../event-bus/InlineAction';
+import { ModelEvent } from '../event-bus/events/ModelEvent';
+import * as _ from 'lodash';
+import { SelectionElementModel } from '../primitives/selection/SelectionElementModel';
+import { CanvasEngine } from '../CanvasEngine';
 
 export const installDefaultInteractivity = (engine: CanvasEngine) => {
   // selection layer
