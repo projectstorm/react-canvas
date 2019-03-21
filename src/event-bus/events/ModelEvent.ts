@@ -1,13 +1,13 @@
-import { Event } from "../Event";
-import { BaseEvent } from "@projectstorm/react-core";
+import { Event } from '../Event';
+import { BaseEvent } from '@projectstorm/react-core';
 
 export class ModelEvent extends Event {
-	modelEvent: BaseEvent;
+  modelEvent: BaseEvent;
 
-	static NAME = "model-delegate-event";
+  static NAME = 'model-delegate-event';
 
-	constructor(modelEvent: BaseEvent) {
-		super(ModelEvent.NAME, modelEvent.source);
-		this.modelEvent = modelEvent;
-	}
+  constructor(modelEvent: BaseEvent) {
+    super(ModelEvent.NAME, modelEvent.source);
+    this.modelEvent = modelEvent;
+  }
 }

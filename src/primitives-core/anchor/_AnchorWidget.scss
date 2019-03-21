@@ -8,7 +8,7 @@
 	cursor: move;
 	pointer-events: all;
 
-	&:hover {
+	&:hover, &--selected {
 		border: 1px blue solid;
 		background: cyan;
 		min-width: 12px;
