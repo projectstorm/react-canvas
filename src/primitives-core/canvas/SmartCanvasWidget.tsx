@@ -6,7 +6,6 @@ import {CanvasEngine} from "../../CanvasEngine";
 import {CanvasEventWrapperWidget} from "./CanvasEventWrapperWidget";
 import {DimensionTracker} from "../../tracking/DimensionTracker";
 import {CanvasModel} from "./CanvasModel";
-import {Rectangle} from "../../geometry/Rectangle";
 
 export interface CanvasWidgetProps extends BaseWidgetProps {
   model: CanvasModel;
@@ -21,6 +20,7 @@ export class SmartCanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidge
   ref: React.RefObject<HTMLElement>;
   dimension: DimensionTracker;
   dimensionListener: any;
+  engineListener: any;
 
   constructor(props: CanvasWidgetProps) {
     super('src-canvas', props);
@@ -34,11 +34,17 @@ export class SmartCanvasWidget extends BaseWidget<CanvasWidgetProps, CanvasWidge
       updated: (event: BaseEvent<any>) => {
         this.props.model.setViewport(this.dimension.realDimensions);
       }
+    });
+    this.engineListener = this.props.engine.addListener({
+      repaint: () => {
+        this.forceUpdate();
+      }
     })
   }
 
   componentWillUnmount(): void {
     this.dimension.removeListener(this.dimensionListener);
+    this.props.engine.removeListener(this.engineListener);
   }
 
   render() {
