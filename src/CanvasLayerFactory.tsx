@@ -5,15 +5,15 @@ import { CanvasEngine } from './CanvasEngine';
 import { CanvasLayerWidget } from './widgets/CanvasLayerWidget';
 
 export class CanvasLayerFactory extends AbstractElementFactory<CanvasLayerModel> {
-	constructor() {
-		super('layer');
-	}
+  constructor() {
+    super('layer');
+  }
 
-	generateModel(): CanvasLayerModel {
-		return new CanvasLayerModel();
-	}
+  generateModel(): CanvasLayerModel {
+    return new CanvasLayerModel();
+  }
 
-	generateWidget(engine: CanvasEngine, model: CanvasLayerModel): JSX.Element {
-		return <CanvasLayerWidget engine={engine} layer={model} />;
-	}
+  generateWidget(engine: CanvasEngine, model: CanvasLayerModel): JSX.Element {
+    return <CanvasLayerWidget engine={engine} layer={model} />;
+  }
 }

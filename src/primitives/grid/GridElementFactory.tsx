@@ -5,17 +5,17 @@ import { GridElementWidget } from './GridElementWidget';
 import * as React from 'react';
 
 export class GridElementFactory extends AbstractElementFactory<GridElementModel> {
-	static NAME = 'primitive-grid';
+  static NAME = 'primitive-grid';
 
-	constructor() {
-		super(GridElementFactory.NAME);
-	}
+  constructor() {
+    super(GridElementFactory.NAME);
+  }
 
-	generateModel(): GridElementModel {
-		return new GridElementModel();
-	}
+  generateModel(): GridElementModel {
+    return new GridElementModel();
+  }
 
-	generateWidget(engine: CanvasEngine, model: GridElementModel): JSX.Element {
-		return <GridElementWidget engine={engine} model={model} />;
-	}
+  generateWidget(engine: CanvasEngine, model: GridElementModel): JSX.Element {
+    return <GridElementWidget engine={engine} model={model} />;
+  }
 }

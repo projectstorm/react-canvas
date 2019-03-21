@@ -1,4 +1,4 @@
 export interface HistoryState {
-	name: string;
-	state: any;
+  name: string;
+  state: any;
 }

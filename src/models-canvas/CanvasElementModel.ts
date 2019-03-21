@@ -4,86 +4,86 @@ import { BaseModel, BaseModelListener, DeserializeEvent } from '../base-models/B
 import { BaseEvent } from '@projectstorm/react-core';
 
 export interface CanvasElementModelListener<T extends CanvasElementModel = any> extends BaseModelListener<T> {
-	selectionChanged?(event: BaseEvent<CanvasElementModel> & { selected: boolean });
+  selectionChanged?(event: BaseEvent<CanvasElementModel> & { selected: boolean });
 
-	lockChanged?(event: BaseEvent<CanvasElementModel> & { locked: boolean });
+  lockChanged?(event: BaseEvent<CanvasElementModel> & { locked: boolean });
 }
 
 export abstract class CanvasElementModel<
-	T extends CanvasElementModelListener = CanvasElementModelListener
+  T extends CanvasElementModelListener = CanvasElementModelListener
 > extends BaseModel<CanvasLayerModel, CanvasElementModelListener> {
-	protected selected: boolean;
-	protected locked: boolean;
+  protected selected: boolean;
+  protected locked: boolean;
 
-	constructor(type: string) {
-		super(type);
-		this.type = type;
-		this.selected = false;
-		this.locked = false;
-	}
+  constructor(type: string) {
+    super(type);
+    this.type = type;
+    this.selected = false;
+    this.locked = false;
+  }
 
-	serialize() {
-		return {
-			...super.serialize(),
-			selected: this.selected,
-			locked: this.locked
-		};
-	}
+  serialize() {
+    return {
+      ...super.serialize(),
+      selected: this.selected,
+      locked: this.locked
+    };
+  }
 
-	deSerialize(event: DeserializeEvent): void {
-		super.deSerialize(event);
-		this.selected = !!event.data['selected'];
-		this.locked = !!event.data['locked'];
-	}
+  deSerialize(event: DeserializeEvent): void {
+    super.deSerialize(event);
+    this.selected = !!event.data['selected'];
+    this.locked = !!event.data['locked'];
+  }
 
-	setSelected(selected: boolean) {
-		this.selected = selected;
-		this.iterateListeners('selection changed', (listener, event: any) => {
-			if (listener.selectionChanged) {
-				event.selected = selected;
-				listener.selectionChanged(event);
-			}
-		});
-	}
+  setSelected(selected: boolean) {
+    this.selected = selected;
+    this.iterateListeners('selection changed', (listener, event: any) => {
+      if (listener.selectionChanged) {
+        event.selected = selected;
+        listener.selectionChanged(event);
+      }
+    });
+  }
 
-	setLocked(locked: boolean) {
-		this.locked = locked;
-		this.iterateListeners('lock changed', (listener, event: any) => {
-			if (listener.lockChanged) {
-				event.locked = locked;
-				listener.lockChanged(event);
-			}
-		});
-	}
+  setLocked(locked: boolean) {
+    this.locked = locked;
+    this.iterateListeners('lock changed', (listener, event: any) => {
+      if (listener.lockChanged) {
+        event.locked = locked;
+        listener.lockChanged(event);
+      }
+    });
+  }
 
-	isSelected(): boolean {
-		return this.selected;
-	}
+  isSelected(): boolean {
+    return this.selected;
+  }
 
-	isLocked(): boolean {
-		return this.getParent().isLocked();
-	}
+  isLocked(): boolean {
+    return this.getParent().isLocked();
+  }
 
-	abstract getDimensions(): Rectangle;
+  abstract getDimensions(): Rectangle;
 
-	abstract setDimensions(dimensions: Rectangle);
+  abstract setDimensions(dimensions: Rectangle);
 
-	moveToLayer(layer: CanvasLayerModel) {
-		if (this.parent) {
-			this.parent.removeModel(this);
-		}
-		layer.addModel(this);
-	}
+  moveToLayer(layer: CanvasLayerModel) {
+    if (this.parent) {
+      this.parent.removeModel(this);
+    }
+    layer.addModel(this);
+  }
 
-	moveToFront() {
-		this.parent.moveModelToFront(this);
-	}
+  moveToFront() {
+    this.parent.moveModelToFront(this);
+  }
 
-	moveToBack() {
-		this.parent.moveModelToBack(this);
-	}
+  moveToBack() {
+    this.parent.moveModelToBack(this);
+  }
 
-	moveTo(index: number) {
-		this.parent.moveModel(this, index);
-	}
+  moveTo(index: number) {
+    this.parent.moveModel(this, index);
+  }
 }

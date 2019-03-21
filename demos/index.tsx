@@ -10,7 +10,7 @@ import '../src/sass/main.scss';
 addDecorator(withKnobs);
 
 setOptions({
-	name: 'STORM React Canvas',
-	url: 'https://github.com/projectstorm/react-canvas',
-	addonPanelInRight: true
+  name: 'STORM React Canvas',
+  url: 'https://github.com/projectstorm/react-canvas',
+  addonPanelInRight: true
 });

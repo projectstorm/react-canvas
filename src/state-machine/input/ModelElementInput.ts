@@ -6,25 +6,25 @@ import { StateMachine } from '../StateMachine';
 import { PressElementEvent, UnPressElementEvent } from '../../event-bus/events/elements';
 
 export class ModelElementInput extends AbstractStateMachineInput {
-	element: CanvasElementModel;
+  element: CanvasElementModel;
 
-	static NAME = 'model-element';
+  static NAME = 'model-element';
 
-	constructor(element: CanvasElementModel) {
-		super(ModelElementInput.NAME);
-		this.element = element;
-	}
+  constructor(element: CanvasElementModel) {
+    super(ModelElementInput.NAME);
+    this.element = element;
+  }
 
-	static installActions(machine: StateMachine, eventBus: EventBus) {
-		eventBus.registerAction(
-			new InlineAction<PressElementEvent>(PressElementEvent.NAME, event => {
-				machine.addInput(new ModelElementInput(event.element));
-			})
-		);
-		eventBus.registerAction(
-			new InlineAction<UnPressElementEvent>(UnPressElementEvent.NAME, event => {
-				machine.removeInput(ModelElementInput.NAME);
-			})
-		);
-	}
+  static installActions(machine: StateMachine, eventBus: EventBus) {
+    eventBus.registerAction(
+      new InlineAction<PressElementEvent>(PressElementEvent.NAME, event => {
+        machine.addInput(new ModelElementInput(event.element));
+      })
+    );
+    eventBus.registerAction(
+      new InlineAction<UnPressElementEvent>(UnPressElementEvent.NAME, event => {
+        machine.removeInput(ModelElementInput.NAME);
+      })
+    );
+  }
 }

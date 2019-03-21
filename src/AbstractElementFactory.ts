@@ -3,24 +3,24 @@ import { AbstractState } from './state-machine/AbstractState';
 import { BaseModel } from './base-models/BaseModel';
 
 export abstract class AbstractElementFactory<T extends BaseModel = BaseModel> {
-	public type: string;
-	protected directiveProcessors;
-	protected engine: CanvasEngine;
+  public type: string;
+  protected directiveProcessors;
+  protected engine: CanvasEngine;
 
-	constructor(type: string) {
-		this.type = type;
-		this.directiveProcessors = [];
-	}
+  constructor(type: string) {
+    this.type = type;
+    this.directiveProcessors = [];
+  }
 
-	setEngine(engine: CanvasEngine) {
-		this.engine = engine;
-	}
+  setEngine(engine: CanvasEngine) {
+    this.engine = engine;
+  }
 
-	getCanvasStates(): AbstractState[] {
-		return [];
-	}
+  getCanvasStates(): AbstractState[] {
+    return [];
+  }
 
-	abstract generateModel(): T;
+  abstract generateModel(): T;
 
-	abstract generateWidget(engine: CanvasEngine, model: T): JSX.Element;
+  abstract generateWidget(engine: CanvasEngine, model: T): JSX.Element;
 }

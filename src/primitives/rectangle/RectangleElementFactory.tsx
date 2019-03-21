@@ -5,17 +5,17 @@ import * as React from 'react';
 import { CanvasEngine } from '../../CanvasEngine';
 
 export class RectangleElementFactory extends AbstractElementFactory<RectangleElementModel> {
-	static NAME = 'primitive-rectangle';
+  static NAME = 'primitive-rectangle';
 
-	constructor() {
-		super(RectangleElementFactory.NAME);
-	}
+  constructor() {
+    super(RectangleElementFactory.NAME);
+  }
 
-	generateModel(): RectangleElementModel {
-		return new RectangleElementModel();
-	}
+  generateModel(): RectangleElementModel {
+    return new RectangleElementModel();
+  }
 
-	generateWidget(engine: CanvasEngine, model: RectangleElementModel): JSX.Element {
-		return <RectangleElementWidget engine={engine} model={model} />;
-	}
+  generateWidget(engine: CanvasEngine, model: RectangleElementModel): JSX.Element {
+    return <RectangleElementWidget engine={engine} model={model} />;
+  }
 }

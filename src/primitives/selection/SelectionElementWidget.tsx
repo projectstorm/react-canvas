@@ -5,19 +5,19 @@ import { CanvasEngine } from '../../CanvasEngine';
 import { SelectionElementModel } from './SelectionElementModel';
 
 export interface SelectionElementWidgetProps extends BaseWidgetProps {
-	engine: CanvasEngine;
-	model: SelectionElementModel;
+  engine: CanvasEngine;
+  model: SelectionElementModel;
 }
 
 export interface SelectionElementWidgetState {}
 
 export class SelectionElementWidget extends BaseWidget<SelectionElementWidgetProps, SelectionElementWidgetState> {
-	constructor(props: SelectionElementWidgetProps) {
-		super('src-selection-group', props);
-		this.state = {};
-	}
+  constructor(props: SelectionElementWidgetProps) {
+    super('src-selection-group', props);
+    this.state = {};
+  }
 
-	render() {
-		return <SelectionGroupWidget model={this.props.model} engine={this.props.engine} />;
-	}
+  render() {
+    return <SelectionGroupWidget model={this.props.model} engine={this.props.engine} />;
+  }
 }

@@ -2,12 +2,12 @@ import { SelectionElementModel } from '../../primitives/selection/SelectionEleme
 import { AbstractStateMachineInput } from '../AbstractStateMachineInput';
 
 export class ModelRotateInput extends AbstractStateMachineInput {
-	selectionModel: SelectionElementModel;
+  selectionModel: SelectionElementModel;
 
-	static NAME = 'model-rotate';
+  static NAME = 'model-rotate';
 
-	constructor(model: SelectionElementModel) {
-		super(ModelRotateInput.NAME);
-		this.selectionModel = model;
-	}
+  constructor(model: SelectionElementModel) {
+    super(ModelRotateInput.NAME);
+    this.selectionModel = model;
+  }
 }
