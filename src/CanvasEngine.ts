@@ -18,17 +18,12 @@ import {KeyInput} from './state-machine/input/KeyInput';
 import {ModelElementInput} from './state-machine/input/ModelElementInput';
 import {DefaultState} from './state-machine/states/DefaultState';
 import {Toolkit} from '@projectstorm/react-core';
-import {LayerModel} from './primitives-core/layer/LayerModel';
-import {SelectionElementModel} from './primitives/selection/SelectionElementModel';
 import {ModelEvent} from './event-bus/events/ModelEvent';
-import {InlineAction} from './event-bus/InlineAction';
 import {PaperElementFactory} from './primitives/paper/PaperElementFactory';
 import {BaseEvent, BaseObject} from '@projectstorm/react-core';
 import {BaseModel, DeserializeEvent} from './base-models/BaseModel';
-import {EllipseElementModel} from './primitives/ellipse/EllipseElementModel';
 import {DeselectModelsAction} from './event-bus/actions/DeselectModelsAction';
 import {CanvasFactory} from "./primitives-core/canvas/CanvasFactory";
-import {installDefaultInteractivity} from "./interactivity/default-interactivity";
 
 export class CanvasEngineError extends Error {
 }

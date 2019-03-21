@@ -21,9 +21,9 @@ storiesOf('Simple Usage', module).add('Full example', () => {
   model.setZoomLevel(1);
   engine.setModel(model);
 
+  engine.installDefaults();
   installDebugInteractivity(engine);
   installDefaultInteractivity(engine);
-  engine.installDefaults();
 
   // grid layer
   let layer2 = new LayerModel();
@@ -64,6 +64,7 @@ storiesOf('Simple Usage', module).add('Full example', () => {
 
   let squareModel3 = new RectangleElementModel();
   squareModel3.dimensions.updateDimensions(420, 420, 50, 70);
+  squareModel3.dimensions.rotate(33);
 
   layer.addModels([squareModel, squareModel2, squareModel3]);
 

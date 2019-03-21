@@ -17,7 +17,7 @@ export class SimpleCanvasWidget extends BaseWidget<CanvasWidgetProps> {
   render() {
     return (
       <DimensionTrackerWidget reference={this.props.forwardRef} dimensionTracker={this.props.dimension}>
-        <div {...this.getProps()}  ref={this.props.forwardRef}>
+        <div {...this.getProps()} ref={this.props.forwardRef}>
           { this.props.children }
         </div>
       </DimensionTrackerWidget>
