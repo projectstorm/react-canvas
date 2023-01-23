@@ -1,4 +1,7 @@
-# STORM React canvas (WIP)
+Note: this project was an experiment for me (Dylan Vorster) where I learnt all about desktop publishing systems (DTP). A lot of the concepts I implemented here, I moved over to react-diagrams such as layers etc.. I still plan to revisit a lot of these ideas there, and maybe port over some of the elements such as the infinite grid and page layout. Thanks for your interest in this project though, it meant a lot to me <3 , I never thought a throwaway project like this would end up with so many Github stars x_x
+
+
+# STORM React canvas (Archived)
 
 A brand new foundation for storm-react-diagrams
 
